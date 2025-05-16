@@ -1,3 +1,4 @@
+import PaymentCalculator from "@/components/shared/calculator/Calculator";
 import Cover from "./_components/Cover";
 import MainFAQ from "./_components/MainFAQ";
 import ProjectsSection from "./_components/ProjectsSection";
@@ -10,8 +11,9 @@ export default function page() {
       <Cover />
       <ProjectsSection />
       <WhyChooseUs />
-      <MainFAQ />
+      <PaymentCalculator />
       <WhyInvest />
+      <MainFAQ />
     </>
   );
 }

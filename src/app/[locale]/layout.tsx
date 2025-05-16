@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import QueryProvider from "@/reactQuery/queryProvider";
 import { AuthProvider } from "@/auth/AuthProvider";
+import Footer from "@/components/footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default async function RootLayout({
             <NextIntlClientProvider messages={messages}>
               <Header />
               {children}
+              <Footer />
             </NextIntlClientProvider>
           </QueryProvider>
         </AuthProvider>

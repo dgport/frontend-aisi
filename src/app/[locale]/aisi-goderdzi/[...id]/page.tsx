@@ -14,9 +14,8 @@ import { ImageResizer } from "@/components/shared/responsiveImage/FloorPlanResiz
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LocaleSwitcher from "@/i18n/LocaleSwitcher";
-
-import FloorSelectorCarousel from "../../../../components/shared/floorInfo/SelectFloorCarousel";
 import { ApartmentDetailsSheet } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
+import { FloorSelector } from "@/components/shared/floorInfo/FloorSelect";
 
 interface ParamIds {
   buildingId: string;
@@ -90,6 +89,14 @@ export default function FloorPlanPage() {
     enabled: Boolean(buildingId),
   });
 
+  const selectedFloorPlan = useMemo(() => {
+    if (!floorPlans || floorPlans.length === 0) return null;
+
+    return (
+      floorPlans.find((plan) => plan.id.toString() === floorPlanId) || null
+    );
+  }, [floorPlans, floorPlanId]);
+
   const {
     data: apartmentsData,
     isLoading: isLoadingApartments,
@@ -108,7 +115,9 @@ export default function FloorPlanPage() {
 
   const isLoading = isLoadingFloorPlans || isLoadingApartments;
   const hasError =
-    floorPlansError || apartmentsError || (!floorPlans.length && !isLoading);
+    floorPlansError ||
+    apartmentsError ||
+    (!isLoading && (!floorPlans.length || !selectedFloorPlan));
 
   const { isMobile, apartmentAreas } = useApartmentPaths(apartmentsData);
 
@@ -144,33 +153,18 @@ export default function FloorPlanPage() {
     setIsSheetOpen(false);
   };
 
-  const availableFloors = useMemo(() => [1, 2, 3, 4], []);
-
-  const handleFloorSelect = useCallback(
-    (floor: number) => {
-      if (Number(floorId) === floor) return;
-
-      startTransition(() => {
-        router.replace(`/aisi-goderdzi/${buildingId}/${floorPlanId}/${floor}`, {
-          scroll: false,
-        });
-      });
-    },
-    [router, buildingId, floorPlanId, floorId]
-  );
-
   const handleBack = useCallback(() => {
     router.back();
   }, [router]);
 
   const imagePath = useMemo(() => {
-    if (floorPlans.length > 0) {
+    if (selectedFloorPlan) {
       return isMobile
-        ? `http://localhost:3001/${floorPlans[0]?.mobile_image}`
-        : `http://localhost:3001/${floorPlans[0]?.desktop_image}`;
+        ? `http://localhost:3001/${selectedFloorPlan.mobile_image}`
+        : `http://localhost:3001/${selectedFloorPlan.desktop_image}`;
     }
     return "/placeholder.svg";
-  }, [floorPlans, isMobile]);
+  }, [selectedFloorPlan, isMobile]);
 
   const apartmentOverlays = useCallback(
     ({
@@ -249,20 +243,16 @@ export default function FloorPlanPage() {
                 </Button>
               </div>
 
-              <div className="mx-4 flex items-center">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-1.5 flex items-center">
-                  <span className="text-sm text-blue-700 font-medium">
-                    Floor: {floorId}
-                  </span>
-                </div>
+              <div className="mx-4 flex items-center gap-3">
+                <FloorSelector
+                  currentFloor={parseInt(floorId)}
+                  floorRangeStart={selectedFloorPlan?.floor_range_start}
+                  floorRangeEnd={selectedFloorPlan?.floor_range_end}
+                  buildingId={buildingId}
+                  floorPlanId={floorPlanId}
+                  route="aisi-goderdzi"
+                />
               </div>
-
-              <FloorSelectorCarousel
-                availableFloors={availableFloors}
-                currentFloor={Number(floorId)}
-                onFloorSelect={handleFloorSelect}
-                isPending={isPending}
-              />
 
               <LocaleSwitcher />
             </div>
@@ -280,12 +270,14 @@ export default function FloorPlanPage() {
             >
               <MemoizedImageResizer
                 imageSrc={imagePath || "/placeholder.svg"}
-                altText={`Floor ${floorId} Plan`}
+                altText={`${
+                  selectedFloorPlan?.name || "Building"
+                } - Floor ${floorId} Plan`}
                 originalDimensions={GODERDZI_ORIGINAL_DIMENSIONS}
                 maxDimensions={GODERDZI_MAX_SIZE}
                 isMobile={isMobile}
                 priority
-                key={`floor-${floorId}`}
+                key={`floor-${floorId}-plan-${floorPlanId}`}
               >
                 {apartmentOverlays}
               </MemoizedImageResizer>

@@ -1,129 +1,222 @@
+"use client";
+
 import { useState, useEffect } from "react";
+import { Calculator, DollarSign, Percent, Clock } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 
-export default function MortgageCalculator() {
-  const [propertyAmount, setPropertyAmount] = useState(200000);
-  const [downPaymentPercent, setDownPaymentPercent] = useState(10);
-  const [loanTermMonths, setLoanTermMonths] = useState(36);
+export default function PaymentCalculator() {
+  const [propertyValue, setPropertyValue] = useState(100000);
+  const [months, setMonths] = useState(24);
+  const [downPaymentPercent, setDownPaymentPercent] = useState(20);
+  const [downPaymentAmount, setDownPaymentAmount] = useState(20000);
   const [monthlyPayment, setMonthlyPayment] = useState(0);
+  const [totalPayment, setTotalPayment] = useState(0);
 
-  const downPaymentAmount = (propertyAmount * downPaymentPercent) / 100;
-
-  const loanAmount = propertyAmount - downPaymentAmount;
-
-  const annualInterestRate = 5;
-  const monthlyInterestRate = annualInterestRate / 100 / 12;
+  const [isUpdatingPercent, setIsUpdatingPercent] = useState(false);
 
   useEffect(() => {
-    if (loanTermMonths > 0 && loanAmount > 0) {
-      const numerator =
-        loanAmount *
-        monthlyInterestRate *
-        Math.pow(1 + monthlyInterestRate, loanTermMonths);
-      const denominator = Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1;
-      const payment = numerator / denominator;
-      setMonthlyPayment(payment);
+    if (!isUpdatingPercent) {
+      const amount = (propertyValue * downPaymentPercent) / 100;
+      setIsUpdatingPercent(true);
+      setDownPaymentAmount(amount);
     } else {
-      setMonthlyPayment(0);
+      setIsUpdatingPercent(false);
     }
-  }, [propertyAmount, downPaymentPercent, loanTermMonths, loanAmount]);
+  }, [propertyValue, downPaymentPercent]);
+
+  const handleDownPaymentAmountChange = (value: number) => {
+    setDownPaymentAmount(value);
+    const percent = (value / propertyValue) * 100;
+    setDownPaymentPercent(Number.parseFloat(percent.toFixed(1)));
+  };
+
+  useEffect(() => {
+    const loanAmount = propertyValue - downPaymentAmount;
+    const monthly = months > 0 ? loanAmount / months : 0;
+
+    setMonthlyPayment(monthly);
+    setTotalPayment(loanAmount);
+  }, [propertyValue, months, downPaymentAmount]);
+
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
   return (
-    <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md z-50">
-      <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">
-        Property Payment Calculator
-      </h2>
-
-      <div className="mb-6">
-        <label className="  text-gray-700 mb-2 flex justify-between">
-          <span className="font-semibold">Property Amount:</span>
-          <span className="text-blue-600 font-bold">
-            ${propertyAmount.toLocaleString()}
-          </span>
-        </label>
-        <input
-          type="range"
-          min="50000"
-          max="1000000"
-          step="10000"
-          value={propertyAmount}
-          onChange={(e) => setPropertyAmount(Number(e.target.value))}
-          className="w-full h-3 bg-blue-100 rounded-lg appearance-none cursor-pointer"
-        />
-        <div className="flex justify-between text-xs text-gray-500 mt-1">
-          <span>$50,000</span>
-          <span>$1,000,000</span>
+    <div className="w-full p-4 md:px-16 py-20   mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+      <div className="p-5 sm:p-8">
+        <div className="flex items-center mb-6">
+          <Calculator className="h-6 w-6 text-blue-600 mr-2" />
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800">
+            Payment Calculator
+          </h2>
         </div>
-      </div>
 
-      <div className="mb-6">
-        <label className="block text-gray-700 mb-2 flex justify-between">
-          <span className="font-semibold">Down Payment:</span>
-          <span className="text-blue-600 font-bold">
-            {downPaymentPercent}% (${downPaymentAmount.toLocaleString()})
-          </span>
-        </label>
-        <input
-          type="range"
-          min="10"
-          max="50"
-          step="1"
-          value={downPaymentPercent}
-          onChange={(e) => setDownPaymentPercent(Number(e.target.value))}
-          className="w-full h-3 bg-blue-100 rounded-lg appearance-none cursor-pointer"
-        />
-        <div className="flex justify-between text-xs text-gray-500 mt-1">
-          <span>10% (Minimum)</span>
-          <span>50%</span>
-        </div>
-      </div>
-
-      <div className="mb-8">
-        <label className=" text-gray-700 mb-2 flex justify-between">
-          <span className="font-semibold">Loan Term:</span>
-          <span className="text-blue-600 font-bold">
-            {loanTermMonths} months
-          </span>
-        </label>
-        <input
-          type="range"
-          min="12"
-          max="60"
-          step="1"
-          value={loanTermMonths}
-          onChange={(e) => setLoanTermMonths(Number(e.target.value))}
-          className="w-full h-3 bg-blue-100 rounded-lg appearance-none cursor-pointer"
-        />
-        <div className="flex justify-between text-xs text-gray-500 mt-1">
-          <span>12 months</span>
-          <span>60 months (Maximum)</span>
-        </div>
-      </div>
-
-      <div className="p-5 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg border border-blue-200">
-        <h3 className="text-lg font-semibold mb-3 text-blue-800">
-          Calculation Results
-        </h3>
-        <div className="grid grid-cols-2 gap-3">
-          <div className="text-gray-700 font-medium">Loan Amount:</div>
-          <div className="font-semibold text-right">
-            ${loanAmount.toLocaleString()}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <label className="text-gray-600 flex items-center">
+                  <DollarSign className="h-4 w-4 mr-1 text-blue-500" />
+                  Property Value
+                </label>
+                <div className="bg-blue-50 px-3 py-1 rounded-lg">
+                  <input
+                    type="number"
+                    value={propertyValue}
+                    onChange={(e) =>
+                      setPropertyValue(Math.max(0, Number(e.target.value)))
+                    }
+                    className="w-24 bg-transparent text-blue-600 font-medium text-right focus:outline-none"
+                  />
+                </div>
+              </div>
+              <Slider
+                value={[propertyValue]}
+                min={10000}
+                max={1000000}
+                step={5000}
+                onValueChange={(value) => setPropertyValue(value[0])}
+              />
+              <div className="flex justify-between text-xs text-gray-400">
+                <span>$10,000</span>
+                <span>$1,000,000</span>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <label className="text-gray-600 flex items-center">
+                  <Percent className="h-4 w-4 mr-1 text-blue-500" />
+                  Down Payment
+                </label>
+                <div className="flex space-x-2">
+                  <div className="bg-blue-50 px-3 py-1 rounded-lg">
+                    <input
+                      type="number"
+                      value={downPaymentPercent}
+                      onChange={(e) => {
+                        setDownPaymentPercent(
+                          Math.max(0, Math.min(100, Number(e.target.value)))
+                        );
+                      }}
+                      className="w-12 bg-transparent text-blue-600 font-medium text-right focus:outline-none"
+                    />
+                    <span className="text-blue-600 font-medium">%</span>
+                  </div>
+                  <div className="bg-blue-50 px-3 py-1 rounded-lg">
+                    <input
+                      type="number"
+                      value={Math.round(downPaymentAmount)}
+                      onChange={(e) => {
+                        const value = Math.max(
+                          0,
+                          Math.min(propertyValue, Number(e.target.value))
+                        );
+                        handleDownPaymentAmountChange(value);
+                      }}
+                      className="w-20 bg-transparent text-blue-600 font-medium text-right focus:outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+              <Slider
+                value={[downPaymentPercent]}
+                min={0}
+                max={100}
+                step={1}
+                onValueChange={(value) => setDownPaymentPercent(value[0])}
+              />
+              <div className="flex justify-between text-xs text-gray-400">
+                <span>0%</span>
+                <span>100%</span>
+              </div>
+            </div>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <label className="text-gray-600 flex items-center">
+                  <Clock className="h-4 w-4 mr-1 text-blue-500" />
+                  Payment Period
+                </label>
+                <div className="bg-blue-50 px-3 py-1 rounded-lg flex items-center">
+                  <input
+                    type="number"
+                    value={months}
+                    onChange={(e) =>
+                      setMonths(
+                        Math.max(1, Math.min(60, Number(e.target.value)))
+                      )
+                    }
+                    className="w-12 bg-transparent text-blue-600 font-medium text-right focus:outline-none"
+                  />
+                  <span className="text-blue-600 font-medium ml-1">months</span>
+                </div>
+              </div>
+              <Slider
+                value={[months]}
+                min={1}
+                max={60}
+                step={1}
+                onValueChange={(value) => setMonths(value[0])}
+              />
+              <div className="flex justify-between text-xs text-gray-400">
+                <span>1 month</span>
+                <span>60 months</span>
+              </div>
+            </div>
           </div>
+          <div className="bg-gradient-to-b from-blue-50 to-white rounded-xl p-5 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Payment Summary
+            </h3>
 
-          <div className="text-gray-700 font-medium">Interest Rate:</div>
-          <div className="font-semibold text-right">
-            {annualInterestRate}% annually
-          </div>
+            <div className="space-y-4">
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100">
+                <div className="text-gray-500 text-sm">Monthly Payment</div>
+                <div className="text-2xl font-bold text-blue-600">
+                  {formatCurrency(monthlyPayment)}
+                </div>
+              </div>
 
-          <div className="text-gray-700 font-medium">Loan Term:</div>
-          <div className="font-semibold text-right">
-            {loanTermMonths} months
-          </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-blue-100">
+                  <div className="text-gray-500 text-xs">Total Amount</div>
+                  <div className="text-lg font-medium text-gray-800">
+                    {formatCurrency(propertyValue)}
+                  </div>
+                </div>
 
-          <div className="text-gray-800 font-bold text-lg border-t pt-2 border-blue-200">
-            Monthly Payment:
-          </div>
-          <div className="font-bold text-xl text-blue-700 text-right border-t pt-2 border-blue-200">
-            ${monthlyPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-blue-100">
+                  <div className="text-gray-500 text-xs">Down Payment</div>
+                  <div className="text-lg font-medium text-gray-800">
+                    {formatCurrency(downPaymentAmount)}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-blue-100">
+                  <div className="text-gray-500 text-xs">Amount to Finance</div>
+                  <div className="text-lg font-medium text-gray-800">
+                    {formatCurrency(totalPayment)}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg p-3 shadow-sm border border-blue-100">
+                  <div className="text-gray-500 text-xs">Payment Schedule</div>
+                  <div className="text-lg font-medium text-gray-800">
+                    {months} months
+                  </div>
+                </div>
+              </div>
+
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 mt-2">
+                Contact Sales Team
+              </button>
+            </div>
           </div>
         </div>
       </div>

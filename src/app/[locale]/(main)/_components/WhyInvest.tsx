@@ -24,7 +24,7 @@ const investmentReasons: InvestmentReason[] = [
       "4.5M tourists in 2024",
       "Top 5 emerging destination",
     ],
-    image: "/images/goderdzi/GoderdziGreen.jpg",
+    image: "/images/main/Batumi1.jpeg",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const investmentReasons: InvestmentReason[] = [
     description:
       "Strong annual property value growth with projected increases of 8-12% over the next five years.",
     stats: ["10% average ROI", "3-5 year breakeven", "Strong rental yields"],
-    image: "/images/goderdzi/GoderdziNature.jpg",
+    image: "/images/main/Batumi2.jpeg",
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ const investmentReasons: InvestmentReason[] = [
       "Foreign ownership allowed",
       "Business visa programs",
     ],
-    image: "/images/goderdzi/GoderdziPool.jpg",
+    image: "/images/main/Batumi3.jpg",
   },
   {
     id: 4,
@@ -52,7 +52,7 @@ const investmentReasons: InvestmentReason[] = [
     description:
       "Positioned at a crossroads between major markets with excellent transportation connections.",
     stats: ["3-hour flights to EU", "Direct sea routes", "New Silk Road hub"],
-    image: "/images/goderdzi/GoderdziGreen.jpg",
+    image: "/images/main/Batumi4.webp",
   },
 ];
 
@@ -157,7 +157,7 @@ export default function WhyInvest() {
                   onClick={() => jumpToReason(reason.id)}
                   className={`group flex items-center gap-3 p-3 md:p-4 text-left transition-all duration-300 border-l-4 md:min-w-56 flex-shrink-0 md:flex-shrink ${
                     activeReason === reason.id
-                      ? "bg-white/20 backdrop-blur-sm border-l-white"
+                      ? "bg-white/20 backdrop-blur-xs border-l-white"
                       : "bg-white/5 border-l-transparent hover:bg-white/10"
                   }`}
                   whileHover={{ x: 4 }}
