@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useCallback, useTransition } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { floorPlansAPI } from "@/routes/floorPlans";
 import { useApartmentPaths } from "@/hooks/UseApartmentsPaths";

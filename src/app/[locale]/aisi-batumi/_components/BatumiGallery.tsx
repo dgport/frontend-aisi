@@ -1,11 +1,16 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react";
-import img from "@/root/public/images/Cover1.png";
+import { useState, useEffect, JSX } from "react";
 import Image from "next/image";
+import img from "@/root/public/images/Cover1.png";
 
-// Use placeholder images with variety of aspect ratios
-const galleryImages = [
+interface GalleryImage {
+  src: string | any;
+  alt: string;
+  aspectRatio: number;
+}
+
+const galleryImages: GalleryImage[] = [
   {
     src: img,
     alt: "Goderdzi Green Views",
@@ -43,12 +48,11 @@ const galleryImages = [
   },
 ];
 
-export default function SimpleMasonryGallery() {
-  const [columns, setColumns] = useState(3);
+export default function SimpleMasonryGallery(): JSX.Element {
+  const [columns, setColumns] = useState<number>(3);
 
-  // Adjust number of columns based on screen width
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = (): void => {
       if (window.innerWidth < 640) {
         setColumns(1);
       } else if (window.innerWidth < 1024) {
@@ -63,36 +67,29 @@ export default function SimpleMasonryGallery() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Create optimized column arrays for the masonry layout
-  const createMasonryLayout = () => {
-    const columnHeights = Array(columns).fill(0);
-    const columnItems = Array(columns)
-      .fill()
+  const createMasonryLayout = (): GalleryImage[][] => {
+    const columnHeights: number[] = Array(columns).fill(0);
+    const columnItems: GalleryImage[][] = Array(columns)
+      .fill(null)
       .map(() => []);
 
     galleryImages.forEach((image) => {
-      // Find the column with the least height
-      const shortestColumnIndex = columnHeights.indexOf(
+      const shortestColumnIndex: number = columnHeights.indexOf(
         Math.min(...columnHeights)
       );
 
-      // Add image to the shortest column
       columnItems[shortestColumnIndex].push(image);
-
-      // Update the height of that column
       columnHeights[shortestColumnIndex] += 1 / image.aspectRatio;
     });
 
     return columnItems;
   };
 
-  const masonryColumns = createMasonryLayout();
+  const masonryColumns: GalleryImage[][] = createMasonryLayout();
 
   return (
     <div className="w-full">
       <h3 className="text-2xl font-semibold mb-6">Property Gallery</h3>
-
-      {/* Masonry Grid */}
       <div className="flex flex-wrap gap-3">
         {masonryColumns.map((column, colIndex) => (
           <div key={colIndex} className="flex-1 min-w-0 flex flex-col gap-3">

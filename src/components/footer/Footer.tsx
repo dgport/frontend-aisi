@@ -46,11 +46,16 @@ export default function Footer() {
             className="flex flex-col"
           >
             <Link href={`/${locale}`} className="inline-block mb-6">
-              <Image src={Logo || "/placeholder.svg"} alt="AISI Logo" className="w-32 h-auto" />
+              <Image
+                src={Logo || "/placeholder.svg"}
+                alt="AISI Logo"
+                className="w-32 h-auto"
+              />
             </Link>
             <p className="text-gray-300 text-sm mb-6">
-              AISI Development is a premier construction and development company specializing in creating exceptional
-              residential and commercial spaces with innovative design and superior craftsmanship.
+              AISI Development is a premier construction and development company
+              specializing in creating exceptional residential and commercial
+              spaces with innovative design and superior craftsmanship.
             </p>
             <div className="flex space-x-4">
               <motion.a
@@ -86,7 +91,9 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">Navigation</h3>
+            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">
+              Navigation
+            </h3>
             <ul className="space-y-3">
               {navItems.map((item) => (
                 <li key={item.name}>
@@ -108,7 +115,9 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">Our Projects</h3>
+            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">
+              Our Projects
+            </h3>
             <ul className="space-y-3">
               {projectItems.map((item) => (
                 <li key={item.name}>
@@ -130,18 +139,31 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">Contact Us</h3>
+            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">
+              Contact Us
+            </h3>
             <ul className="space-y-4">
               <li className="flex items-start">
-                <MapPin size={18} className="text-indigo-400 mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-300">123 Construction Avenue, Batumi, Georgia</span>
+                <MapPin
+                  size={18}
+                  className="text-indigo-400 mr-3 mt-1 flex-shrink-0"
+                />
+                <span className="text-gray-300">
+                  123 Construction Avenue, Batumi, Georgia
+                </span>
               </li>
               <li className="flex items-center">
-                <Phone size={18} className="text-indigo-400 mr-3 flex-shrink-0" />
+                <Phone
+                  size={18}
+                  className="text-indigo-400 mr-3 flex-shrink-0"
+                />
                 <span className="text-gray-300">+995 123 456 789</span>
               </li>
               <li className="flex items-center">
-                <Mail size={18} className="text-indigo-400 mr-3 flex-shrink-0" />
+                <Mail
+                  size={18}
+                  className="text-indigo-400 mr-3 flex-shrink-0"
+                />
                 <span className="text-gray-300">info@aisidevelopment.com</span>
               </li>
             </ul>
@@ -157,8 +179,12 @@ export default function Footer() {
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between">
             <div className="mb-6 md:mb-0">
-              <h4 className="text-white text-lg font-medium mb-2">Stay Updated</h4>
-              <p className="text-gray-400 text-sm">Subscribe to our newsletter for the latest updates</p>
+              <h4 className="text-white text-lg font-medium mb-2">
+                Stay Updated
+              </h4>
+              <p className="text-gray-400 text-sm">
+                Subscribe to our newsletter for the latest updates
+              </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
               <input
@@ -180,25 +206,13 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center"
         >
-          <p className="text-gray-400 text-sm mb-4 md:mb-0">
+          <p className="text-gray-400 text-center text-sm mb-4 md:mb-0">
             © {new Date().getFullYear()} AISI Development. All rights reserved.
           </p>
-          <div className="flex space-x-6">
-            <Link href="#" className="text-gray-400 hover:text-white text-sm">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="text-gray-400 hover:text-white text-sm">
-              Terms of Service
-            </Link>
-            <Link href="#" className="text-gray-400 hover:text-white text-sm">
-              Cookies
-            </Link>
-          </div>
         </motion.div>
       </div>
 
-      {/* Decorative element */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 via-indigo-400 to-indigo-600"></div>
     </footer>
-  )
+  );
 }

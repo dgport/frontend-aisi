@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { JSX } from "react";
 import {
   Select,
   SelectContent,
@@ -8,7 +10,16 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 
-// Create a reusable FloorSelector component
+interface FloorSelectorProps {
+  currentFloor: number;
+  floorRangeStart: number;
+  floorRangeEnd: number;
+  buildingId: string;
+  floorPlanId: string;
+  route: string;
+  disabled?: boolean;
+}
+
 export function FloorSelector({
   currentFloor,
   floorRangeStart,
@@ -17,11 +28,10 @@ export function FloorSelector({
   floorPlanId,
   route,
   disabled = false,
-}) {
+}: FloorSelectorProps): JSX.Element | null {
   const router = useRouter();
 
-  // Generate array of available floors
-  const availableFloors = React.useMemo(() => {
+  const availableFloors: number[] = React.useMemo(() => {
     if (
       typeof floorRangeStart !== "number" ||
       typeof floorRangeEnd !== "number"
@@ -29,23 +39,20 @@ export function FloorSelector({
       return [];
     }
 
-    // Create array from range start to range end (inclusive)
     return Array.from(
       { length: floorRangeEnd - floorRangeStart + 1 },
       (_, i) => floorRangeStart + i
     );
   }, [floorRangeStart, floorRangeEnd]);
 
-  // Handle floor selection change
-  const handleFloorChange = (value) => {
+  const handleFloorChange = (value: string): void => {
     if (buildingId && floorPlanId) {
-      // Redirect to the selected floor
       router.replace(`/${route}/${buildingId}/${floorPlanId}/${value}`);
     }
   };
 
   if (availableFloors.length <= 1) {
-    return null; // Don't show selector if there's only one floor
+    return null;
   }
 
   return (

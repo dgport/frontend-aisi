@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useCallback, useTransition } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { floorPlansAPI } from "@/routes/floorPlans";
 import { useApartmentPaths } from "@/hooks/UseApartmentsPaths";
@@ -33,6 +33,7 @@ interface SelectedApartment {
   price?: number;
   images?: string[];
 }
+
 const MemoizedImageResizer = React.memo(ImageResizer);
 const MemoizedApartmentOverlay = React.memo(ApartmentOverlay);
 
@@ -44,7 +45,6 @@ const LoadingIndicator = ({ message = "Loading..." }) => (
 );
 
 export default function FloorPlanPage() {
-  const [isPending, startTransition] = useTransition();
   const [hoveredApartment, setHoveredApartment] = useState<number | null>(null);
   const [selectedApartment, setSelectedApartment] = useState<
     SelectedApartment | undefined
@@ -74,7 +74,6 @@ export default function FloorPlanPage() {
     queryKey: ["floorPlanList", buildingId],
     queryFn: async () => {
       if (!buildingId) return [];
-
       try {
         const response = await floorPlansAPI.getList(buildingId);
         return response;
@@ -91,7 +90,6 @@ export default function FloorPlanPage() {
 
   const selectedFloorPlan = useMemo(() => {
     if (!floorPlans || floorPlans.length === 0) return null;
-
     return (
       floorPlans.find((plan) => plan.id.toString() === floorPlanId) || null
     );
@@ -194,7 +192,7 @@ export default function FloorPlanPage() {
     [apartmentAreas, hoveredApartment, handleApartmentClick]
   );
 
-  const shouldShowHeader = !isLoading || isPending;
+  const shouldShowHeader = !isLoading;
 
   return (
     <main
@@ -204,7 +202,7 @@ export default function FloorPlanPage() {
         isMobile ? "overflow-y-auto" : "overflow-hidden"
       } z-50`}
     >
-      {isLoading && !isPending ? (
+      {isLoading ? (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
           <LoadingIndicator message="Loading floor plan data..." />
         </div>
@@ -235,7 +233,6 @@ export default function FloorPlanPage() {
                   variant="outline"
                   size="sm"
                   onClick={handleBack}
-                  disabled={isPending}
                   className="flex items-center gap-1"
                 >
                   <ChevronLeft size={16} />
@@ -258,31 +255,25 @@ export default function FloorPlanPage() {
             </div>
           )}
 
-          {isPending ? (
-            <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10">
-              <LoadingIndicator message={`Loading floor ${floorId} data...`} />
-            </div>
-          ) : (
-            <div
-              className={`${
-                isMobile ? "mt-2" : "flex-1 overflow-hidden min-h-0"
-              }`}
+          <div
+            className={`${
+              isMobile ? "mt-2" : "flex-1 overflow-hidden min-h-0"
+            }`}
+          >
+            <MemoizedImageResizer
+              imageSrc={imagePath || "/placeholder.svg"}
+              altText={`${
+                selectedFloorPlan?.name || "Building"
+              } - Floor ${floorId} Plan`}
+              originalDimensions={GODERDZI_ORIGINAL_DIMENSIONS}
+              maxDimensions={GODERDZI_MAX_SIZE}
+              isMobile={isMobile}
+              priority
+              key={`floor-${floorId}-plan-${floorPlanId}`}
             >
-              <MemoizedImageResizer
-                imageSrc={imagePath || "/placeholder.svg"}
-                altText={`${
-                  selectedFloorPlan?.name || "Building"
-                } - Floor ${floorId} Plan`}
-                originalDimensions={GODERDZI_ORIGINAL_DIMENSIONS}
-                maxDimensions={GODERDZI_MAX_SIZE}
-                isMobile={isMobile}
-                priority
-                key={`floor-${floorId}-plan-${floorPlanId}`}
-              >
-                {apartmentOverlays}
-              </MemoizedImageResizer>
-            </div>
-          )}
+              {apartmentOverlays}
+            </MemoizedImageResizer>
+          </div>
 
           <ApartmentDetailsSheet
             isOpen={isSheetOpen}
