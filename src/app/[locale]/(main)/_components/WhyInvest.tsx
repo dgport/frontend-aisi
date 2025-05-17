@@ -97,7 +97,7 @@ export default function WhyInvest() {
         clearTimeout(autoplayRef.current);
       }
     };
-  }, [activeReason, resetAutoplayTimer]);
+  }, [activeReason]);
 
   const getCurrentReason = () =>
     investmentReasons.find((reason) => reason.id === activeReason) ||
@@ -155,7 +155,7 @@ export default function WhyInvest() {
                 <motion.button
                   key={reason.id}
                   onClick={() => jumpToReason(reason.id)}
-                  className={`group flex items-center gap-3 p-3 md:p-4 text-left transition-all duration-300 border-l-4 md:min-w-56 flex-shrink-0 md:flex-shrink ${
+                  className={`group flex items-center gap-3 p-3 md:p-4 text-left transition-all duration-300 border-l-4 md:min-w-56 flex-shrink-0 md:flex-shrink cursor-pointer ${
                     activeReason === reason.id
                       ? "bg-white/20 backdrop-blur-xs border-l-white"
                       : "bg-white/5 border-l-transparent hover:bg-white/10"
@@ -236,14 +236,14 @@ export default function WhyInvest() {
                 <div className="flex gap-3">
                   <button
                     onClick={handlePrev}
-                    className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all"
+                    className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
                     aria-label="Previous reason"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={handleNext}
-                    className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all"
+                    className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
                     aria-label="Next reason"
                   >
                     <ChevronRight className="w-5 h-5" />
@@ -254,7 +254,7 @@ export default function WhyInvest() {
                     <button
                       key={reason.id}
                       onClick={() => jumpToReason(reason.id)}
-                      className={`h-2 rounded-full transition-all duration-300 ${
+                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                         activeReason === reason.id
                           ? "bg-white w-8"
                           : "bg-white/30 w-4 hover:bg-white/50"

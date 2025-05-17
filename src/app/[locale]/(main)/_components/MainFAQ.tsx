@@ -28,7 +28,7 @@ export default function MainFAQ() {
   };
 
   return (
-    <section className="p-4 md:px-16 py-20">
+    <section className="p-4 md:px-16 py-10 lg:py-20">
       <div className="w-full border border-gray-300  rounded-lg ">
         <div className="bg-white p-4 rounded-lg shadow-sm">
           <h3 className="text-2xl font-semibold mb-6">

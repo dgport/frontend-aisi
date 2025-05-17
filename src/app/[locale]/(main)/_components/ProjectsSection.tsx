@@ -92,19 +92,19 @@ export default function ProjectsCarousel() {
               loop: true,
               dragFree: false,
               slidesToScroll: 1,
-              watchDrag: false,
+              watchDrag: true,
             }}
             className="w-full"
           >
-            <CarouselContent className="-ml-1 md:-ml-2 px-12">
+            <CarouselContent className="-ml-1 md:-ml-2 md:px-12">
               {projectsData.map((project) => (
                 <CarouselItem
                   key={project.id}
-                  className={`pl-1 md:px-5 ${
+                  className={`px-6 md:px-5 ${
                     isMobile ? "basis-full" : "basis-1/3"
                   }`}
                 >
-                  <div className="relative group w-full overflow-hidden rounded-lg shadow-2xl bg-white/10 backdrop-blur-md">
+                  <div className="relative group w-full overflow-hidden rounded-lg md:shadow-2xl bg-white/10 backdrop-blur-md">
                     <Link href={project.address} className="block w-full">
                       <div className="relative h-80 sm:h-96 overflow-hidden rounded-lg w-full">
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70 z-10"></div>
@@ -112,7 +112,6 @@ export default function ProjectsCarousel() {
                           src={project.image || "/placeholder.svg"}
                           alt={project.title}
                           fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
                           priority
                           className={`object-cover transition-transform duration-700 group-hover:scale-105 ${
                             project.status?.soldOut || project.status?.finished
