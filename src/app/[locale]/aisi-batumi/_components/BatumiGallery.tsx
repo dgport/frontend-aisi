@@ -2,8 +2,7 @@
 
 import { useState, useEffect, JSX } from "react";
 import Image from "next/image";
-import img from "@/root/public/images/Cover1.png";
-
+import img from "@/root/public/images/main/Batumi1.jpeg";
 interface GalleryImage {
   src: string | any;
   alt: string;

@@ -11,10 +11,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import img from "@/root/public/images/goderdzi/MainCover1.jpg";
-import img1 from "@/root/public/images/aisi-batumi.png";
-import img3 from "@/root/public/images/Cover1.png";
-
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import img1 from "@/root/public/images/main/Project2.png";
+import img3 from "@/root/public/images/main/Project3.png";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const projectsData = [
@@ -34,10 +33,10 @@ const projectsData = [
   },
   {
     id: 3,
-    title: "AISI Goderdzie",
-    location: "Adjara, Goderdzi ski resort",
+    title: "AISI Angisa",
+    location: "Adjara, Batumi",
     image: img3,
-    address: "/aisi-goderdzi",
+    address: "/#",
     status: {
       soldOut: true,
       finished: true,
@@ -123,12 +122,12 @@ export default function ProjectsCarousel() {
                           project.status?.finished) && (
                           <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-black/40">
                             {project.status.soldOut && (
-                              <div className="bg-red-600 text-white font-bold py-2 px-6 rounded-md text-2xl mb-4 transform rotate-12 shadow-xl">
+                              <div className="bg-black/70 backdrop-blur-md text-white font-bold py-2 px-6 rounded-md text-2xl mb-4 transform rotate-12 shadow-xl border border-white/20">
                                 SOLD OUT
                               </div>
                             )}
                             {project.status.finished && (
-                              <div className="bg-green-600 text-white font-bold py-2 px-6 rounded-md text-2xl transform -rotate-6 shadow-xl">
+                              <div className="bg-black/70 backdrop-blur-md text-white font-bold py-2 px-6 rounded-md text-2xl transform -rotate-6 shadow-xl border border-white/20">
                                 FINISHED
                               </div>
                             )}
@@ -154,13 +153,8 @@ export default function ProjectsCarousel() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-
-            <CarouselPrevious className="absolute lg:hidden left-2 md:left-4 top-1/2 bg-white/90 hover:bg-white border-none shadow-lg h-10 w-10 md:h-12 md:w-12 transition-all duration-300">
-              <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-blue-600" />
-            </CarouselPrevious>
-            <CarouselNext className="absolute right-2 lg:hidden  md:right-4 top-1/2 bg-white/90 hover:bg-white border-none shadow-lg h-10 w-10 md:h-12 md:w-12 transition-all duration-300">
-              <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-blue-600" />
-            </CarouselNext>
+            <CarouselPrevious className="absolute lg:hidden left-2 md:left-4 top-1/2 bg-white/90 hover:bg-white  border border-gray shadow-lg h-10 w-10 md:h-12 md:w-12 transition-all duration-300" />
+            <CarouselNext className="absolute right-2 lg:hidden  md:right-4 top-1/2 bg-white/90 hover:bg-white border border-gray shadow-lg h-10 w-10 md:h-12 md:w-12 transition-all duration-300" />
           </Carousel>
         </motion.div>
       </div>

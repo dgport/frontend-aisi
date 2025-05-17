@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Clock } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+ 
 
 export default function PaymentCalculator() {
   const [propertyValue, setPropertyValue] = useState(100000);
@@ -51,8 +52,8 @@ export default function PaymentCalculator() {
       <div className="sm:p-8">
         <div className="flex flex-col mb-6">
           <div className="flex items-center">
-            <Calculator className="h-6 w-6 text-indigo-600 mr-2" />
-            <h2 className="text-xl sm:text-2xl font-bold text-indigo-700">
+            <Calculator className="h-6 w-6 text-black/70 mr-2" />
+            <h2 className="text-xl sm:text-2xl font-bold text-black/70">
               Payment Calculator
             </h2>
           </div>
@@ -63,7 +64,7 @@ export default function PaymentCalculator() {
           <div className="space-y-6">
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <label className="text-indigo-700 flex items-center">
+                <label className="text-black/70 flex items-center">
                   <DollarSign className="h-4 w-4 mr-1 text-indigo-500" />
                   Property Value
                 </label>
@@ -74,7 +75,7 @@ export default function PaymentCalculator() {
                     onChange={(e) =>
                       setPropertyValue(Math.max(0, Number(e.target.value)))
                     }
-                    className="w-24 bg-transparent text-indigo-600 font-medium text-right focus:outline-none"
+                    className="w-24 bg-transparent text-black/70 font-medium text-right focus:outline-none"
                   />
                 </div>
               </div>
@@ -86,14 +87,14 @@ export default function PaymentCalculator() {
                 onValueChange={(value) => setPropertyValue(value[0])}
                 className="[&_[role=slider]]:bg-indigo-600 [&_[role=slider]]:border-indigo-600 [&_[role=track]]:bg-indigo-600"
               />
-              <div className="flex justify-between text-xs text-gray-600">
+              <div className="flex justify-between text-xs text-gray-400">
                 <span>$10,000</span>
                 <span>$1,000,000</span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <label className="text-indigo-700 flex items-center">
+                <label className="text-black/70 flex items-center">
                   <Percent className="h-4 w-4 mr-1 text-indigo-500" />
                   Down Payment
                 </label>
@@ -107,9 +108,9 @@ export default function PaymentCalculator() {
                           Math.max(0, Math.min(100, Number(e.target.value)))
                         );
                       }}
-                      className="w-12 bg-transparent text-indigo-600 font-medium text-right focus:outline-none"
+                      className="w-12 bg-transparent text-black/70 font-medium text-right focus:outline-none"
                     />
-                    <span className="text-indigo-600 font-medium">%</span>
+                    <span className="text-black/70 font-medium">%</span>
                   </div>
                   <div className="bg-indigo-50 px-3 py-1 rounded-lg">
                     <input
@@ -122,7 +123,7 @@ export default function PaymentCalculator() {
                         );
                         handleDownPaymentAmountChange(value);
                       }}
-                      className="w-20 bg-transparent text-indigo-600 font-medium text-right focus:outline-none"
+                      className="w-20 bg-transparent text-black/70 font-medium text-right focus:outline-none"
                     />
                   </div>
                 </div>
@@ -135,14 +136,14 @@ export default function PaymentCalculator() {
                 onValueChange={(value) => setDownPaymentPercent(value[0])}
                 className="[&_[role=slider]]:bg-indigo-600 [&_[role=slider]]:border-indigo-600 [&_[role=track]]:bg-indigo-600"
               />
-              <div className="flex justify-between text-xs text-gray-600">
+              <div className="flex justify-between text-xs text-gray-400">
                 <span>0%</span>
                 <span>100%</span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <label className="text-indigo-700 flex items-center">
+                <label className="text-black/70 flex items-center">
                   <Clock className="h-4 w-4 mr-1 text-indigo-500" />
                   Payment Period
                 </label>
@@ -155,11 +156,9 @@ export default function PaymentCalculator() {
                         Math.max(1, Math.min(60, Number(e.target.value)))
                       )
                     }
-                    className="w-12 bg-transparent text-indigo-600 font-medium text-right focus:outline-none"
+                    className="w-12 bg-transparent text-black/70 font-medium text-right focus:outline-none"
                   />
-                  <span className="text-indigo-600 font-medium ml-1">
-                    months
-                  </span>
+                  <span className="text-black/70 font-medium ml-1">months</span>
                 </div>
               </div>
               <Slider
@@ -170,7 +169,7 @@ export default function PaymentCalculator() {
                 onValueChange={(value) => setMonths(value[0])}
                 className="[&_[role=slider]]:bg-indigo-600 [&_[role=slider]]:border-indigo-600 [&_[role=track]]:bg-indigo-600"
               />
-              <div className="flex justify-between text-xs text-gray-600">
+              <div className="flex justify-between text-xs text-gray-400">
                 <span>1 month</span>
                 <span>60 months</span>
               </div>
@@ -178,7 +177,7 @@ export default function PaymentCalculator() {
           </div>
           <div className="bg-gradient-to-b from-indigo-50 to-white rounded-xl p-5 shadow-sm border border-indigo-100">
             <div className="flex flex-col mb-4">
-              <h3 className="text-lg font-semibold text-indigo-700">
+              <h3 className="text-lg font-semibold text-black/70">
                 Payment Summary
               </h3>
               <div className="h-[2px] bg-gradient-to-r from-indigo-400 via-white to-indigo-400 mt-1 w-full"></div>
@@ -186,23 +185,23 @@ export default function PaymentCalculator() {
 
             <div className="space-y-4">
               <div className="bg-white rounded-lg p-4 shadow-sm border border-indigo-200">
-                <div className="text-gray-500 text-sm">Monthly Payment</div>
-                <div className="text-2xl font-bold text-indigo-500">
+                <div className="text-gray-400 text-sm">Monthly Payment</div>
+                <div className="text-2xl font-bold text-black/90">
                   {formatCurrency(monthlyPayment)}
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-500 text-xs">Total Amount</div>
-                  <div className="text-lg font-medium text-indigo-700">
+                  <div className="text-gray-400 text-xs">Total Amount</div>
+                  <div className="text-lg font-medium text-black/70">
                     {formatCurrency(propertyValue)}
                   </div>
                 </div>
 
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-500 text-xs">Down Payment</div>
-                  <div className="text-lg font-medium text-indigo-700">
+                  <div className="text-gray-400 text-xs">Down Payment</div>
+                  <div className="text-lg font-medium text-black/70">
                     {formatCurrency(downPaymentAmount)}
                   </div>
                 </div>
@@ -210,23 +209,19 @@ export default function PaymentCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-500 text-xs">Amount to Finance</div>
-                  <div className="text-lg font-medium text-indigo-700">
+                  <div className="text-gray-400 text-xs">Amount to Finance</div>
+                  <div className="text-lg font-medium text-black/70">
                     {formatCurrency(totalPayment)}
                   </div>
                 </div>
 
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-500 text-xs">Payment Schedule</div>
-                  <div className="text-lg font-medium text-indigo-700">
+                  <div className="text-gray-400 text-xs">Payment Schedule</div>
+                  <div className="text-lg font-medium text-black/70">
                     {months} months
                   </div>
                 </div>
               </div>
-
-              <button className="w-full bg-gradient-to-r from-indigo-500 via-indigo-600 to-indigo-500 hover:from-indigo-600 hover:via-indigo-700 hover:to-indigo-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-300 mt-2">
-                Contact Sales Team
-              </button>
             </div>
           </div>
         </div>

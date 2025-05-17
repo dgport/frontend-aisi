@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { useRouter } from "next/navigation";
-import { Building, Layers, Home, Calendar } from "lucide-react";
+import { Building, Layers, Home, Calendar, Loader2 } from "lucide-react";
 import SitePlanImage from "@/root/public/images/batumi/SelectBuilding.png";
 import MobileSitePlan from "@/root/public/images/batumi/SelectBuilding.png";
 import { buildings } from "@/constants/coordinants/buildingFloorCoord";
@@ -19,6 +19,7 @@ export default function SelectFloor() {
   const [floorPlan, setSelectedFloorplan] = useState<string | null>(null);
   const [hoveredFloor, setHoveredFloor] = useState<string | null>(null);
   const [scaleFactor, setScaleFactor] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -60,10 +61,15 @@ export default function SelectFloor() {
     floorPlan: string,
     buildingIndex: string
   ) => {
-    setSelectedBuilding(buildingId);
-    setHoveredFloor(null);
-    setSelectedFloorplan(floorPlan);
-    setBuildingId(buildingIndex);
+    setIsLoading(true);
+    // Simulate loading time
+    setTimeout(() => {
+      setSelectedBuilding(buildingId);
+      setHoveredFloor(null);
+      setSelectedFloorplan(floorPlan);
+      setBuildingId(buildingIndex);
+      setIsLoading(false);
+    }, 800); // 800ms delay to show the loading state
   };
 
   const handleBuildingHover = (buildingId: string) => {
@@ -72,7 +78,11 @@ export default function SelectFloor() {
 
   const handleFloorClick = (floorId: string) => {
     if (buildingId) {
-      router.push(`/aisi-batumi/${buildingId}/${floorPlan}/${floorId}`);
+      setIsLoading(true);
+      // Navigate after a short delay to show loading state
+      setTimeout(() => {
+        router.push(`/aisi-batumi/${buildingId}/${floorPlan}/${floorId}`);
+      }, 300);
     }
   };
 
@@ -97,6 +107,15 @@ export default function SelectFloor() {
   };
 
   const renderRightPanel = () => {
+    if (isLoading) {
+      return (
+        <div className="flex flex-col items-center justify-center h-full">
+          <Loader2 className="h-10 w-10 text-blue-500 animate-spin mb-4" />
+          <p className="text-gray-700 text-lg">Loading building details...</p>
+        </div>
+      );
+    }
+
     if (selectedBuilding) {
       return (
         <>
@@ -245,7 +264,7 @@ export default function SelectFloor() {
               ref={imageRef}
               src={getCurrentImage()}
               alt="Building plan image"
-              className="w-full rounded-lg"
+              className={`w-full rounded-lg ${isLoading ? "opacity-60" : ""}`}
               priority
               onLoad={() => {
                 if (imageRef.current) {
@@ -257,7 +276,14 @@ export default function SelectFloor() {
               }}
             />
 
-            {!selectedBuilding && (
+            {isLoading && (
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-80 p-6 rounded-lg shadow-md flex flex-col items-center">
+                <Loader2 className="h-10 w-10 text-blue-500 animate-spin mb-2" />
+                <p className="text-gray-700">Loading...</p>
+              </div>
+            )}
+
+            {!selectedBuilding && !isLoading && (
               <svg className="absolute top-0 left-0 h-full w-full">
                 {buildings.map((building) => (
                   <polygon
@@ -294,7 +320,7 @@ export default function SelectFloor() {
               </svg>
             )}
 
-            {selectedBuilding && (
+            {selectedBuilding && !isLoading && (
               <svg className="absolute top-0 left-0 h-full w-full">
                 {getCurrentFloors().map((floor) => (
                   <polygon
@@ -325,7 +351,7 @@ export default function SelectFloor() {
               </svg>
             )}
 
-            {!selectedBuilding && hoveredBuilding && (
+            {!selectedBuilding && hoveredBuilding && !isLoading && (
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow-md pointer-events-none">
                 <h3 className="text-xl font-bold text-blue-600">
                   Building {hoveredBuilding}
@@ -333,18 +359,22 @@ export default function SelectFloor() {
               </div>
             )}
 
-            {selectedBuilding && hoveredFloor && (
+            {selectedBuilding && hoveredFloor && !isLoading && (
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow-md pointer-events-none text-8xl font-bold opacity-50">
                 {hoveredFloor}
               </div>
             )}
 
-            {selectedBuilding && (
+            {selectedBuilding && !isLoading && (
               <button
                 className="absolute top-4 left-4 bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow-md hover:bg-opacity-100 transition-all"
                 onClick={() => {
-                  setSelectedBuilding(null);
-                  setHoveredFloor(null);
+                  setIsLoading(true);
+                  setTimeout(() => {
+                    setSelectedBuilding(null);
+                    setHoveredFloor(null);
+                    setIsLoading(false);
+                  }, 500);
                 }}
               >
                 ← Back to Site Plan

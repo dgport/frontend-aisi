@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { Home, Building2, SmilePlus, Clock } from "lucide-react";
-import test from "@/root/public/images/low-angle-shot-modern-glass-city-buildings.jpg";
+import test from "@/root/public/images/main/low-angle-shot-modern-glass-city-buildings.jpg";
 
 interface WhyUsProps {
   value: string;
