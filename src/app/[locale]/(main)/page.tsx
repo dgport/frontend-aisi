@@ -6,6 +6,7 @@ import WhyInvest from "./_components/WhyInvest";
 import WhyChooseUs from "./_components/WhyUsSection";
 
 export default function page() {
+ 
   return (
     <>
       <Cover />
