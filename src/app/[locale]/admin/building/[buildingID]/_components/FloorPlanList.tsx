@@ -127,7 +127,7 @@ const FloorPlanList = () => {
                     <Image
                       width={600}
                       height={600}
-                      src={`http://localhost:3001/${plan.desktop_image}`}
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${plan.desktop_image}`}
                       alt={`Floor plan ${plan.name}`}
                       className="object-cover w-full h-full  transition-transform duration-300"
                     />

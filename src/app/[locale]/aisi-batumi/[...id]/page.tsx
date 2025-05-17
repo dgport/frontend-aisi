@@ -159,8 +159,8 @@ export default function FloorPlanPage() {
   const imagePath = useMemo(() => {
     if (selectedFloorPlan) {
       return isMobile
-        ? `http://localhost:3001/${selectedFloorPlan.mobile_image}`
-        : `http://localhost:3001/${selectedFloorPlan.desktop_image}`;
+        ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan.mobile_image}`
+        : `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan.desktop_image}`;
     }
     return "/placeholder.svg";
   }, [selectedFloorPlan, isMobile]);

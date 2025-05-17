@@ -121,9 +121,7 @@ const ApartmentCard = ({
                 width={600}
                 height={600}
                 key={index}
-                src={`${
-                  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
-                }${imagePath}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${imagePath}`}
                 alt={`Apartment ${apartment.flat_number} - Image ${index + 1}`}
                 className="w-full h-40 object-cover rounded"
               />

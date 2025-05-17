@@ -39,7 +39,7 @@ export const apartmentsAPI = {
       flat_number: String(data.flat_number),
     };
     
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/update_apartment_status`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/update_apartment_status`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

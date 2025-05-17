@@ -108,7 +108,7 @@ export const ApartmentDetailsSheet = ({
               {apartment.images.length === 1 ? (
                 <div className="relative rounded-lg overflow-hidden h-72 bg-gray-100">
                   <Image
-                    src={`http://localhost:3001${apartment.images[0]}`}
+                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${apartment.images[0]}`}
                     alt={`Apartment ${apartment.number}`}
                     className="w-full h-full object-cover"
                     width={800}
@@ -122,7 +122,7 @@ export const ApartmentDetailsSheet = ({
                     className="relative rounded-lg overflow-hidden h-48 bg-gray-100"
                   >
                     <Image
-                      src={`http://localhost:3001${img}`}
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${img}`}
                       alt={`Apartment ${apartment.number} - Image ${idx + 1}`}
                       className="w-full h-full object-cover"
                       width={400}
