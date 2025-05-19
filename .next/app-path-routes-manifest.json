@@ -1,0 +1,13 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/[locale]/aisi-batumi/[...id]/page": "/[locale]/aisi-batumi/[...id]",
+  "/[locale]/(main)/page": "/[locale]",
+  "/[locale]/aisi-batumi/page": "/[locale]/aisi-batumi",
+  "/[locale]/signin/page": "/[locale]/signin",
+  "/[locale]/aisi-goderdzi/[...id]/page": "/[locale]/aisi-goderdzi/[...id]",
+  "/[locale]/contact/page": "/[locale]/contact",
+  "/[locale]/aisi-goderdzi/page": "/[locale]/aisi-goderdzi",
+  "/[locale]/admin/building/[buildingID]/[floorID]/page": "/[locale]/admin/building/[buildingID]/[floorID]",
+  "/[locale]/admin/building/[buildingID]/page": "/[locale]/admin/building/[buildingID]",
+  "/[locale]/admin/page": "/[locale]/admin"
+}
