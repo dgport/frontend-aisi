@@ -1,17 +1,18 @@
 "use client";
+
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { authAPI } from "@/routes/auth";
 
 interface User {
+  userId: string;
   email: string;
-  password: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  isAuthenticated: boolean;
+  authenticated: boolean;
   isLoading: boolean;
   login: (token: string) => void;
   logout: () => void;
@@ -23,46 +24,66 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   const checkAuth = async () => {
     try {
-      const token = Cookies.get("token");
-      if (!token) {
-        setIsAuthenticated(false);
+      const cookieToken = Cookies.get("token");
+      const localStorageToken = localStorage.getItem("token");
+
+      if (!cookieToken && !localStorageToken) {
+        setAuthenticated(false);
         setUser(null);
         setIsLoading(false);
         return;
+      }
+
+      if (!cookieToken && localStorageToken) {
+        Cookies.set("token", localStorageToken, {
+          secure: true,
+          sameSite: "none",
+          expires: 1,
+        });
       }
 
       const response = await authAPI.checkAuthStatus();
 
       if (response.user) {
         setUser(response.user);
-        setIsAuthenticated(true);
+        setAuthenticated(true);
+
+        if (localStorageToken !== cookieToken && cookieToken) {
+          localStorage.setItem("token", cookieToken);
+        }
       } else {
         setUser(null);
-        setIsAuthenticated(false);
+        setAuthenticated(false);
         Cookies.remove("token");
+        localStorage.removeItem("token");
       }
     } catch (error) {
-      console.error("Auth verification failed:", error);
+      console.error("❌ Auth verification failed:", error);
       setUser(null);
-      setIsAuthenticated(false);
+      setAuthenticated(false);
       Cookies.remove("token");
+      localStorage.removeItem("token");
     } finally {
       setIsLoading(false);
     }
   };
 
   const login = (token: string) => {
+    localStorage.setItem("token", token);
+
     Cookies.set("token", token, {
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
+      expires: 1,
     });
+
     checkAuth();
   };
 
@@ -70,24 +91,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       await authAPI.signout();
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("❌ Logout error:", error);
     } finally {
-      Cookies.remove("token");
+      Cookies.remove("token", { path: "/", domain: undefined });
+      localStorage.removeItem("token");
       setUser(null);
-      setIsAuthenticated(false);
+      setAuthenticated(false);
       router.push("/");
     }
   };
 
   useEffect(() => {
     checkAuth();
+    const interval = setInterval(() => {
+      if (authenticated) {
+        checkAuth();
+      }
+    }, 5 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        isAuthenticated,
+        authenticated,
         isLoading,
         login,
         logout,

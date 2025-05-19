@@ -1,7 +1,9 @@
 {
   "version": 1,
   "config": {
-    "env": {},
+    "env": {
+      "NEXT_PUBLIC_API_URL": "https://api.aisigroup.ge/api"
+    },
     "eslint": {
       "ignoreDuringBuilds": false
     },
@@ -62,6 +64,11 @@
           "protocol": "http",
           "hostname": "localhost",
           "port": "3001",
+          "pathname": "/**"
+        },
+        {
+          "protocol": "https",
+          "hostname": "api.aisigroup.ge",
           "pathname": "/**"
         }
       ],

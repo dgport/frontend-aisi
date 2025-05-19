@@ -1,7 +1,7 @@
 import AdminSidebar from "./_components/AdminSidebar";
 import { isAuthServer } from "@/auth/isAuthServer";
 import { redirect } from "next/navigation";
-
+ 
 export default async function AdminLayout({
   children,
 }: {
@@ -9,7 +9,7 @@ export default async function AdminLayout({
 }) {
   const authResult = await isAuthServer();
 
-  if (!authResult.isAuthenticated) {
+  if (!authResult.authenticated) {
     redirect("/signin");
   }
 

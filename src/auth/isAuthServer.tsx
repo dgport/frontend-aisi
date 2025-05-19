@@ -7,38 +7,37 @@ export async function isAuthServer() {
     const token = (await cookieStore).get("token")?.value;
 
     if (!token) {
-      console.log("No token found in cookies");
       return {
-        isAuthenticated: false,
+        authenticated: false,
         user: null,
       };
     }
 
     const secret = new TextEncoder().encode(
-      process.env.JWT_SECRET || "your-secret-key"
+      process.env.JWT_SECRET || "aisisecret"
     );
 
     try {
       const { payload } = await jwtVerify(token, secret);
 
       return {
-        isAuthenticated: true,
+        authenticated: true,
         user: {
           id: payload.userId as string,
           email: payload.email as string,
         },
       };
     } catch (verifyError) {
-      console.error("Token verification error:", verifyError);
+      console.error(verifyError)
       return {
-        isAuthenticated: false,
+        authenticated: false,
         user: null,
       };
     }
   } catch (error) {
-    console.error("Unexpected error in isAuthServer:", error);
+    console.error("❌ Unexpected error in isAuthServer:", error);
     return {
-      isAuthenticated: false,
+      authenticated: false,
       user: null,
     };
   }

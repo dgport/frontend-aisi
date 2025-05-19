@@ -3,26 +3,30 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthProvider";
-
+ 
 export const isAuth = (Component: React.ComponentType) => {
-  return function ProtectedRoute() {
+  return function ProtectedRoute(props: any) {
     const router = useRouter();
-    const { isAuthenticated, isLoading } = useAuth();
+    const { authenticated, isLoading } = useAuth();
 
     useEffect(() => {
-      if (!isLoading && !isAuthenticated) {
+      if (!isLoading && !authenticated) {
         router.push("/signin");
       }
-    }, [isLoading, isAuthenticated, router]);
+    }, [isLoading, authenticated, router]);
 
-    if (isLoading || !isAuthenticated) {
+    if (isLoading) {
       return (
         <div className="flex items-center justify-center min-h-screen">
-          ...Loading
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
         </div>
       );
     }
 
-    return <Component />;
+    if (!authenticated) {
+      return null;
+    }
+
+    return <Component {...props} />;
   };
 };
