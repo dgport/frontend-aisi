@@ -1,6 +1,5 @@
 import AdminSidebar from "./_components/AdminSidebar";
-import { isAuthServer } from "@/auth/isAuthServer";
-import { redirect } from "next/navigation";
+
  
 export default async function AdminLayout({
   children,
