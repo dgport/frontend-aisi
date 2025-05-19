@@ -1,6 +1,0 @@
-{
-  "/[locale]/(main)/page": "app/[locale]/(main)/page.js",
-  "/[locale]/admin/page": "app/[locale]/admin/page.js",
-  "/[locale]/signin/page": "app/[locale]/signin/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
-}
