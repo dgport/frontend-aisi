@@ -7,11 +7,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const authResult = await isAuthServer();
-
-  if (!authResult.authenticated) {
-    redirect("/signin");
-  }
+ 
 
   return (
     <div className="flex min-h-screen ">

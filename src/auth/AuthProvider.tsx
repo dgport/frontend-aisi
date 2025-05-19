@@ -32,21 +32,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const checkAuth = async () => {
     try {
       const cookieToken = Cookies.get("token");
-      const localStorageToken = localStorage.getItem("token");
 
-      if (!cookieToken && !localStorageToken) {
+      if (!cookieToken) {
         setAuthenticated(false);
         setUser(null);
         setIsLoading(false);
         return;
-      }
-
-      if (!cookieToken && localStorageToken) {
-        Cookies.set("token", localStorageToken, {
-          secure: true,
-          sameSite: "none",
-          expires: 1,
-        });
       }
 
       const response = await authAPI.checkAuthStatus();
@@ -54,30 +45,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (response.user) {
         setUser(response.user);
         setAuthenticated(true);
-
-        if (localStorageToken !== cookieToken && cookieToken) {
-          localStorage.setItem("token", cookieToken);
-        }
       } else {
         setUser(null);
         setAuthenticated(false);
         Cookies.remove("token");
-        localStorage.removeItem("token");
       }
     } catch (error) {
       console.error("❌ Auth verification failed:", error);
       setUser(null);
       setAuthenticated(false);
       Cookies.remove("token");
-      localStorage.removeItem("token");
     } finally {
       setIsLoading(false);
     }
   };
 
   const login = (token: string) => {
-    localStorage.setItem("token", token);
-
     Cookies.set("token", token, {
       secure: true,
       sameSite: "none",
@@ -94,7 +77,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       console.error("❌ Logout error:", error);
     } finally {
       Cookies.remove("token", { path: "/", domain: undefined });
-      localStorage.removeItem("token");
       setUser(null);
       setAuthenticated(false);
       router.push("/");

@@ -1,6 +1,13 @@
+import { isAuthServer } from "@/auth/isAuthServer";
 import { Building2 } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
+  const authResult = await isAuthServer();
+
+  if (authResult && !authResult.authenticated) {
+    redirect("/signin");
+  }
   return (
     <div className="flex items-center justify-center h-full bg-gray-50">
       <div className="text-center max-w-2xl px-6">
