@@ -57,14 +57,16 @@ export default function SelectFloor() {
   const router = useRouter();
 
   const handleFloorClick = (floorId: number) => {
-    const buildingId = 19;
-    const floorPlanId = 12;
+    const buildingId = 1;
+    const floorPlanId = 1;
 
     router.push(`/aisi-goderdzi/${buildingId}/${floorPlanId}/${floorId}`);
   };
 
   const currentImage = isMobile ? MobileImage : DesktopImage;
   const currentAreas = isMobile ? mobileAreas : desktopAreas;
+
+   
 
   return (
     <section>

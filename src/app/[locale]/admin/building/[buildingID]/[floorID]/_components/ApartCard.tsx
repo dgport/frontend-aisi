@@ -65,6 +65,7 @@ const ApartmentCard = ({
       setIsUpdating(false);
     }, 500);
   };
+ 
 
   return (
     <div className="p-4 border rounded shadow relative">
@@ -121,7 +122,7 @@ const ApartmentCard = ({
                 width={600}
                 height={600}
                 key={index}
-                src={`${process.env.NEXT_PUBLIC_API_URL}${imagePath}`}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${imagePath}`}
                 alt={`Apartment ${apartment.flat_number} - Image ${index + 1}`}
                 className="w-full h-40 object-cover rounded"
               />

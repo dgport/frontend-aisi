@@ -14,8 +14,9 @@ import { ImageResizer } from "@/components/shared/responsiveImage/FloorPlanResiz
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LocaleSwitcher from "@/i18n/LocaleSwitcher";
-import { ApartmentDetailsSheet } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
+ 
 import { FloorSelector } from "@/components/shared/floorInfo/FloorSelect";
+import { ApartmentDetailsModal } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
 
 interface ParamIds {
   buildingId: string;
@@ -158,11 +159,16 @@ export default function FloorPlanPage() {
   const imagePath = useMemo(() => {
     if (selectedFloorPlan) {
       return isMobile
-        ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${selectedFloorPlan.mobile_image}`
-        : `${process.env.NEXT_PUBLIC_IMAGE_URL}${selectedFloorPlan.desktop_image}`;
+        ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan.mobile_image}`
+        : `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan.desktop_image}`;
     }
     return "/placeholder.svg";
   }, [selectedFloorPlan, isMobile]);
+
+  console.log(
+    selectedFloorPlan &&
+      `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan?.mobile_image}`
+  );
 
   const apartmentOverlays = useCallback(
     ({
@@ -275,7 +281,7 @@ export default function FloorPlanPage() {
             </MemoizedImageResizer>
           </div>
 
-          <ApartmentDetailsSheet
+          <ApartmentDetailsModal
             isOpen={isSheetOpen}
             onClose={handleCloseSheet}
             apartment={selectedApartment || null}

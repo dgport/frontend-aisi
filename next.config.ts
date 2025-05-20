@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   // Add environment variables from first config
- env: {
+  env: {
     NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'development' 
       ? 'https://api.aisigroup.ge/api' 
       : 'https://api.aisigroup.ge/api',
@@ -33,23 +33,25 @@ const nextConfig: NextConfig = {
   
   images: {
     remotePatterns: [
-   
       {
         protocol: "http",
         hostname: "localhost",
         port: "3001",
         pathname: "/**",
       },
-     
       {
         protocol: "https",
         hostname: "api.aisigroup.ge",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "api.aisigroup.ge/uploads",
+        pathname: "/**",
+      }
     ],
   },
   
- 
   async headers() {
     return process.env.NODE_ENV === 'development' 
       ? [

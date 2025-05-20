@@ -157,6 +157,7 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
           transition: "all 0.3s ease",
           opacity: isVisible ? 1 : 0,
           transform: isVisible ? "scale(1)" : "scale(0.95)",
+          cursor: "pointer",
         }}
         className={`
           ${hoveredApartment === flatId ? "bg-blue-200/50" : getStatusColor()}

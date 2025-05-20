@@ -13,7 +13,9 @@ export async function isAuthServer() {
       };
     }
 
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(
+      process.env.JWT_SECRET || "aisisecret"
+    );
 
     try {
       const { payload } = await jwtVerify(token, secret);

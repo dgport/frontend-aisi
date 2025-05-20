@@ -126,3 +126,20 @@
   background-image: linear-gradient(90deg, #D52028 0%, #FD9D14 100%);
 }
 
+.image-zoomed {
+  overflow: hidden;
+}
+
+.rmiz-overlay {
+  z-index: 9999 !important;
+}
+
+.rmiz-modal-content {
+  z-index: 10000 !important;
+}
+
+/* Make sure the zoom controls appear above the Sheet */
+.rmiz-btn-zoom,
+.rmiz-btn-unzoom {
+  z-index: 10001 !important;
+}

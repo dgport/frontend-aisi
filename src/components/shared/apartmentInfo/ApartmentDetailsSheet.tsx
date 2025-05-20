@@ -1,16 +1,21 @@
+"use client";
+
+import type React from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { CheckCircle2, Ruler, Tag, X } from "lucide-react";
+  CheckCircle2,
+  Ruler,
+  Tag,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
-interface ApartmentDetailsSheetProps {
+interface ApartmentDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   apartment: {
@@ -25,18 +30,48 @@ interface ApartmentDetailsSheetProps {
   } | null;
 }
 
-export const ApartmentDetailsSheet = ({
+export const ApartmentDetailsModal = ({
   isOpen,
   onClose,
   apartment,
-}: ApartmentDetailsSheetProps) => {
+}: ApartmentDetailsModalProps) => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     phoneNumber: "",
   });
 
-  if (!apartment) return null;
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  useEffect(() => {
+    const handleEscKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !isZoomed) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleEscKey);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isOpen, isZoomed, onClose]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !apartment) return null;
 
   const getStatusStyles = () => {
     switch (apartment.status?.toLowerCase()) {
@@ -60,108 +95,191 @@ export const ApartmentDetailsSheet = ({
     e.preventDefault();
   };
 
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget && !isZoomed) {
+      onClose();
+    }
+  };
+
+  const nextImage = () => {
+    if (apartment.images && apartment.images.length > 0) {
+      setSelectedImage((prev) => (prev + 1) % apartment.images!.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (apartment.images && apartment.images.length > 0) {
+      setSelectedImage(
+        (prev) =>
+          (prev - 1 + apartment.images!.length) % apartment.images!.length
+      );
+    }
+  };
+
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent
-        side="right"
-        className="w-full sm:max-w-md md:max-w-lg overflow-y-auto"
+    <div
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+      onClick={handleBackdropClick}
+    >
+      <div
+        className="bg-white rounded-none md:rounded-lg shadow-xl w-full h-full md:h-auto md:max-w-screen-xl flex flex-col md:flex-row relative md:overflow-hidden md:m-6 overflow-y-scroll"
+        onClick={(e) => e.stopPropagation()}
       >
-        <SheetHeader className="space-y-2 mb-4">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="flex items-center gap-5">
-              <span className="text-xl font-bold">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 right-4 rounded-full h-8 w-8 z-10 cursor-pointer"
+          aria-label="Close"
+          onClick={() => !isZoomed && onClose()}
+        >
+          <X className="h-4 w-4" />
+        </Button>
+
+        <div className="md:w-1/2 p-4 flex flex-col overflow-hidden">
+          <div className="flex-1 flex flex-col">
+            {apartment.images && apartment.images.length > 0 ? (
+              <>
+                <div className="relative rounded-lg overflow-hidden flex-1 bg-gray-100 h-[300px] md:h-96">
+                  <Zoom zoomMargin={10}>
+                    <div className="h-full w-full flex items-center justify-center">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${apartment.images[selectedImage]}`}
+                        alt={`Apartment ${apartment.number}`}
+                        className="object-cover w-full h-full cursor-zoom-in"
+                        width={800}
+                        height={600}
+                      />
+                    </div>
+                  </Zoom>
+
+                  {/* Image navigation arrows */}
+                  {apartment.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-1.5 shadow-md cursor-pointer"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-1.5 shadow-md cursor-pointer"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="h-5 w-5" />
+                      </button>
+                    </>
+                  )}
+                </div>
+                {apartment.images.length > 1 && (
+                  <div className="mt-3 mb-2 md:hidden">
+                    <p className="text-sm font-medium mb-2">Gallery Images:</p>
+                    <div className="flex gap-3 overflow-x-auto pb-4 pt-1 px-1 bg-gray-50 rounded-lg">
+                      {apartment.images.map((img, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedImage(idx)}
+                          className={`relative rounded-md overflow-hidden h-20 w-20 flex-shrink-0 transition cursor-pointer ${
+                            selectedImage === idx
+                              ? "ring-2 ring-blue-500 shadow-md transform scale-105"
+                              : "border border-gray-200"
+                          }`}
+                        >
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${img}`}
+                            alt={`Thumbnail ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                            width={100}
+                            height={100}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex-1 flex items-center justify-center bg-gray-100 rounded-lg h-64 md:h-96">
+                <p className="text-gray-500">No images available</p>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="md:w-1/2 flex flex-col">
+          <div className="p-4 border-b border-gray-200">
+            <div className="flex items-center">
+              <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 md:gap-3">
                 Apartment #{apartment.number}
-              </span>
-              <div className="flex items-center gap-2">
                 <div
-                  className={`px-3 py-1 rounded-full border flex items-center gap-1.5 font-medium ${getStatusStyles()}`}
+                  className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full border flex items-center gap-1 md:gap-1.5 text-sm md:text-base font-medium ${getStatusStyles()}`}
                 >
                   {apartment.status === "available" && (
-                    <CheckCircle2 className="h-4 w-4" />
+                    <CheckCircle2 className="h-3 w-3 md:h-4 md:w-4" />
                   )}
                   {apartment.status || "Unknown"}
                 </div>
-              </div>
-            </SheetTitle>
-            <SheetClose asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full h-8 w-8"
-                aria-label="Close"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </SheetClose>
+              </h2>
+            </div>
           </div>
-        </SheetHeader>
-
-        <div className="space-y-6">
-          {apartment.images && apartment.images.length > 0 && (
-            <div
-              className={
-                apartment.images.length === 1
-                  ? "w-full"
-                  : "grid grid-cols-2 gap-2"
-              }
-            >
-              {apartment.images.length === 1 ? (
-                <div className="relative rounded-lg overflow-hidden h-72 bg-gray-100">
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${apartment.images[0]}`}
-                    alt={`Apartment ${apartment.number}`}
-                    className="w-full h-full object-cover"
-                    width={800}
-                    height={600}
-                  />
-                </div>
-              ) : (
-                apartment.images.slice(0, 2).map((img, idx) => (
-                  <div
+          {apartment.images && apartment.images.length > 1 && (
+            <div className="hidden md:block p-4 border-b border-gray-200">
+              <p className="text-sm font-medium mb-2">Gallery Images:</p>
+              <div className="flex flex-wrap gap-2">
+                {apartment.images.map((img, idx) => (
+                  <button
                     key={idx}
-                    className="relative rounded-lg overflow-hidden h-48 bg-gray-100"
+                    onClick={() => setSelectedImage(idx)}
+                    className={`relative rounded-md overflow-hidden h-16 w-16 flex-shrink-0 transition cursor-pointer ${
+                      selectedImage === idx
+                        ? "ring-2 ring-blue-500 shadow-md transform scale-105"
+                        : "border border-gray-200"
+                    }`}
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${img}`}
-                      alt={`Apartment ${apartment.number} - Image ${idx + 1}`}
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${img}`}
+                      alt={`Thumbnail ${idx + 1}`}
                       className="w-full h-full object-cover"
-                      width={400}
-                      height={300}
+                      width={100}
+                      height={100}
                     />
-                  </div>
-                ))
-              )}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
-          <div className="bg-gray-50 p-4 rounded-lg grid grid-cols-2 gap-4">
-            <div className="flex items-center gap-3">
-              <Ruler className="h-5 w-5 text-gray-500 flex-shrink-0" />
-              <div>
-                <p className="text-sm text-gray-500">Area</p>
-                <p className="font-semibold">
-                  {apartment.area ? `${apartment.area} m²` : "N/A"}
-                </p>
+          <div className="flex-1 p-4 space-y-4 md:space-y-6">
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-2 md:gap-3">
+                <Ruler className="h-4 w-4 md:h-5 md:w-5 text-gray-500 flex-shrink-0" />
+                <div>
+                  <p className="text-xs md:text-sm text-gray-500">Area</p>
+                  <p className="font-semibold text-sm md:text-base">
+                    {apartment.area ? `${apartment.area} m²` : "N/A"}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 md:gap-3">
+                <Tag className="h-4 w-4 md:h-5 md:w-5 text-gray-500 flex-shrink-0" />
+                <div>
+                  <p className="text-xs md:text-sm text-gray-500">Floor</p>
+                  <p className="font-semibold text-sm md:text-base">
+                    {apartment.floor || "N/A"}
+                  </p>
+                </div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Tag className="h-5 w-5 text-gray-500 flex-shrink-0" />
-              <div>
-                <p className="text-sm text-gray-500">Floor</p>
-                <p className="font-semibold">{apartment.floor || "N/A"}</p>
-              </div>
-            </div>
-          </div>
-
-          {apartment.status === "available" && (
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium mb-3">Contact Sales</h3>
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <h3 className="font-medium mb-2 md:mb-3 text-sm md:text-base">
+                Contact Sales
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-2 md:space-y-3">
+                <div className="grid grid-cols-2 gap-2 md:gap-3">
                   <div>
                     <label
                       htmlFor="firstName"
-                      className="block text-sm text-gray-600 mb-1"
+                      className="block text-xs md:text-sm text-gray-600 mb-1"
                     >
                       First Name
                     </label>
@@ -171,14 +289,14 @@ export const ApartmentDetailsSheet = ({
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-2 py-1 md:px-3 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       required
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="lastName"
-                      className="block text-sm text-gray-600 mb-1"
+                      className="block text-xs md:text-sm text-gray-600 mb-1"
                     >
                       Last Name
                     </label>
@@ -188,7 +306,7 @@ export const ApartmentDetailsSheet = ({
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-2 py-1 md:px-3 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       required
                     />
                   </div>
@@ -196,7 +314,7 @@ export const ApartmentDetailsSheet = ({
                 <div>
                   <label
                     htmlFor="phoneNumber"
-                    className="block text-sm text-gray-600 mb-1"
+                    className="block text-xs md:text-sm text-gray-600 mb-1"
                   >
                     Phone Number
                   </label>
@@ -206,18 +324,23 @@ export const ApartmentDetailsSheet = ({
                     name="phoneNumber"
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-2 py-1 md:px-3 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full mt-2" size="lg">
+                <Button
+                  type="submit"
+                  className="w-full mt-2 cursor-pointer"
+                  size="sm"
+                  variant="default"
+                >
                   Submit Inquiry
                 </Button>
               </form>
             </div>
-          )}
+          </div>
         </div>
-      </SheetContent>
-    </Sheet>
+      </div>
+    </div>
   );
 };
