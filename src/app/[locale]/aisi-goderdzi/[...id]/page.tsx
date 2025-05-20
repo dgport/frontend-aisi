@@ -153,7 +153,7 @@ export default function FloorPlanPage() {
   };
 
   const handleBack = useCallback(() => {
-    router.back();
+    router.push("/aisi-goderdzi");
   }, [router]);
 
   const imagePath = useMemo(() => {
@@ -164,11 +164,6 @@ export default function FloorPlanPage() {
     }
     return "/placeholder.svg";
   }, [selectedFloorPlan, isMobile]);
-
-  console.log(
-    selectedFloorPlan &&
-      `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan?.mobile_image}`
-  );
 
   const apartmentOverlays = useCallback(
     ({

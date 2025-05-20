@@ -66,8 +66,6 @@ export default function SelectFloor() {
   const currentImage = isMobile ? MobileImage : DesktopImage;
   const currentAreas = isMobile ? mobileAreas : desktopAreas;
 
-   
-
   return (
     <section>
       <div className="flex flex-col md:flex-row gap-10">

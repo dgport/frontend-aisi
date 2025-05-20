@@ -21,15 +21,17 @@ const propertyImages = [
 
 export default function GoderdziGallery() {
   return (
-    <div className="w-ful">
-      <h3 className="text-2xl font-semibold mb-6">Property Gallery</h3>
+    <section className="w-ful md:px-10  my-10">
+      <h3 className="text-2xl text-center font-semibold mb-6">
+        Property Gallery
+      </h3>
 
-      <Carousel className="w-full ">
-        <CarouselContent className="-ml-4">
+      <Carousel className="w-full pl-3">
+        <CarouselContent className=" ">
           {propertyImages.map((image, index) => (
             <CarouselItem
               key={index}
-              className="md:basis-1/2 lg:basis-1/3 pl-4"
+              className="basis-full  pl-5  md:basis-1/2 lg:basis-1/3"
             >
               <div className="h-64 overflow-hidden rounded-lg">
                 <div className="relative w-full h-full">
@@ -42,15 +44,12 @@ export default function GoderdziGallery() {
                   />
                 </div>
               </div>
-              <p className="mt-2 text-center text-sm text-gray-600">
-                {image.alt}
-              </p>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-2" />
-        <CarouselNext className="right-2" />
+        <CarouselPrevious className="md:-left-5 left-1 w-9 h-9 md:w-10 md:h-10" />
+        <CarouselNext className="md:-right-5 right-1 w-9 h-9 md:w-10 md:h-10" />
       </Carousel>
-    </div>
+    </section>
   );
 }

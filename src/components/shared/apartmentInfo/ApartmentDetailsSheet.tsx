@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import { Input } from "@/components/ui/input";
 
 interface ApartmentDetailsModalProps {
   isOpen: boolean;
@@ -212,12 +213,18 @@ export const ApartmentDetailsModal = ({
               <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 md:gap-3">
                 Apartment #{apartment.number}
                 <div
-                  className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full border flex items-center gap-1 md:gap-1.5 text-sm md:text-base font-medium ${getStatusStyles()}`}
+                  className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full border flex  border-indigo-400 items-center gap-1 md:gap-1.5 text-sm md:text-base font-medium ${getStatusStyles()}`}
                 >
                   {apartment.status === "available" && (
-                    <CheckCircle2 className="h-3 w-3 md:h-4 md:w-4" />
+                    <CheckCircle2 className="h-3 w-3 md:h-4 md:w-4 " />
                   )}
-                  {apartment.status || "Unknown"}
+                  {apartment.status === "available" ? (
+                    <span>Available</span>
+                  ) : apartment.status === "sold" ? (
+                    <span>Sold</span>
+                  ) : apartment.status === "reserved" ? (
+                    <span>Reserved</span>
+                  ) : null}
                 </div>
               </h2>
             </div>
@@ -250,20 +257,20 @@ export const ApartmentDetailsModal = ({
           )}
 
           <div className="flex-1 p-4 space-y-4 md:space-y-6">
-            <div className="bg-gray-50 p-3 md:p-4 rounded-lg grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-2 md:gap-3">
+            <div className=" grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-2 md:gap-3 bg-gray-100 p-3 md:p-4 rounded-lg  ">
                 <Ruler className="h-4 w-4 md:h-5 md:w-5 text-gray-500 flex-shrink-0" />
-                <div>
+                <div className="flex gap-2  items-center">
                   <p className="text-xs md:text-sm text-gray-500">Area</p>
                   <p className="font-semibold text-sm md:text-base">
                     {apartment.area ? `${apartment.area} m²` : "N/A"}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 md:gap-3">
+              <div className="flex items-center gap-2 md:gap-3 bg-gray-100 p-3 md:p-4 rounded-lg  ">
                 <Tag className="h-4 w-4 md:h-5 md:w-5 text-gray-500 flex-shrink-0" />
-                <div>
-                  <p className="text-xs md:text-sm text-gray-500">Floor</p>
+                <div className="flex gap-2  items-center">
+                  <p className="text-xs md:text-sm text-gray-500">Floor:</p>
                   <p className="font-semibold text-sm md:text-base">
                     {apartment.floor || "N/A"}
                   </p>
@@ -283,13 +290,12 @@ export const ApartmentDetailsModal = ({
                     >
                       First Name
                     </label>
-                    <input
+                    <Input
                       type="text"
                       id="firstName"
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-2 py-1 md:px-3 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       required
                     />
                   </div>
@@ -300,13 +306,12 @@ export const ApartmentDetailsModal = ({
                     >
                       Last Name
                     </label>
-                    <input
+                    <Input
                       type="text"
                       id="lastName"
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-2 py-1 md:px-3 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       required
                     />
                   </div>
@@ -318,21 +323,18 @@ export const ApartmentDetailsModal = ({
                   >
                     Phone Number
                   </label>
-                  <input
+                  <Input
                     type="tel"
                     id="phoneNumber"
                     name="phoneNumber"
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
-                    className="w-full px-2 py-1 md:px-3 md:py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     required
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full mt-2 cursor-pointer"
-                  size="sm"
-                  variant="default"
+                  className="w-full md:w-1/2 mt-2 cursor-pointer text-white bg-indigo-400 hover:bg-indigo-500"
                 >
                   Submit Inquiry
                 </Button>

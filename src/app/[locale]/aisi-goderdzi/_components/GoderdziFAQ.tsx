@@ -37,7 +37,7 @@ export default function GoderdziFAQ() {
               className="border border-gray-200 rounded-lg overflow-hidden"
             >
               <button
-                className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 transition-colors"
+                className="flex justify-between items-center cursor-pointer w-full p-4 text-left bg-gray-50 hover:bg-gray-100 transition-colors"
                 onClick={() => toggleAccordion(index)}
               >
                 <span className="font-medium">{item.question}</span>
