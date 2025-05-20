@@ -11,7 +11,7 @@ export default async function AdminLayout({
   return (
     <div className="flex min-h-screen ">
       <AdminSidebar />
-      <div className="flex-grow pl-64 pt-24">{children}</div>
+      <div className="flex-grow pt-24">{children}</div>
     </div>
   );
 }

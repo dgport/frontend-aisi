@@ -174,7 +174,7 @@ export default function BuildingsPage() {
   }
 
   return (
-    <div className="flex h-[90vh] fixed mt-24" onMouseEnter={handleMouseEnter}>
+    <div className="flex h-[90vh]   mt-24" onMouseEnter={handleMouseEnter}>
       <div className="w-64 bg-gray-100 border-r p-4 flex flex-col">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Buildings</h2>

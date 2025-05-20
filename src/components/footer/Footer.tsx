@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useLocale } from "next-intl"
 import { Mail, MapPin, Phone } from "lucide-react";
-import Logo from "@/root/public/images/LogoAisi.png";
+import Logo from "@/root/public/images/AisiLogo1.png";
 import { Facebook, Instagram } from "../svg";
 
 export default function Footer() {
@@ -23,7 +23,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative w-full mt-5">
+    <footer className="relative w-full ">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 backdrop-blur-sm"></div>
       </div>

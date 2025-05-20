@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LocaleSwitcher from "@/i18n/LocaleSwitcher";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { useMediaQuery } from "@/use-media-query";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
-import Logo from "@/root/public/images/LogoAisi.png";
+import Logo from "@/root/public/images/AisiLogo1.png";
 import Image from "next/image";
 
 export default function Header() {
@@ -17,6 +17,12 @@ export default function Header() {
   const [isProjectsOpen, setIsProjectsOpen] = useState(false);
   const pathname = usePathname();
   const locale = useLocale();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Check if the current path includes 'admin'
+    setIsAdmin(pathname.includes("/admin"));
+  }, [pathname]);
 
   const navItems = [
     { name: "Main", href: "/" },
@@ -43,8 +49,15 @@ export default function Header() {
     return pathname === `/${locale}${href}`;
   };
 
+  // Background styling based on admin status
+  const headerBgClass = isAdmin
+    ? "bg-slate-900" // Solid background for admin pages
+    : "bg-transparent"; // Transparent for regular pages
+
   return (
-    <header className="absolute w-full flex flex-col items-center z-50 px-6 lg:px-16 pt-4">
+    <header
+      className={`absolute w-full flex flex-col items-center z-50 px-6 lg:px-16 pt-4 ${headerBgClass}`}
+    >
       <motion.div
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -60,7 +73,7 @@ export default function Header() {
             <Image
               src={Logo || "/placeholder.svg"}
               alt="AISI Logo"
-              className="w-28 md:w-36 h-auto cursor-pointer md:ml-10"
+              className="w-18  h-auto cursor-pointer md:ml-10"
             />
           </Link>
         </motion.div>
@@ -84,7 +97,9 @@ export default function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute top-20 left-0 right-0 bg-black/80 backdrop-blur-md rounded-b-xl p-4 flex flex-col gap-4 border-t border-white/20"
+                  className={`absolute top-20 left-0 right-0 ${
+                    isAdmin ? "bg-slate-800" : "bg-black/80"
+                  } backdrop-blur-md rounded-b-xl p-4 flex flex-col gap-4 border-t border-white/20`}
                 >
                   {navItems.map((item, index) => (
                     <div key={item.name}>
@@ -233,7 +248,9 @@ export default function Header() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute left-0 mt-2 w-48 bg-black/60 backdrop-blur-lg rounded-lg py-2 shadow-xl z-10 border border-white/20"
+                            className={`absolute left-0 mt-2 w-48 ${
+                              isAdmin ? "bg-slate-800" : "bg-black/60"
+                            } backdrop-blur-lg rounded-lg py-2 shadow-xl z-10 border border-white/20`}
                           >
                             {item.subItems.map((subItem) => (
                               <motion.div

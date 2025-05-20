@@ -43,7 +43,7 @@ export const ApartmentDetailsModal = ({
   });
 
   const [selectedImage, setSelectedImage] = useState(0);
-  const [isZoomed, setIsZoomed] = useState(false);
+ const isZoomed = false;
 
   useEffect(() => {
     const handleEscKey = (e: KeyboardEvent) => {
