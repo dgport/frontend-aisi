@@ -4,8 +4,8 @@ import BuildingBImage from "@/root/public/images/batumi/BlockB.png";
 export const buildings = [
   {
     id: "1",
-    buidlingId: "22",
-    floorPlan: "15",
+    buidlingId: "2",
+    floorPlan: "3",
     coords: [
       { x: 102, y: 32 },
       { x: 113, y: 678 },

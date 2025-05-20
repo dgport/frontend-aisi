@@ -6,7 +6,6 @@ import Otis from "@/root/public/images/batumi/Otis.png";
 import Parking from "@/root/public/images/batumi/Parking.png";
 import Gym from "@/root/public/images/batumi/Gym.png";
 import Elevator from "@/root/public/images/batumi/Elevator.png";
-
 import { useMediaQuery } from "@/use-media-query";
 
 interface GalleryImage {
