@@ -39,7 +39,7 @@ export default function Footer() {
               <Image
                 src={Logo || "/placeholder.svg"}
                 alt="AISI Logo"
-                className="w-32 h-auto"
+                className="w-26 h-auto"
               />
             </Link>
           </motion.div>
