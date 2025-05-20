@@ -48,8 +48,8 @@ export const buildings = [
   },
   {
     id: "2",
-    buidlingId: "22",
-    floorPlan: "20",
+    buidlingId: "2",
+    floorPlan: "2",
     coords: [
       { x: 444, y: 638 },
       { x: 496, y: 683 },

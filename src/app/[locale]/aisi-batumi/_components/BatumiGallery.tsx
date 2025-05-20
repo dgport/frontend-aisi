@@ -1,118 +1,83 @@
 "use client";
 
-import { useState, useEffect, JSX } from "react";
+import type { JSX } from "react";
 import Image from "next/image";
-import img from "@/root/public/images/main/Batumi1.jpeg";
+import Otis from "@/root/public/images/batumi/Otis.png";
+import Parking from "@/root/public/images/batumi/Parking.png";
+import Gym from "@/root/public/images/batumi/Gym.png";
+import Elevator from "@/root/public/images/batumi/Elevator.png";
+
+import { useMediaQuery } from "@/use-media-query";
+
 interface GalleryImage {
   src: string | any;
   alt: string;
-  aspectRatio: number;
+  title: string;
+  description: string;
 }
 
 const galleryImages: GalleryImage[] = [
   {
-    src: img,
+    src: Otis,
     alt: "Goderdzi Green Views",
-    aspectRatio: 3 / 2,
+    title: "Beautiful Surroundings",
+    description: "Enjoy the lush green views surrounding the property",
   },
   {
-    src: img,
+    src: Parking,
     alt: "Goderdzi Nature Surroundings",
-    aspectRatio: 3 / 4,
+    title: "Natural Environment",
+    description: "Located in a pristine natural setting with fresh air",
   },
   {
-    src: img,
+    src: Gym,
     alt: "Goderdzi Pool Area",
-    aspectRatio: 4 / 3,
+    title: "Swimming Pool",
+    description:
+      "This building features a luxurious swimming pool for residents",
   },
   {
-    src: img,
+    src: Elevator,
     alt: "Goderdzi Exterior",
-    aspectRatio: 1 / 1,
-  },
-  {
-    src: img,
-    alt: "Goderdzi Interior",
-    aspectRatio: 3 / 4,
-  },
-  {
-    src: img,
-    alt: "Goderdzi View",
-    aspectRatio: 9 / 8,
-  },
-  {
-    src: img,
-    alt: "Goderdzi Lounge",
-    aspectRatio: 5 / 3,
+    title: "Modern Exterior",
+    description: "Contemporary architectural design with premium materials",
   },
 ];
 
-export default function SimpleMasonryGallery(): JSX.Element {
-  const [columns, setColumns] = useState<number>(3);
+export default function PropertyGallery(): JSX.Element {
+  const isMobile = useMediaQuery("(max-width: 639px)");
+  const isTablet = useMediaQuery("(min-width: 640px) and (max-width: 767px)");
+  const isLaptop = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
 
-  useEffect(() => {
-    const handleResize = (): void => {
-      if (window.innerWidth < 640) {
-        setColumns(1);
-      } else if (window.innerWidth < 1024) {
-        setColumns(2);
-      } else {
-        setColumns(3);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const createMasonryLayout = (): GalleryImage[][] => {
-    const columnHeights: number[] = Array(columns).fill(0);
-    const columnItems: GalleryImage[][] = Array(columns)
-      .fill(null)
-      .map(() => []);
-
-    galleryImages.forEach((image) => {
-      const shortestColumnIndex: number = columnHeights.indexOf(
-        Math.min(...columnHeights)
-      );
-
-      columnItems[shortestColumnIndex].push(image);
-      columnHeights[shortestColumnIndex] += 1 / image.aspectRatio;
-    });
-
-    return columnItems;
-  };
-
-  const masonryColumns: GalleryImage[][] = createMasonryLayout();
+  const columns = isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4;
 
   return (
-    <div className="w-full">
-      <h3 className="text-2xl font-semibold mb-6">Property Gallery</h3>
-      <div className="flex flex-wrap gap-3">
-        {masonryColumns.map((column, colIndex) => (
-          <div key={colIndex} className="flex-1 min-w-0 flex flex-col gap-3">
-            {column.map((image, imgIndex) => (
-              <div
-                key={`${colIndex}-${imgIndex}`}
-                className="overflow-hidden rounded-lg shadow-md"
-              >
-                <div
-                  className="relative"
-                  style={{
-                    paddingTop: `${(1 / image.aspectRatio) * 60}%`,
-                  }}
-                >
-                  <Image
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt}
-                    className="absolute top-0 left-0 w-full h-full object-cover"
-                    width={600}
-                    height={600}
-                  />
-                </div>
-              </div>
-            ))}
+    <div className="w-full px-4 py-8">
+      <h2 className="text-3xl font-bold mb-8 text-center">Property Gallery</h2>
+
+      <div
+        className={`grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${columns}`}
+      >
+        {galleryImages.map((image, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-lg overflow-hidden shadow-md border border-gray-100 transition-transform duration-300 hover:shadow-lg"
+          >
+            <div className="relative h-64">
+              <Image
+                src={image.src || "/placeholder.svg"}
+                alt={image.alt}
+                className="object-cover"
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-xl font-semibold mb-2 text-gray-800">
+                {image.title}
+              </h3>
+              <p className="text-gray-600">{image.description}</p>
+            </div>
           </div>
         ))}
       </div>
