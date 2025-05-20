@@ -57,18 +57,24 @@ export function FloorSelector({
 
   return (
     <div className="flex items-center">
-      <span className="text-sm text-blue-700 font-medium mr-2">Floor:</span>
+      <span className="text-lg text-blue-700 font-medium mr-4">
+        Select Floor:
+      </span>
       <Select
         value={currentFloor.toString()}
         onValueChange={handleFloorChange}
         disabled={disabled}
       >
-        <SelectTrigger className="w-20 h-8 bg-blue-50 border-blue-200 text-blue-900">
-          <SelectValue />
+        <SelectTrigger className="w-20 h-8 cursor-pointer bg-blue-50 border-blue-200 text-blue-900">
+          <SelectValue className="cursor-pointer" />
         </SelectTrigger>
         <SelectContent>
           {availableFloors.map((floor) => (
-            <SelectItem key={floor} value={floor.toString()}>
+            <SelectItem
+              className="cursor-pointer text-base"
+              key={floor}
+              value={floor.toString()}
+            >
               {floor}
             </SelectItem>
           ))}

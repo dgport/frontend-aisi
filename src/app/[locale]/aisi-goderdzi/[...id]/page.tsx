@@ -14,7 +14,7 @@ import { ImageResizer } from "@/components/shared/responsiveImage/FloorPlanResiz
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LocaleSwitcher from "@/i18n/LocaleSwitcher";
- 
+
 import { FloorSelector } from "@/components/shared/floorInfo/FloorSelect";
 import { ApartmentDetailsModal } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
 
@@ -129,14 +129,14 @@ export default function FloorPlanPage() {
 
       if (apartmentData) {
         const formattedApartment = {
-          id: parseInt(apartmentData.flat_id),
+          id: Number.parseInt(apartmentData.flat_id),
           number: apartmentData.flat_number,
-          area: parseFloat(apartmentData.square_meters) || 0,
+          area: Number.parseFloat(apartmentData.square_meters) || 0,
           status: apartmentData.status,
           floor: apartmentsData?.apartments?.[0]?.apartments?.[0]?.floor || 1,
           price: apartmentData.sqm_price
-            ? parseFloat(apartmentData.sqm_price) *
-              parseFloat(apartmentData.square_meters)
+            ? Number.parseFloat(apartmentData.sqm_price) *
+              Number.parseFloat(apartmentData.square_meters)
             : undefined,
           images: apartmentData.images || [],
         };
@@ -233,7 +233,7 @@ export default function FloorPlanPage() {
       ) : (
         <div className={`flex flex-col ${isMobile ? "" : "h-full"}`}>
           {shouldShowHeader && (
-            <div className="bg-white flex justify-start items-center rounded-xl shadow-lg py-5 px-4 md:px-10">
+            <div className="bg-white flex justify-between items-center rounded-xl shadow-lg py-4 px-4 md:px-10">
               <div className="flex-shrink-0">
                 <Button
                   variant="outline"
@@ -246,9 +246,9 @@ export default function FloorPlanPage() {
                 </Button>
               </div>
 
-              <div className="mx-4 flex items-center gap-3">
+              <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
                 <FloorSelector
-                  currentFloor={parseInt(floorId)}
+                  currentFloor={Number.parseInt(floorId)}
                   floorRangeStart={selectedFloorPlan?.floor_range_start}
                   floorRangeEnd={selectedFloorPlan?.floor_range_end}
                   buildingId={buildingId}
@@ -257,7 +257,9 @@ export default function FloorPlanPage() {
                 />
               </div>
 
-              <LocaleSwitcher />
+              <div className="flex-shrink-0">
+                <LocaleSwitcher />
+              </div>
             </div>
           )}
 
