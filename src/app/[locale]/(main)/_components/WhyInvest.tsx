@@ -97,7 +97,7 @@ export default function WhyInvest() {
         clearTimeout(autoplayRef.current);
       }
     };
-  }, [activeReason]);
+  }, [activeReason, resetAutoplayTimer]);
 
   const getCurrentReason = () =>
     investmentReasons.find((reason) => reason.id === activeReason) ||

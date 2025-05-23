@@ -1,9 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronDownIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { locales } from "./routing";
 
 import {
@@ -27,7 +26,14 @@ const languageNames: Record<Locale, string> = {
   ru: "Русский",
 };
 
-export default function LocaleSwitcher() {
+interface LocaleSwitcherProps {
+  variant?: "mobile" | "desktop";
+}
+
+export default function LocaleSwitcher({
+  variant = "desktop",
+}: LocaleSwitcherProps) {
+  const t = useTranslations("main");
   const router = useRouter();
   const pathname = usePathname();
   const currentLocale = useLocale() as Locale;
@@ -49,15 +55,46 @@ export default function LocaleSwitcher() {
 
   const CurrentFlag = LanguageFlags[currentLocale];
 
+  if (variant === "mobile") {
+    return (
+      <div className="grid grid-cols-3 gap-2 w-auto">
+        {(locales as unknown as Locale[]).map((locale) => {
+          const Flag = LanguageFlags[locale];
+          const isActive = locale === currentLocale;
+
+          return (
+            <Button
+              key={locale}
+              variant={isActive ? "default" : "outline"}
+              className={`flex items-center justify-center gap-2 px-3 py-2 ${
+                isActive
+                  ? "bg-indigo-500/30 text-indigo-100 border border-indigo-400/40"
+                  : "bg-black/20 text-white hover:bg-indigo-500/20 hover:text-indigo-100"
+              }`}
+              onClick={() => handleLocaleChange(locale)}
+              disabled={isActive}
+            >
+              <Flag />
+
+              <span className="text-sm font-medium">
+                {locale.toUpperCase()}
+              </span>
+            </Button>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="flex items-center gap-2  cursor-pointer rounded-full h-9 px-3 py-3 bg-white text-black border border-input hover:bg-gray-50  hover:text-accent-foreground">
+        <button className="flex gap-2 items-center cursor-pointer p-2 rounded-full hover:bg-white/10 transition-colors duration-200">
           <CurrentFlag />
-          <ChevronDownIcon className="h-4 w-4 opacity-50" />
+          <span className="md:hidden text-white">{t("changeLang")}</span>
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-48 p-2">
+      <PopoverContent className="w-48 p-2 bg-black/80 backdrop-blur-lg border border-white/20">
         <div className="grid gap-1">
           {(locales as unknown as Locale[]).map((locale) => {
             const Flag = LanguageFlags[locale];
@@ -65,7 +102,11 @@ export default function LocaleSwitcher() {
               <Button
                 key={locale}
                 variant="ghost"
-                className="justify-start gap-2 w-full"
+                className={`justify-start gap-2 w-full ${
+                  locale === currentLocale
+                    ? "bg-indigo-500/20 text-indigo-200"
+                    : "text-white hover:bg-indigo-500/10 hover:text-indigo-200"
+                }`}
                 onClick={() => handleLocaleChange(locale)}
                 disabled={locale === currentLocale}
               >

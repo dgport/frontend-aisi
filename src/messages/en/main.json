@@ -1,3 +1,8 @@
 {
-    "hello": "Hello"
+     "main": "Main",
+     "projects": "Projects",
+     "contact": "Contact",
+        "aisiBatumi": "AISI Batumi",
+    "aisiGoderdzi": "AISI Goderdzi",
+    "changeLang": "Change Language"
 }

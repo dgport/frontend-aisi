@@ -1,3 +1,9 @@
 {
-    "hello": "გამარჯობა"
+    
+    "main": "მთავარი",
+    "projects": "პროექტები",
+    "contact": "კონტაქტი",
+    "aisiBatumi": "აისი ბათუმი",
+    "aisiGoderdzi": "აისი გოდერძი",
+    "changeLang": "ენის შეცვლა"
 }
