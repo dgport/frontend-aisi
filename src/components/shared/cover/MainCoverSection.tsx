@@ -31,7 +31,7 @@ export default function CoverSection({
   secondaryDescription,
   tags = [{ text: "LUXURY" }, { text: "MODERN" }, { text: "EXCLUSIVE" }],
   slideInterval = 7000,
-  height = "lg:min-h-screen",
+  height = "min-h-screen",
 }: CoverSectionProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -47,7 +47,7 @@ export default function CoverSection({
 
   return (
     <motion.div
-      className={` ${height} relative h-[700px] lg:min-h-[30vh] w-full overflow-hidden px-6 lg:px-16`}
+      className={` ${height} relative h-[700px]  w-full overflow-hidden px-6 lg:px-16`}
     >
       <div className={`absolute inset-0 bg-zinc-900/60 z-10`}></div>
 
