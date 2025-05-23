@@ -14,9 +14,10 @@
     "coverTitle":"Investment, residential and commercial real estate",
     "coverDesc": "AISI Group offers a diverse range of projects designed to meet various needs, including residential homes, investment apartments, and commercial properties.",
     "ourProjects": "OUR PROJECTS",
-      "soldOut": "SOLD OUT",
+    "soldOut": "SOLD OUT",
     "finished": "FINISHED",
     "adjaraBatumi": "Adjara, Batumi",   
-      "adjaraGoderdzi": "Adjara, Goderdzi ski resort"
+    "adjaraGoderdzi": "Adjara, Goderdzi ski resort",
+    "whyChoose": "Why Choose Us?"
     
 }

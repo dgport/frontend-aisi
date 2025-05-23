@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { Home, Building2, SmilePlus, Clock } from "lucide-react";
 import test from "@/root/public/images/main/low-angle-shot-modern-glass-city-buildings.jpg";
+import { useTranslations } from "next-intl";
 
 interface WhyUsProps {
   value: string;
@@ -13,6 +14,7 @@ interface WhyUsProps {
 }
 
 export default function WhyChooseUs() {
+  const t = useTranslations("main");
   const Counter = ({ value, label, icon }: WhyUsProps) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -46,7 +48,7 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-2xl md:text-3xl font-bold text-white mb-0.5"
+          className="text-2xl md:text-3xl font-normal text-white mb-0.5"
         >
           {isInView ? count : 0}+
         </motion.h3>
@@ -74,34 +76,24 @@ export default function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-xl md:text-3xl font-bold text-white mb-1"
+            className="text-xl md:text-3xl font-normal text-white mb-5"
           >
-            Why Choose Us?
+            {t("whyChoose")}
           </motion.h2>
           <motion.div
             initial={{ width: 0 }}
-            whileInView={{ width: "40px" }}
+            whileInView={{ width: "80px" }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="h-1 bg-teal-500 mb-2"
           ></motion.div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-white/80 max-w-2xl mx-auto text-md"
-          >
-            Our expertise in luxury real estate development and unwavering
-            commitment to quality has established us as industry leaders for
-            over two decades.
-          </motion.p>
+          
         </div>
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 relative">
             <div className="px-2 py-2">
               <Counter
-                value="10000"
+                value="1000"
                 label="Flats Delivered"
                 icon={<Home size={24} className="mx-auto" />}
               />
@@ -112,7 +104,7 @@ export default function WhyChooseUs() {
             ></div>
             <div className="px-2 py-2">
               <Counter
-                value="45"
+                value="4"
                 label="Building Projects"
                 icon={<Building2 size={24} className="mx-auto" />}
               />
@@ -123,7 +115,7 @@ export default function WhyChooseUs() {
             ></div>
             <div className="px-2 py-2">
               <Counter
-                value="987"
+                value="1000"
                 label="Happy Clients"
                 icon={<SmilePlus size={24} className="mx-auto" />}
               />
@@ -134,7 +126,7 @@ export default function WhyChooseUs() {
             ></div>
             <div className="px-2 py-2">
               <Counter
-                value="25"
+                value="6"
                 label="Years Experience"
                 icon={<Clock size={24} className="mx-auto" />}
               />
