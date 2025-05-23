@@ -15,37 +15,39 @@ import img1 from "@/root/public/images/main/Project2.png";
 import img3 from "@/root/public/images/main/Project3.png";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-
-const projectsData = [
-  {
-    id: 1,
-    title: "AISI Batumi",
-    location: "Adjara, Batumi",
-    image: img1,
-    address: "/aisi-batumi",
-  },
-  {
-    id: 2,
-    title: "AISI Goderdzie",
-    location: "Adjara, Goderdzi ski resort",
-    image: img,
-    address: "/aisi-goderdzi",
-  },
-  {
-    id: 3,
-    title: "AISI Angisa",
-    location: "Adjara, Batumi",
-    image: img3,
-    address: "/#",
-    status: {
-      soldOut: true,
-      finished: true,
-    },
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function ProjectsCarousel() {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const t = useTranslations("main");
+
+  const projectsData = [
+    {
+      id: 1,
+      title: t("aisiBatumi"),
+      location: t("adjaraBatumi"),
+      image: img1,
+      address: "/aisi-batumi",
+    },
+    {
+      id: 2,
+      title: t("aisiGoderdzi"),
+      location: t("adjaraGoderdzi"),
+      image: img,
+      address: "/aisi-goderdzi",
+    },
+    {
+      id: 3,
+      title: t("aisiAngisa"),
+      location: t("adjaraBatumi"),
+      image: img3,
+      address: "/#",
+      status: {
+        soldOut: true,
+        finished: true,
+      },
+    },
+  ];
 
   return (
     <section className="w-full py-16 relative">
@@ -65,8 +67,8 @@ export default function ProjectsCarousel() {
               transition={{ duration: 0.6 }}
               className="h-[2px] bg-gradient-to-r from-indigo-400 via-indigo-200 to-indigo-400 rounded-full mr-4"
             ></motion.div>
-            <h2 className="text-xl w-full md:text-4xl font-bold text-black uppercase mb-6 leading-tight drop-shadow-lg">
-              Our Projects
+            <h2 className="text-xl w-full md:text-4xl font-normal tracking-widest text-black uppercase mb-6 leading-tight drop-shadow-lg">
+              {t("ourProjects")}
             </h2>
             <motion.div
               initial={{ width: 0, opacity: 0 }}
@@ -77,7 +79,6 @@ export default function ProjectsCarousel() {
             ></motion.div>
           </div>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -122,20 +123,20 @@ export default function ProjectsCarousel() {
                           project.status?.finished) && (
                           <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-black/40">
                             {project.status.soldOut && (
-                              <div className="bg-black/70 backdrop-blur-md text-white font-bold py-2 px-6 rounded-md text-2xl mb-4 transform rotate-12 shadow-xl border border-white/20">
-                                SOLD OUT
+                              <div className="bg-black/70 backdrop-blur-md text-white font-normal py-2 px-6 rounded-md text-2xl mb-4 transform rotate-12 shadow-xl border border-white/20">
+                                {t("soldOut")}
                               </div>
                             )}
                             {project.status.finished && (
-                              <div className="bg-black/70 backdrop-blur-md text-white font-bold py-2 px-6 rounded-md text-2xl transform -rotate-6 shadow-xl border border-white/20">
-                                FINISHED
+                              <div className="bg-black/70 backdrop-blur-md text-white font-normal py-2 px-6 rounded-md text-2xl transform -rotate-6 shadow-xl border border-white/20">
+                                {t("finished")}
                               </div>
                             )}
                           </div>
                         )}
 
                         <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
-                          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] group-hover:translate-x-2 transition-transform duration-300">
+                          <h3 className="text-2xl md:text-3xl font-semibold text-white mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)] group-hover:translate-x-2 transition-transform duration-300">
                             {project.title}
                           </h3>
                           <div className="flex items-center">

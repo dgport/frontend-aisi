@@ -2,15 +2,21 @@
      "main": "Main",
      "projects": "Projects",
      "contact": "Contact",
-        "aisiBatumi": "AISI Batumi",
+    "aisiBatumi": "AISI Batumi",
     "aisiGoderdzi": "AISI Goderdzi",
+    "aisiAngisa": "AISI Angisa",
     "changeLang": "Change Language",
     "aisiGroup": "AISI GROUP",
     "premiumDev": "Premium Real Estate Developer",
     "transformingFrom": "Transforming spaces into exceptional living experiences since 2009",
     "modern": "MODERN",
     "exclu": "EXCLUSIVE",
-        "coverTitle":"Investment, residential and commercial real estate",
+    "coverTitle":"Investment, residential and commercial real estate",
     "coverDesc": "AISI Group offers a diverse range of projects designed to meet various needs, including residential homes, investment apartments, and commercial properties.",
-    "123": ""
+    "ourProjects": "OUR PROJECTS",
+      "soldOut": "SOLD OUT",
+    "finished": "FINISHED",
+    "adjaraBatumi": "Adjara, Batumi",   
+      "adjaraGoderdzi": "Adjara, Goderdzi ski resort"
+    
 }
