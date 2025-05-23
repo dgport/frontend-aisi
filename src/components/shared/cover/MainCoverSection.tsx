@@ -103,7 +103,7 @@ export default function CoverSection({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.8, delay: 0.6 }}
-                      className="text-transparent bg-gradient-to-r from-indigo-100 via-indigo-50 to-indigo-100 bg-clip-text text-3xl lg:text-4xl  font-bold tracking-wider"
+                      className="text-transparent h-12 bg-gradient-to-r from-indigo-100 via-indigo-50 to-indigo-100 bg-clip-text text-3xl lg:text-4xl  font-normal tracking-wider"
                     >
                       {title.split(" ").map((word, i) => (
                         <motion.span
@@ -190,7 +190,7 @@ export default function CoverSection({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.6 }}
-                    className="text-xl lg:text-2xl text-center lg:text-start xl:text-4xl font-bold text-white mb-3 lg:mb-5"
+                    className="text-xl lg:text-2xl text-center lg:text-start xl:text-4xl font-normal text-white mb-3 lg:mb-5"
                   >
                     {secondaryTitle}
                   </motion.h2>

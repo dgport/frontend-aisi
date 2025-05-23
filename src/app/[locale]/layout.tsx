@@ -8,14 +8,12 @@ import QueryProvider from "@/reactQuery/queryProvider";
 import { AuthProvider } from "@/auth/AuthProvider";
 import Footer from "@/components/footer/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+
+const georgian = Geist({
+  variable: "--font-georgian-thin",
   subsets: ["latin"],
+  weight: "100",
 });
 
 export const metadata: Metadata = {
@@ -34,9 +32,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`  ${georgian.variable} antialiased`}>
         <AuthProvider>
           <QueryProvider>
             <NextIntlClientProvider messages={messages}>
