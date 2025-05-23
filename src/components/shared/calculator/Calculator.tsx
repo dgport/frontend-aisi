@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Clock } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
- 
+import { useTranslations } from "next-intl";
 
 export default function PaymentCalculator() {
+  const t = useTranslations("main");
   const [propertyValue, setPropertyValue] = useState(100000);
   const [months, setMonths] = useState(24);
   const [downPaymentPercent, setDownPaymentPercent] = useState(20);
@@ -48,13 +49,13 @@ export default function PaymentCalculator() {
   };
 
   return (
-    <div className="w-full p-4 md:px-16 pb-20 pt-10 mx-auto bg-gradient-to-b from-white to-indigo-50 rounded-xl shadow-md overflow-hidden border border-indigo-100">
+    <div className="w-full p-4 px-8 md:px-16 pb-20 pt-10 mx-auto bg-gradient-to-b from-white to-indigo-50 rounded-xl shadow-md overflow-hidden border border-indigo-100">
       <div className="sm:p-8">
         <div className="flex flex-col mb-6">
           <div className="flex items-center">
             <Calculator className="h-6 w-6 text-black/70 mr-2" />
-            <h2 className="text-xl sm:text-2xl font-bold text-black/70">
-              Payment Calculator
+            <h2 className="text-xl sm:text-2xl font-normal text-black/70">
+              {t("payCalculator")}
             </h2>
           </div>
           <div className="h-[3px] bg-gradient-to-r from-indigo-400 via-white to-indigo-400 mt-2 w-full"></div>
@@ -66,7 +67,7 @@ export default function PaymentCalculator() {
               <div className="flex justify-between items-center">
                 <label className="text-black/70 flex items-center">
                   <DollarSign className="h-4 w-4 mr-1 text-indigo-500" />
-                  Property Value
+                  {t("propValue")}
                 </label>
                 <div className="bg-indigo-50 px-3 py-1 rounded-lg">
                   <input
@@ -96,7 +97,7 @@ export default function PaymentCalculator() {
               <div className="flex justify-between items-center">
                 <label className="text-black/70 flex items-center">
                   <Percent className="h-4 w-4 mr-1 text-indigo-500" />
-                  Down Payment
+                  {t("downPayment")}
                 </label>
                 <div className="flex space-x-2">
                   <div className="bg-indigo-50 px-3 py-1 rounded-lg">
@@ -145,7 +146,7 @@ export default function PaymentCalculator() {
               <div className="flex justify-between items-center">
                 <label className="text-black/70 flex items-center">
                   <Clock className="h-4 w-4 mr-1 text-indigo-500" />
-                  Payment Period
+                  {t("payPeriod")}
                 </label>
                 <div className="bg-indigo-50 px-3 py-1 rounded-lg flex items-center">
                   <input
@@ -158,7 +159,9 @@ export default function PaymentCalculator() {
                     }
                     className="w-12 bg-transparent text-black/70 font-medium text-right focus:outline-none"
                   />
-                  <span className="text-black/70 font-medium ml-1">months</span>
+                  <span className="text-black/70 font-medium ml-1">
+                    {t("month")}
+                  </span>
                 </div>
               </div>
               <Slider
@@ -170,22 +173,22 @@ export default function PaymentCalculator() {
                 className="[&_[role=slider]]:bg-indigo-600 [&_[role=slider]]:border-indigo-600 [&_[role=track]]:bg-indigo-600"
               />
               <div className="flex justify-between text-xs text-gray-400">
-                <span>1 month</span>
-                <span>60 months</span>
+                <span>1 {t("month")}</span>
+                <span>60 {t("month")}</span>
               </div>
             </div>
           </div>
           <div className="bg-gradient-to-b from-indigo-50 to-white rounded-xl p-5 shadow-sm border border-indigo-100">
             <div className="flex flex-col mb-4">
               <h3 className="text-lg font-semibold text-black/70">
-                Payment Summary
+                {t("sumPayment")}
               </h3>
               <div className="h-[2px] bg-gradient-to-r from-indigo-400 via-white to-indigo-400 mt-1 w-full"></div>
             </div>
 
             <div className="space-y-4">
               <div className="bg-white rounded-lg p-4 shadow-sm border border-indigo-200">
-                <div className="text-gray-400 text-sm">Monthly Payment</div>
+                <div className="text-gray-400 text-sm">{t("monthPay")}</div>
                 <div className="text-2xl font-bold text-black/90">
                   {formatCurrency(monthlyPayment)}
                 </div>
@@ -193,14 +196,16 @@ export default function PaymentCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-400 text-xs">Total Amount</div>
+                  <div className="text-gray-400 text-xs">{t("propValue")}</div>
                   <div className="text-lg font-medium text-black/70">
                     {formatCurrency(propertyValue)}
                   </div>
                 </div>
 
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-400 text-xs">Down Payment</div>
+                  <div className="text-gray-400 text-xs">
+                    {t("downPayment")}
+                  </div>
                   <div className="text-lg font-medium text-black/70">
                     {formatCurrency(downPaymentAmount)}
                   </div>
@@ -209,16 +214,18 @@ export default function PaymentCalculator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-400 text-xs">Amount to Finance</div>
+                  <div className="text-gray-400 text-xs">
+                    {t("financeAmount")}
+                  </div>
                   <div className="text-lg font-medium text-black/70">
                     {formatCurrency(totalPayment)}
                   </div>
                 </div>
 
                 <div className="bg-white rounded-lg p-3 shadow-sm border border-indigo-200">
-                  <div className="text-gray-400 text-xs">Payment Schedule</div>
+                  <div className="text-gray-400 text-xs">{t("paySched")}</div>
                   <div className="text-lg font-medium text-black/70">
-                    {months} months
+                    {months} {t("month")}
                   </div>
                 </div>
               </div>

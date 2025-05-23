@@ -18,6 +18,15 @@
     "finished": "FINISHED",
     "adjaraBatumi": "Adjara, Batumi",   
     "adjaraGoderdzi": "Adjara, Goderdzi ski resort",
-    "whyChoose": "Why Choose Us?"
+    "whyChoose": "Why Choose Us?",
+       "payCalculator": "Payment Calculator",
+       "propValue": "Property Value",
+       "downPayment": "Down Payment",
+       "payPeriod": "Payment Period",
+         "month": "Month",
+         "sumPayment": "Payment Summary",
+         "monthPay": "Monthly Payment",
+         "financeAmount": "Amount to Finance",
+                "paySched": "Payment Schedule"
     
 }

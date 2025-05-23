@@ -19,6 +19,15 @@
     "finished": "დასრულებულია",
      "adjaraBatumi": "აჭარა, ბათუმი",
      "adjaraGoderdzi": "აჭარა, გოდერძი",
-     "whyChoose": "რატომ ჩვენ?"
+     "whyChoose": "რატომ ჩვენ?",
+     "payCalculator": "კალკულატორი",
+     "propValue": "ქონების ღირებულება",
+            "downPayment": "პირველადი შენატანი",
+            "payPeriod": "გადახდის პერიოდი",
+            "month": "თვე",
+            "sumPayment": "გადახდის დეტალები",
+            "monthPay": "თვიური გადასახადი",
+            "financeAmount": "მიმდინარე გადასახადი",
+            "paySched": "გადახდის განრიგი"
     
 }
