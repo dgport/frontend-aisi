@@ -40,7 +40,7 @@ const INITIAL_FORM_STATE: FormData = {
   message: "",
 };
 
-// Using contact information from footer
+ 
 const CONTACT_INFO: ContactInfo = {
   address: "ანგისის პირველი შესახვევი #28, Batumi, Georgia",
   phone: "+995 557 47 14 14",
@@ -110,7 +110,6 @@ const ContactCard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative">
-      {/* Background Pattern - Same as Footer */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
@@ -121,9 +120,7 @@ const ContactCard: React.FC = () => {
         ></div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -138,10 +135,7 @@ const ContactCard: React.FC = () => {
               "Get in touch with us. We'd love to hear from you and discuss how we can help with your project."}
           </p>
         </motion.div>
-
-        {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Contact Information Card */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -159,7 +153,6 @@ const ContactCard: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Address */}
                 <div className="flex items-start space-x-3">
                   <MapPin
                     size={20}
@@ -174,8 +167,6 @@ const ContactCard: React.FC = () => {
                     </p>
                   </div>
                 </div>
-
-                {/* Phone */}
                 <div className="flex items-start space-x-3">
                   <Phone
                     size={20}
@@ -193,8 +184,6 @@ const ContactCard: React.FC = () => {
                     </a>
                   </div>
                 </div>
-
-                {/* Email */}
                 <div className="flex items-start space-x-3">
                   <Mail
                     size={20}
@@ -212,8 +201,6 @@ const ContactCard: React.FC = () => {
                     </a>
                   </div>
                 </div>
-
-                {/* Social Media */}
                 <div className="pt-6 border-t border-white/10">
                   <h3 className="text-white font-medium mb-4">
                     {t("followUs") || "Follow Us"}
@@ -250,8 +237,6 @@ const ContactCard: React.FC = () => {
               </CardContent>
             </Card>
           </motion.div>
-
-          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -378,8 +363,6 @@ const ContactCard: React.FC = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom Accent Line */}
       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
     </div>
   );

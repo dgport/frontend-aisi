@@ -21,7 +21,6 @@ export default function Footer() {
 
   return (
     <footer className="relative px-10 md:px-20 w-full  bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
@@ -33,9 +32,7 @@ export default function Footer() {
       </div>
 
       <div className="relative z-10 container   mx-auto  py-6 lg:py-8">
-        {/* Desktop: Horizontal Layout | Mobile: Vertical Layout */}
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-8 lg:space-y-0 lg:space-x-12">
-          {/* Logo Section - Desktop Only */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,8 +49,6 @@ export default function Footer() {
               />
             </Link>
           </motion.div>
-
-          {/* Navigation Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,8 +69,6 @@ export default function Footer() {
               ))}
             </div>
           </motion.div>
-
-          {/* Contact Information Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -120,8 +113,6 @@ export default function Footer() {
               </div>
             </div>
           </motion.div>
-
-          {/* Social Media Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -129,7 +120,7 @@ export default function Footer() {
             className="flex-1 lg:flex-none"
           >
             <h3 className="text-white text-sm font-semibold mb-4 uppercase tracking-wider">
-              Follow Us
+              {t("followUs")}
             </h3>
             <div className="flex space-x-3">
               <motion.a
@@ -161,23 +152,17 @@ export default function Footer() {
             </div>
           </motion.div>
         </div>
-
-        {/* Bottom Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8 pt-6 border-t border-white/10"
+          className="mt-8 pt-6 border-t border-white/10 flex flex-row w-full justify-center items-center"
         >
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
-            <p className="text-gray-500 text-xs">
-              © {new Date().getFullYear()} Digital Port. All rights reserved.
-            </p>
-          </div>
+          <p className="text-gray-500 text-xs text-center">
+            © {new Date().getFullYear()} Digital Port. All rights reserved.
+          </p>
         </motion.div>
       </div>
-
-      {/* Bottom Accent Line */}
       <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
     </footer>
   );
