@@ -61,6 +61,7 @@ export default function Header() {
   };
 
   const headerBgClass = isAdmin ? "bg-slate-900" : "bg-transparent";
+
   if (!isMounted) {
     return (
       <header
@@ -127,50 +128,47 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className={`absolute top-20 left-4 right-4 z-50 ${
-                      isAdmin
-                        ? "bg-gradient-to-br from-slate-800/95 to-slate-900/95"
-                        : "bg-gradient-to-br from-black/90 to-gray-900/90"
-                    } backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 overflow-hidden`}
+                    className="absolute top-20 left-4 right-4 z-50 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-xl rounded-lg shadow-2xl border border-white/10 overflow-hidden"
                   >
-                    <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+                    {/* Background Pattern - Same as Footer */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+                          backgroundSize: "20px 20px",
+                        }}
+                      ></div>
+                    </div>
 
-                    <div className="p-6 space-y-2">
+                    {/* Top Accent Line */}
+                    <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
+
+                    <div className="relative z-10 p-4 space-y-1">
                       {navItems.map((item) => (
                         <div key={item.name}>
                           {item.subItems ? (
-                            <div className="space-y-2">
+                            <div className="space-y-1">
                               <button
                                 onClick={() =>
                                   setIsProjectsOpen(!isProjectsOpen)
                                 }
-                                className={`w-full flex items-center justify-between p-4 rounded-xl transition-all duration-300 ${
+                                className={`w-full flex items-center justify-between p-3 rounded-lg transition-all duration-200 ${
                                   isActive(item.href)
-                                    ? "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 shadow-lg shadow-indigo-500/10"
-                                    : "bg-white/5 hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 hover:border hover:border-indigo-400/20"
-                                } border border-transparent`}
+                                    ? "bg-white/10 border border-indigo-400/30"
+                                    : "bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/20"
+                                }`}
                                 aria-expanded={isProjectsOpen}
                               >
-                                <span
-                                  className={`text-white text-lg font-medium transition-colors duration-200 ${
-                                    isActive(item.href)
-                                      ? "text-indigo-200"
-                                      : "hover:text-indigo-200"
-                                  }`}
-                                >
+                                <span className="text-white text-sm font-medium">
                                   {item.name}
                                 </span>
-
-                                <div
-                                  className="text-indigo-300 transition-transform duration-300"
-                                  style={{
-                                    transform: isProjectsOpen
-                                      ? "rotate(90deg)"
-                                      : "rotate(0deg)",
-                                  }}
-                                >
-                                  <ChevronRight size={20} />
-                                </div>
+                                <ChevronRight
+                                  size={16}
+                                  className={`text-indigo-400 transition-transform duration-200 ${
+                                    isProjectsOpen ? "rotate-90" : ""
+                                  }`}
+                                />
                               </button>
 
                               <AnimatePresence>
@@ -179,39 +177,28 @@ export default function Header() {
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: "auto" }}
                                     exit={{ opacity: 0, height: 0 }}
-                                    transition={{ duration: 0.3 }}
+                                    transition={{ duration: 0.2 }}
                                     className="overflow-hidden"
                                   >
-                                    <div className="pl-4 space-y-2">
+                                    <div className="pl-4 space-y-1">
                                       {item.subItems.map((subItem) => (
-                                        <div key={subItem.name}>
-                                          <Link
-                                            href={`/${locale}${subItem.href}`}
-                                            onClick={() => {
-                                              setIsMenuOpen(false);
-                                              setIsProjectsOpen(false);
-                                            }}
-                                            className={`block relative p-4 rounded-lg transition-all duration-200 ${
-                                              isSubItemActive(subItem.href)
-                                                ? "bg-gradient-to-r from-indigo-500/25 to-purple-500/25 border border-indigo-400/40 shadow-md"
-                                                : "bg-white/5 hover:bg-gradient-to-r hover:from-indigo-500/15 hover:to-purple-500/15 hover:border hover:border-indigo-400/25"
-                                            } border border-transparent`}
-                                          >
-                                            {isSubItemActive(subItem.href) && (
-                                              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full" />
-                                            )}
-
-                                            <span
-                                              className={`text-white text-base transition-colors duration-200 ${
-                                                isSubItemActive(subItem.href)
-                                                  ? "font-medium text-indigo-100 ml-4"
-                                                  : "hover:text-indigo-200"
-                                              }`}
-                                            >
-                                              {subItem.name}
-                                            </span>
-                                          </Link>
-                                        </div>
+                                        <Link
+                                          key={subItem.name}
+                                          href={`/${locale}${subItem.href}`}
+                                          onClick={() => {
+                                            setIsMenuOpen(false);
+                                            setIsProjectsOpen(false);
+                                          }}
+                                          className={`block p-3 rounded-lg transition-all duration-200 ${
+                                            isSubItemActive(subItem.href)
+                                              ? "bg-indigo-500/20 border border-indigo-400/40 text-indigo-200"
+                                              : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
+                                          }`}
+                                        >
+                                          <span className="text-sm">
+                                            {subItem.name}
+                                          </span>
+                                        </Link>
                                       ))}
                                     </div>
                                   </motion.div>
@@ -222,31 +209,30 @@ export default function Header() {
                             <Link
                               href={`/${locale}${item.href}`}
                               onClick={() => setIsMenuOpen(false)}
-                              className={`block p-4 rounded-xl transition-all duration-300 ${
+                              className={`block p-3 rounded-lg transition-all duration-200 ${
                                 isActive(item.href)
-                                  ? "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 shadow-lg shadow-indigo-500/10"
-                                  : "bg-white/5 hover:bg-gradient-to-r hover:from-indigo-500/10 hover:to-purple-500/10 hover:border hover:border-indigo-400/20"
-                              } border border-transparent`}
+                                  ? "bg-white/10 border border-indigo-400/30 text-white"
+                                  : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
+                              }`}
                             >
-                              <span
-                                className={`text-white text-lg font-medium transition-colors duration-200 ${
-                                  isActive(item.href)
-                                    ? "text-indigo-200"
-                                    : "hover:text-indigo-200"
-                                }`}
-                              >
+                              <span className="text-sm font-medium">
                                 {item.name}
                               </span>
                             </Link>
                           )}
                         </div>
                       ))}
-                      <div className="pt-4 mt-4 border-t border-white/10">
-                        <div className="bg-white/5 flex items-center gap-1 rounded-xl p-4 backdrop-blur-sm">
+
+                      {/* Language Switcher */}
+                      <div className="pt-3 mt-3 border-t border-white/10">
+                        <div className="bg-white/5 rounded-lg p-3 border border-white/10">
                           <LocaleSwitcher />
                         </div>
                       </div>
                     </div>
+
+                    {/* Bottom Accent Line */}
+                    <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
                   </motion.div>
                 </>
               )}
@@ -290,34 +276,36 @@ export default function Header() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className={`absolute left-0 mt-2 w-48 ${
-                              isAdmin ? "bg-slate-800/95" : "bg-black/70"
-                            } backdrop-blur-lg rounded-lg py-2 shadow-xl z-10 border border-white/20`}
+                            className="absolute left-0 mt-2 w-48 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-lg rounded-lg py-2 shadow-xl z-10 border border-white/20"
                           >
-                            {item.subItems.map((subItem) => (
+                            {/* Background Pattern */}
+                            <div className="absolute inset-0 opacity-5 rounded-lg">
                               <div
-                                key={subItem.name}
-                                className="relative mx-2 my-1"
-                              >
-                                <Link
-                                  href={`/${locale}${subItem.href}`}
-                                  className={`block px-3 py-2.5 rounded-md text-sm transition-all duration-200 group relative overflow-hidden ${
-                                    isSubItemActive(subItem.href)
-                                      ? "bg-indigo-500/20 text-indigo-200 font-medium border border-indigo-400/30"
-                                      : "text-white hover:bg-indigo-500/10 hover:text-indigo-200"
-                                  }`}
-                                  onClick={() => setIsProjectsOpen(false)}
-                                >
-                                  <span className="relative z-10">
-                                    {subItem.name}
-                                  </span>
+                                className="absolute inset-0"
+                                style={{
+                                  backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+                                  backgroundSize: "20px 20px",
+                                }}
+                              ></div>
+                            </div>
 
-                                  {isSubItemActive(subItem.href) && (
-                                    <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-indigo-400 to-indigo-600" />
-                                  )}
-                                </Link>
-                              </div>
-                            ))}
+                            <div className="relative z-10">
+                              {item.subItems.map((subItem) => (
+                                <div key={subItem.name} className="mx-2 my-1">
+                                  <Link
+                                    href={`/${locale}${subItem.href}`}
+                                    className={`block px-3 py-2 rounded-md text-sm transition-all duration-200 ${
+                                      isSubItemActive(subItem.href)
+                                        ? "bg-indigo-500/20 text-indigo-200 border border-indigo-400/30"
+                                        : "text-gray-400 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/20"
+                                    }`}
+                                    onClick={() => setIsProjectsOpen(false)}
+                                  >
+                                    {subItem.name}
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>

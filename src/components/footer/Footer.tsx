@@ -2,158 +2,183 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import Image from "next/image"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl";
 import { Mail, MapPin, Phone } from "lucide-react";
-import Logo from "@/root/public/images/AisiLogo1.png";
 import { Facebook, Instagram } from "../svg";
+import Image from "next/image";
+import Logo from "@/root/public/images/AisiLogo1.png";
 
 export default function Footer() {
+  const t = useTranslations("main");
   const locale = useLocale();
 
-  const navItems = [
-    { name: "Main", href: "/" },
-    { name: "Projects", href: "/projects" },
-    { name: "Contact", href: "/contact" },
-  ];
-
-  const projectItems = [
-    { name: "AISI Batumi", href: "/projects/batumi" },
-    { name: "AISI Goderdzi", href: "/projects/goderdzi" },
+  const allItems = [
+    { name: t("main"), href: "/" },
+    { name: t("contact"), href: "/contact" },
+    { name: t("aisiBatumi"), href: "/aisi-batumi" },
+    { name: t("aisiGoderdzi"), href: "/aisi-goderdzi" },
   ];
 
   return (
-    <footer className="relative w-full ">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-black/70 backdrop-blur-sm"></div>
+    <footer className="relative px-10 md:px-20 w-full  bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+            backgroundSize: "20px 20px",
+          }}
+        ></div>
       </div>
-      <div className="relative z-10 container mx-auto px-6 lg:px-8 pt-10 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+      <div className="relative z-10 container   mx-auto  py-6 lg:py-8">
+        {/* Desktop: Horizontal Layout | Mobile: Vertical Layout */}
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-8 lg:space-y-0 lg:space-x-12">
+          {/* Logo Section - Desktop Only */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="hidden md:flex flex-col"
+            className="hidden lg:block flex-none"
           >
-            <Link href={`/${locale}`} className="inline-block mb-6">
+            <Link href={`/${locale}`} className="inline-block">
               <Image
                 src={Logo || "/placeholder.svg"}
                 alt="AISI Logo"
-                className="w-26 h-auto"
+                width={120}
+                height={60}
+                className="w-24 h-auto opacity-90 hover:opacity-100 transition-opacity duration-200"
               />
             </Link>
           </motion.div>
+
+          {/* Navigation Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-white text-sm font-semibold mb-4 uppercase tracking-wider">
+              {t("navigation")}
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 lg:gap-1">
+              {allItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={`/${locale}${item.href}`}
+                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm py-1 block"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Contact Information Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">
-              Navigation
+            <h3 className="text-white text-sm font-semibold mb-4 uppercase tracking-wider">
+              {t("contactUs")}
             </h3>
-            <ul className="space-y-3">
-              {navItems.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={`/${locale}${item.href}`}
-                    className="text-gray-300 hover:text-indigo-300 transition-colors duration-200 flex items-center group"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-2 transform scale-0 group-hover:scale-100 transition-transform duration-200"></span>
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="space-y-3">
+              <div className="flex items-start">
+                <MapPin
+                  size={14}
+                  className="text-indigo-400 mr-2 mt-0.5 flex-shrink-0"
+                />
+                <span className="text-gray-400 text-sm leading-relaxed">
+                  ანგისის პირველი შესახვევი #28, Batumi, Georgia
+                </span>
+              </div>
+              <div className="flex items-start">
+                <Phone
+                  size={14}
+                  className="text-indigo-400 mr-2 mt-0.5 flex-shrink-0"
+                />
+                <a
+                  href="tel:+995557471414"
+                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
+                >
+                  +995 557 47 14 14
+                </a>
+              </div>
+              <div className="flex items-start">
+                <Mail
+                  size={14}
+                  className="text-indigo-400 mr-2 mt-0.5 flex-shrink-0"
+                />
+                <a
+                  href="mailto:aisistatus@gmail.com"
+                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
+                >
+                  aisistatus@gmail.com
+                </a>
+              </div>
+            </div>
           </motion.div>
+
+          {/* Social Media Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex-1 lg:flex-none"
           >
-            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">
-              Our Projects
+            <h3 className="text-white text-sm font-semibold mb-4 uppercase tracking-wider">
+              Follow Us
             </h3>
-            <ul className="space-y-3">
-              {projectItems.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={`/${locale}${item.href}`}
-                    className="text-gray-300 hover:text-indigo-300 transition-colors duration-200 flex items-center group"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mr-2 transform scale-0 group-hover:scale-100 transition-transform duration-200"></span>
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <h3 className="text-white text-lg font-medium mb-6 pb-2 border-b border-indigo-500/30">
-              Contact Us
-            </h3>
-            <ul className="space-y-4">
-              <li className="flex items-start">
-                <MapPin
-                  size={18}
-                  className="text-indigo-400 mr-3 mt-1 flex-shrink-0"
-                />
-                <span className="text-gray-300">
-                  123 Construction Avenue, Batumi, Georgia
-                </span>
-              </li>
-              <li className="flex items-center">
-                <Phone
-                  size={18}
-                  className="text-indigo-400 mr-3 flex-shrink-0"
-                />
-                <span className="text-gray-300">+995 123 456 789</span>
-              </li>
-              <li className="flex items-center">
-                <Mail
-                  size={18}
-                  className="text-indigo-400 mr-3 flex-shrink-0"
-                />
-                <span className="text-gray-300">info@aisidevelopment.com</span>
-              </li>
-            </ul>
-
-            <div className="flex space-x-4 mt-6">
+            <div className="flex space-x-3">
               <motion.a
-                href="#"
-                whileHover={{ scale: 1.1 }}
+                href="https://www.facebook.com/AISIGROUP"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors duration-200"
+                className="bg-white/5 hover:bg-blue-600/20 border border-white/10 hover:border-blue-400/50 p-2.5 rounded-lg transition-all duration-200 group"
               >
-                <Facebook size={18} className="w-4 h-4 fill-white" />
+                <Facebook
+                  size={16}
+                  className="w-4 h-4 fill-gray-400 group-hover:fill-blue-400"
+                />
               </motion.a>
               <motion.a
-                href="#"
-                whileHover={{ scale: 1.1 }}
+                href="https://www.instagram.com/aisigroup/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors duration-200"
+                className="bg-white/5 hover:bg-pink-600/20 border border-white/10 hover:border-pink-400/50 p-2.5 rounded-lg transition-all duration-200 group"
               >
-                <Instagram size={18} className="w-4 h-4 fill-white" />
+                <Instagram
+                  size={16}
+                  className="w-4 h-4 fill-gray-400 group-hover:fill-pink-400"
+                />
               </motion.a>
             </div>
           </motion.div>
         </div>
+
+        {/* Bottom Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-center items-center"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-8 pt-6 border-t border-white/10"
         >
-          <p className="text-gray-400 text-center text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} Digital Port
-          </p>
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+            <p className="text-gray-500 text-xs">
+              © {new Date().getFullYear()} Digital Port. All rights reserved.
+            </p>
+          </div>
         </motion.div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-600 via-indigo-400 to-indigo-600"></div>
+      {/* Bottom Accent Line */}
+      <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"></div>
     </footer>
   );
 }
