@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { Send, MapPin, Phone, Mail } from "lucide-react";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
@@ -40,7 +39,6 @@ const INITIAL_FORM_STATE: FormData = {
   message: "",
 };
 
- 
 const CONTACT_INFO: ContactInfo = {
   address: "ანგისის პირველი შესახვევი #28, Batumi, Georgia",
   phone: "+995 557 47 14 14",
@@ -120,19 +118,18 @@ const ContactCard: React.FC = () => {
         ></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-            {t("contactUs") || "Contact Us"}
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white mb-4">
+            {t("contactUs")}
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            {t("contactDescription") ||
-              "Get in touch with us. We'd love to hear from you and discuss how we can help with your project."}
+            {t("contactDescription")}
           </p>
         </motion.div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -144,12 +141,11 @@ const ContactCard: React.FC = () => {
           >
             <Card className="bg-white/5 border border-white/10 backdrop-blur-sm h-full">
               <CardHeader>
-                <CardTitle className="text-white text-xl font-semibold">
-                  {t("contactInfo") || "Contact Information"}
+                <CardTitle className="text-white text-xl font-normal">
+                  {t("contactInfo")}
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  {t("contactInfoDescription") ||
-                    "Reach out to us through any of these channels"}
+                  {t("contactInfoDescription")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -159,8 +155,8 @@ const ContactCard: React.FC = () => {
                     className="text-indigo-400 mt-1 flex-shrink-0"
                   />
                   <div>
-                    <h3 className="text-white font-medium mb-1">
-                      {t("ourOffice") || "Our Office"}
+                    <h3 className="text-white font-light mb-1">
+                      {t("ourOffice")}
                     </h3>
                     <p className="text-gray-400 text-sm leading-relaxed">
                       {CONTACT_INFO.address}
@@ -173,9 +169,7 @@ const ContactCard: React.FC = () => {
                     className="text-indigo-400 mt-1 flex-shrink-0"
                   />
                   <div>
-                    <h3 className="text-white font-medium mb-1">
-                      {t("phone") || "Phone"}
-                    </h3>
+                    <h3 className="text-white font-light mb-1">{t("phone")}</h3>
                     <a
                       href={`tel:${CONTACT_INFO.phone.replace(/[^0-9+]/g, "")}`}
                       className="text-gray-400 hover:text-white transition-colors text-sm"
@@ -190,9 +184,7 @@ const ContactCard: React.FC = () => {
                     className="text-indigo-400 mt-1 flex-shrink-0"
                   />
                   <div>
-                    <h3 className="text-white font-medium mb-1">
-                      {t("email") || "Email"}
-                    </h3>
+                    <h3 className="text-white font-light mb-1">{t("email")}</h3>
                     <a
                       href={`mailto:${CONTACT_INFO.email}`}
                       className="text-gray-400 hover:text-white transition-colors text-sm"
@@ -202,8 +194,8 @@ const ContactCard: React.FC = () => {
                   </div>
                 </div>
                 <div className="pt-6 border-t border-white/10">
-                  <h3 className="text-white font-medium mb-4">
-                    {t("followUs") || "Follow Us"}
+                  <h3 className="text-white font-light mb-4">
+                    {t("followUs")}
                   </h3>
                   <div className="flex space-x-3">
                     <motion.a
@@ -245,12 +237,11 @@ const ContactCard: React.FC = () => {
           >
             <Card className="bg-white/5 border border-white/10 backdrop-blur-sm h-full">
               <CardHeader>
-                <CardTitle className="text-white text-xl font-semibold">
-                  {t("sendUsMessage") || "Send Us a Message"}
+                <CardTitle className="text-white text-xl font-normal">
+                  {t("sendUsMessage")}
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  {t("sendUsDescribe") ||
-                    "Fill out the form below and we'll get back to you as soon as possible."}
+                  {t("sendUsDescribe")}
                 </CardDescription>
               </CardHeader>
               <form onSubmit={handleSubmit}>
@@ -259,9 +250,9 @@ const ContactCard: React.FC = () => {
                     <div className="space-y-2">
                       <label
                         htmlFor="firstName"
-                        className="text-white text-sm font-medium"
+                        className="text-white text-sm font-light"
                       >
-                        {t("firstName") || "First Name"}
+                        {t("firstName")}
                       </label>
                       <Input
                         id="firstName"
@@ -276,9 +267,9 @@ const ContactCard: React.FC = () => {
                     <div className="space-y-2">
                       <label
                         htmlFor="lastName"
-                        className="text-white text-sm font-medium"
+                        className="text-white text-sm font-light"
                       >
-                        {t("lastName") || "Last Name"}
+                        {t("lastName")}
                       </label>
                       <Input
                         id="lastName"
@@ -294,9 +285,9 @@ const ContactCard: React.FC = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="email"
-                      className="text-white text-sm font-medium"
+                      className="text-white text-sm font-light"
                     >
-                      {t("email") || "Email"}
+                      {t("email")}
                     </label>
                     <Input
                       id="email"
@@ -312,9 +303,9 @@ const ContactCard: React.FC = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="message"
-                      className="text-white text-sm font-medium"
+                      className="text-white text-sm font-light"
                     >
-                      {t("message") || "Message"}
+                      {t("message")}
                     </label>
                     <Textarea
                       id="message"
@@ -329,7 +320,7 @@ const ContactCard: React.FC = () => {
                   </div>
                   {result && (
                     <div
-                      className={`text-sm font-medium p-3 rounded-lg ${
+                      className={`text-sm font-light p-3 rounded-lg ${
                         result.includes("Success")
                           ? "text-green-400 bg-green-500/10 border border-green-500/20"
                           : "text-red-400 bg-red-500/10 border border-red-500/20"
@@ -338,11 +329,9 @@ const ContactCard: React.FC = () => {
                       {result}
                     </div>
                   )}
-                </CardContent>
-                <CardFooter>
                   <Button
                     type="submit"
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 transition-colors duration-200"
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-light py-3 transition-colors duration-200"
                     disabled={loading}
                   >
                     {loading ? (
@@ -352,12 +341,12 @@ const ContactCard: React.FC = () => {
                       </span>
                     ) : (
                       <span className="flex items-center gap-2">
-                        {t("sendMessage") || "Send Message"}
+                        {t("sendMessage")}
                         <Send className="w-4 h-4" />
                       </span>
                     )}
                   </Button>
-                </CardFooter>
+                </CardContent>
               </form>
             </Card>
           </motion.div>
