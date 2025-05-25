@@ -94,7 +94,7 @@ export default function WhyChooseUs() {
             <div className="px-2 py-2">
               <Counter
                 value="1000"
-                label="Flats Delivered"
+                label={t("deliveredFlats")}
                 icon={<Home size={24} className="mx-auto" />}
               />
             </div>
@@ -105,7 +105,7 @@ export default function WhyChooseUs() {
             <div className="px-2 py-2">
               <Counter
                 value="4"
-                label="Building Projects"
+                label={t("building")}
                 icon={<Building2 size={24} className="mx-auto" />}
               />
             </div>
@@ -116,7 +116,7 @@ export default function WhyChooseUs() {
             <div className="px-2 py-2">
               <Counter
                 value="1000"
-                label="Happy Clients"
+                label={t("happyClients")}
                 icon={<SmilePlus size={24} className="mx-auto" />}
               />
             </div>
@@ -127,7 +127,7 @@ export default function WhyChooseUs() {
             <div className="px-2 py-2">
               <Counter
                 value="6"
-                label="Years Experience"
+                label={t("yearsExprerience")}
                 icon={<Clock size={24} className="mx-auto" />}
               />
             </div>

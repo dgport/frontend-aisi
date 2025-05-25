@@ -4,59 +4,50 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface InvestmentReason {
   id: number;
-  title: string;
-  description: string;
-  stats: string[];
+  titleKey: string;
+  descriptionKey: string;
+  statsKeys: string[];
   image: string;
 }
 
-const investmentReasons: InvestmentReason[] = [
-  {
-    id: 1,
-    title: "Growing Tourism",
-    description:
-      "Rapidly expanding tourism market with year-round visitors and increasing international attention.",
-    stats: [
-      "15% annual growth",
-      "4.5M tourists in 2024",
-      "Top 5 emerging destination",
-    ],
-    image: "/images/main/Batumi1.jpeg",
-  },
-  {
-    id: 2,
-    title: "Property Appreciation",
-    description:
-      "Strong annual property value growth with projected increases of 8-12% over the next five years.",
-    stats: ["10% average ROI", "3-5 year breakeven", "Strong rental yields"],
-    image: "/images/main/Batumi2.jpeg",
-  },
-  {
-    id: 3,
-    title: "Government Incentives",
-    description:
-      "Tax advantages and development grants available for foreign investors in tourism infrastructure.",
-    stats: [
-      "0% property tax",
-      "Foreign ownership allowed",
-      "Business visa programs",
-    ],
-    image: "/images/main/Batumi3.jpg",
-  },
-  {
-    id: 4,
-    title: "Strategic Location",
-    description:
-      "Positioned at a crossroads between major markets with excellent transportation connections.",
-    stats: ["3-hour flights to EU", "Direct sea routes", "New Silk Road hub"],
-    image: "/images/main/Batumi4.webp",
-  },
-];
-
 export default function WhyInvest() {
+  const t = useTranslations("main");
+
+  const investmentReasons: InvestmentReason[] = [
+    {
+      id: 1,
+      titleKey: "growingTourism",
+      descriptionKey: "growingTourismDesc",
+      statsKeys: ["tourismGrowth", "touristsCount", "topDestination"],
+      image: "/images/main/Batumi1.jpeg",
+    },
+    {
+      id: 2,
+      titleKey: "propertyAppreciation",
+      descriptionKey: "propertyAppreciationDesc",
+      statsKeys: ["averageROI", "breakEven", "rentalYields"],
+      image: "/images/main/Batumi2.jpeg",
+    },
+    {
+      id: 3,
+      titleKey: "governmentIncentives",
+      descriptionKey: "governmentIncentivesDesc",
+      statsKeys: ["propertyTax", "foreignOwnership", "businessVisa"],
+      image: "/images/main/Batumi3.jpg",
+    },
+    {
+      id: 4,
+      titleKey: "strategicLocation",
+      descriptionKey: "strategicLocationDesc",
+      statsKeys: ["flightsToEU", "seaRoutes", "silkRoadHub"],
+      image: "/images/main/Batumi4.webp",
+    },
+  ];
+
   const [activeReason, setActiveReason] = useState(1);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -121,7 +112,7 @@ export default function WhyInvest() {
                   <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-10" />
                   <Image
                     src={reason.image || "/placeholder.svg"}
-                    alt={reason.title}
+                    alt={t(reason.titleKey)}
                     fill
                     className="object-cover"
                     priority
@@ -140,12 +131,12 @@ export default function WhyInvest() {
             transition={{ duration: 0.8 }}
             className="mb-8 md:mb-12"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-center">
-              Why Invest in <span className="text-gray-300">Batumi</span>?
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-4 text-center">
+              {t("whyInvestTitle")}{" "}
+              <span className="text-gray-300">{t("batumi")}</span>?
             </h2>
             <p className="text-white/80 text-center max-w-2xl mx-auto">
-              Discover the compelling reasons that make Batumi an exceptional
-              investment opportunity
+              {t("whyInvestSubtitle")}
             </p>
           </motion.div>
 
@@ -173,13 +164,13 @@ export default function WhyInvest() {
                     {reason.id}
                   </div>
                   <span
-                    className={`font-medium md:text-lg transition-colors ${
+                    className={`font-normal md:text-lg transition-colors ${
                       activeReason === reason.id
                         ? "text-white"
                         : "text-white/70"
                     }`}
                   >
-                    {reason.title}
+                    {t(reason.titleKey)}
                   </span>
                   {activeReason === reason.id && (
                     <motion.div
@@ -205,18 +196,18 @@ export default function WhyInvest() {
                 >
                   <div className="flex flex-col h-full">
                     <div className="mb-6">
-                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 flex items-center gap-3">
-                        <span className="w-10 h-10 flex items-center justify-center bg-white text-black font-bold rounded-full">
+                      <h3 className="text-2xl md:text-3xl font-normal text-white mb-3 flex items-center gap-3">
+                        <span className="w-10 h-10 flex items-center justify-center bg-white text-black font-normal rounded-full">
                           {getCurrentReason().id}
                         </span>
-                        {getCurrentReason().title}
+                        {t(getCurrentReason().titleKey)}
                       </h3>
                       <p className="text-white/80 text-lg">
-                        {getCurrentReason().description}
+                        {t(getCurrentReason().descriptionKey)}
                       </p>
                     </div>
                     <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {getCurrentReason().stats.map((stat, index) => (
+                      {getCurrentReason().statsKeys.map((statKey, index) => (
                         <motion.div
                           key={index}
                           initial={{ opacity: 0, y: 10 }}
@@ -225,7 +216,9 @@ export default function WhyInvest() {
                           className="bg-white/15 p-4 rounded-lg border border-white/15 flex items-center"
                         >
                           <div className="w-2 h-8 bg-white rounded-full mr-3"></div>
-                          <span className="text-white font-medium">{stat}</span>
+                          <span className="text-white font-normal">
+                            {t(statKey)}
+                          </span>
                         </motion.div>
                       ))}
                     </div>
@@ -237,14 +230,14 @@ export default function WhyInvest() {
                   <button
                     onClick={handlePrev}
                     className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
-                    aria-label="Previous reason"
+                    aria-label={t("previousReason")}
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={handleNext}
                     className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
-                    aria-label="Next reason"
+                    aria-label={t("nextReason")}
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
@@ -259,7 +252,7 @@ export default function WhyInvest() {
                           ? "bg-white w-8"
                           : "bg-white/30 w-4 hover:bg-white/50"
                       }`}
-                      aria-label={`Jump to ${reason.title}`}
+                      aria-label={`${t("jumpTo")} ${t(reason.titleKey)}`}
                     />
                   ))}
                 </div>
