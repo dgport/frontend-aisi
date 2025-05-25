@@ -1,5 +1,7 @@
 "use client";
 
+import type React from "react";
+
 interface Coordinate {
   x: number;
   y: number;
@@ -33,11 +35,10 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
   const isHovered = hoveredApartment === flatId;
 
   const getBackgroundColor = () => {
-    if (!isHovered) {
-      return "bg-transparent";
+    if (isHovered) {
+      return "bg-indigo-400/60 border-2 border-white  shadow-lg";
     }
-
-    return "bg-blue-200/50";
+    return "bg-indigo-500/30 border border-white ";
   };
 
   return (
@@ -46,7 +47,7 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
       style={{
         clipPath: getClipPathPolygon(coords, scaleFactor),
       }}
-      className={`absolute top-0 left-0 w-full h-full transition-colors duration-300 cursor-pointer ${getBackgroundColor()}`}
+      className={`absolute top-0 left-0 w-full h-full transition-all duration-300 cursor-pointer ${getBackgroundColor()} hover:shadow-xl `}
       onMouseEnter={() => setHoveredApartment(flatId)}
       onMouseLeave={() => setHoveredApartment(null)}
       onClick={() => handleFloorClick(flatId, flatNumber)}

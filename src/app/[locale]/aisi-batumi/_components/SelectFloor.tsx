@@ -4,10 +4,18 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { useRouter } from "next/navigation";
-import { Building, Layers, Home, Calendar, Loader2 } from "lucide-react";
+import {
+  Building,
+  Layers,
+  Home,
+  Calendar,
+  Loader2,
+  ArrowLeft,
+} from "lucide-react";
 import SitePlanImage from "@/root/public/images/batumi/SelectBuilding.png";
 import MobileSitePlan from "@/root/public/images/batumi/SelectBuilding.png";
 import { buildings } from "@/constants/coordinants/buildingFloorCoord";
+import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 
 const ORIGINAL_IMAGE_WIDTH = 768;
 const MOBILE_IMAGE_WIDTH = 768;
@@ -62,32 +70,23 @@ export default function SelectFloor() {
     buildingIndex: string
   ) => {
     setIsLoading(true);
-    // Simulate loading time
+
     setTimeout(() => {
       setSelectedBuilding(buildingId);
       setHoveredFloor(null);
       setSelectedFloorplan(floorPlan);
       setBuildingId(buildingIndex);
       setIsLoading(false);
-    }, 800); // 800ms delay to show the loading state
-  };
-
-  const handleBuildingHover = (buildingId: string) => {
-    setHoveredBuilding(buildingId);
+    }, 800);
   };
 
   const handleFloorClick = (floorId: string) => {
     if (buildingId) {
       setIsLoading(true);
-      // Navigate after a short delay to show loading state
       setTimeout(() => {
         router.push(`/aisi-batumi/${buildingId}/${floorPlan}/${floorId}`);
       }, 300);
     }
-  };
-
-  const handleFloorHover = (floorId: string) => {
-    setHoveredFloor(floorId);
   };
 
   const getCurrentImage = () => {
@@ -110,8 +109,8 @@ export default function SelectFloor() {
     if (isLoading) {
       return (
         <div className="flex flex-col items-center justify-center h-full">
-          <Loader2 className="h-10 w-10 text-blue-500 animate-spin mb-4" />
-          <p className="text-gray-700 text-lg">Loading building details...</p>
+          <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-4" />
+          <p className="text-gray-600 text-lg">Loading building details...</p>
         </div>
       );
     }
@@ -119,275 +118,284 @@ export default function SelectFloor() {
     if (selectedBuilding) {
       return (
         <>
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+            <Building className="mr-3 h-6 w-6 text-indigo-600" />
             Building {selectedBuilding}: Select Your Floor
           </h2>
-          <p className="text-gray-700 mb-6">
-            Explore our available floors and find your perfect home. Hover over
-            the floor plan on the left to view details for each floor.
+          <p className="text-gray-600 mb-6 leading-relaxed">
+            Explore our available floors and find your perfect home. Click on
+            any floor to view detailed apartment layouts.
           </p>
 
-          <div className="mb-6">
-            <h3 className="font-semibold text-lg mb-3 flex items-center">
-              <Building className="mr-2 h-5 w-5" />
-              Building Overview:
+          <div className="space-y-4">
+            <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
+              <Layers className="mr-2 h-5 w-5 text-indigo-600" />
+              Building Statistics
             </h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Layers className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Total Floors</div>
-                  <div className="font-bold text-lg">12</div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Layers className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Total Floors</span>
                 </div>
+                <div className="font-bold text-2xl text-gray-900">12</div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Home className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Total Units</div>
-                  <div className="font-bold text-lg">48</div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Home className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Total Units</span>
                 </div>
+                <div className="font-bold text-2xl text-gray-900">48</div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Home className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Available Units</div>
-                  <div className="font-bold text-lg">24</div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Home className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Available Units</span>
                 </div>
+                <div className="font-bold text-2xl text-gray-900">24</div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Calendar className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Completion</div>
-                  <div className="font-bold text-lg">2025</div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Calendar className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Completion</span>
                 </div>
+                <div className="font-bold text-2xl text-gray-900">2025</div>
               </div>
             </div>
-          </div>
 
-          {hoveredFloor && (
-            <div className="mt-6 bg-blue-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2">
-                Floor {hoveredFloor}
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Units</p>
-                  <p className="font-bold">4</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Available</p>
-                  <p className="font-bold">2</p>
+            {hoveredFloor && (
+              <div className="mt-6 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                <h4 className="text-gray-900 font-medium mb-2">
+                  Floor {hoveredFloor}
+                </h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-600">Units</p>
+                    <p className="font-bold text-gray-900">4</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Available</p>
+                    <p className="font-bold text-gray-900">2</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </>
       );
     } else {
       return (
         <>
-          <h2 className="text-2xl font-bold mb-4">Select Your Building</h2>
-          <p className="text-gray-700 mb-6">
-            Explore our available buildings and find your perfect home. Hover
-            over the site plan on the left to view details for each building.
-          </p>
-
-          <div className="mb-6">
-            <h3 className="font-semibold text-lg mb-3 flex items-center">
-              <Building className="mr-2 h-5 w-5" />
-              Project Overview:
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+            <Building className="mr-3 h-6 w-6 text-indigo-600" />
+            Select Your Building
+          </h2>
+          <div className="space-y-4">
+            <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
+              <Layers className="mr-2 h-5 w-5 text-indigo-600" />
+              Project Overview
             </h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Layers className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Total Buildings</div>
-                  <div className="font-bold text-lg">4</div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Layers className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Total Buildings</span>
+                </div>
+                <div className="font-bold text-2xl text-gray-900">4</div>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Home className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Total Units</span>
+                </div>
+                <div className="font-bold text-2xl text-gray-900">192</div>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Home className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Available Units</span>
+                </div>
+                <div className="font-bold text-2xl text-gray-900">96</div>
+              </div>
+              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Calendar className="h-5 w-5 mr-2 text-indigo-600" />
+                  <span className="text-sm text-gray-600">Completion</span>
+                </div>
+                <div className="font-bold text-2xl text-gray-900">2025</div>
+              </div>
+            </div>
+
+            {hoveredBuilding && (
+              <div className="mt-6 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                <h4 className="text-gray-900 font-medium mb-2">
+                  Building {hoveredBuilding}
+                </h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-600">Floors</p>
+                    <p className="font-bold text-gray-900">12</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Units</p>
+                    <p className="font-bold text-gray-900">48</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Available</p>
+                    <p className="font-bold text-gray-900">24</p>
+                  </div>
                 </div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Home className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Total Units</div>
-                  <div className="font-bold text-lg">192</div>
-                </div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Home className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Available Units</div>
-                  <div className="font-bold text-lg">96</div>
-                </div>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                <Calendar className="h-5 w-5 mr-2 text-gray-500" />
-                <div>
-                  <div className="text-sm text-gray-500">Completion</div>
-                  <div className="font-bold text-lg">2025</div>
-                </div>
-              </div>
+            )}
+
+            <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+              <h4 className="text-gray-900 font-medium mb-2">
+                How to Navigate
+              </h4>
+              <ul className="text-sm text-gray-600 space-y-1">
+                <li>• Click on any building to view available floors</li>
+                <li>• Hover over areas to see building information</li>
+                <li>• Each colored area represents a different building</li>
+              </ul>
             </div>
           </div>
-
-          {hoveredBuilding && (
-            <div className="mt-6 bg-blue-50 p-4 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2">
-                Building {hoveredBuilding}
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Floors</p>
-                  <p className="font-bold">12</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Units</p>
-                  <p className="font-bold">48</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Available</p>
-                  <p className="font-bold">24</p>
-                </div>
-              </div>
-            </div>
-          )}
         </>
       );
     }
   };
 
   return (
-    <section>
-      <div className="flex flex-col md:flex-row gap-10 ">
-        <div ref={containerRef} className="relative w-full md:w-1/2">
-          <div className="relative w-full">
-            <Image
-              ref={imageRef}
-              src={getCurrentImage()}
-              alt="Building plan image"
-              className={`w-full rounded-lg ${isLoading ? "opacity-60" : ""}`}
-              priority
-              onLoad={() => {
-                if (imageRef.current) {
-                  const baseWidth = isMobile
-                    ? MOBILE_IMAGE_WIDTH
-                    : ORIGINAL_IMAGE_WIDTH;
-                  setScaleFactor(imageRef.current.clientWidth / baseWidth);
-                }
-              }}
-            />
+    <section className="min-h-screen bg-white">
+      <div className="container2">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            {selectedBuilding
+              ? `Building ${selectedBuilding}`
+              : "Select Your Building"}
+          </h1>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            {selectedBuilding
+              ? "Choose your preferred floor and explore available apartments."
+              : "Explore our residential buildings and find your perfect home."}
+          </p>
+        </div>
 
-            {isLoading && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-80 p-6 rounded-lg shadow-md flex flex-col items-center">
-                <Loader2 className="h-10 w-10 text-blue-500 animate-spin mb-2" />
-                <p className="text-gray-700">Loading...</p>
-              </div>
-            )}
+        <div className="flex flex-col lg:flex-row gap-8">
+    
+          <div ref={containerRef} className="relative w-full lg:w-1/2">
+            <div className="relative w-full bg-gray-50 rounded-lg border border-gray-200 overflow-hidden shadow-lg">
+              <Image
+                ref={imageRef}
+                src={getCurrentImage() || "/placeholder.svg"}
+                alt="Building plan image"
+                className={`w-full transition-opacity duration-300 ${
+                  isLoading ? "opacity-60" : ""
+                }`}
+                priority
+                onLoad={() => {
+                  if (imageRef.current) {
+                    const baseWidth = isMobile
+                      ? MOBILE_IMAGE_WIDTH
+                      : ORIGINAL_IMAGE_WIDTH;
+                    setScaleFactor(imageRef.current.clientWidth / baseWidth);
+                  }
+                }}
+              />
 
-            {!selectedBuilding && !isLoading && (
-              <svg className="absolute top-0 left-0 h-full w-full">
-                {buildings.map((building) => (
-                  <polygon
+              {/* Loading Overlay */}
+              {isLoading && (
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 shadow-lg flex flex-col items-center">
+                  <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-2" />
+                  <p className="text-gray-900">Loading...</p>
+                </div>
+              )}
+
+              {/* Building Overlays */}
+              {!selectedBuilding &&
+                !isLoading &&
+                buildings.map((building) => (
+                  <FloorOverlay
                     key={building.id}
-                    points={building.coords
-                      .map(
-                        (point) =>
-                          `${point.x * scaleFactor},${point.y * scaleFactor}`
-                      )
-                      .join(" ")}
-                    fill={
-                      hoveredBuilding === building.id
-                        ? "rgba(0, 123, 255, 0.3)"
-                        : "rgba(0, 0, 0, 0)"
+                    flatId={Number.parseInt(building.id)}
+                    flatNumber={Number.parseInt(building.id)}
+                    coords={building.coords}
+                    hoveredApartment={
+                      hoveredBuilding ? Number.parseInt(hoveredBuilding) : null
                     }
-                    stroke={
-                      hoveredBuilding === building.id
-                        ? "rgba(0, 123, 255, 0.8)"
-                        : "rgba(255, 255, 255, 0.5)"
+                    setHoveredApartment={(id) =>
+                      setHoveredBuilding(id?.toString() || null)
                     }
-                    strokeWidth="2"
-                    className="cursor-pointer"
-                    onClick={() =>
+                    handleFloorClick={() =>
                       handleBuildingClick(
                         building.id,
                         building.floorPlan,
                         building.buidlingId
                       )
                     }
-                    onMouseEnter={() => handleBuildingHover(building.id)}
-                    onMouseLeave={() => setHoveredBuilding(null)}
+                    scaleFactor={scaleFactor}
                   />
                 ))}
-              </svg>
-            )}
 
-            {selectedBuilding && !isLoading && (
-              <svg className="absolute top-0 left-0 h-full w-full">
-                {getCurrentFloors().map((floor) => (
-                  <polygon
+              {/* Floor Overlays */}
+              {selectedBuilding &&
+                !isLoading &&
+                getCurrentFloors().map((floor) => (
+                  <FloorOverlay
                     key={floor.id}
-                    points={floor.coords
-                      .map(
-                        (point) =>
-                          `${point.x * scaleFactor},${point.y * scaleFactor}`
-                      )
-                      .join(" ")}
-                    fill={
-                      hoveredFloor === floor.id
-                        ? "rgba(0, 123, 255, 0.3)"
-                        : "rgba(0, 0, 0, 0)"
+                    flatId={Number.parseInt(floor.id)}
+                    flatNumber={Number.parseInt(floor.id)}
+                    coords={floor.coords}
+                    hoveredApartment={
+                      hoveredFloor ? Number.parseInt(hoveredFloor) : null
                     }
-                    stroke={
-                      hoveredFloor === floor.id
-                        ? "rgba(0, 123, 255, 0.8)"
-                        : "rgba(255, 255, 255, 0.5)"
+                    setHoveredApartment={(id) =>
+                      setHoveredFloor(id?.toString() || null)
                     }
-                    strokeWidth="2"
-                    className="cursor-pointer"
-                    onClick={() => handleFloorClick(floor.id)}
-                    onMouseEnter={() => handleFloorHover(floor.id)}
-                    onMouseLeave={() => setHoveredFloor(null)}
+                    handleFloorClick={() => handleFloorClick(floor.id)}
+                    scaleFactor={scaleFactor}
                   />
                 ))}
-              </svg>
-            )}
 
-            {!selectedBuilding && hoveredBuilding && !isLoading && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow-md pointer-events-none">
-                <h3 className="text-xl font-bold text-blue-600">
-                  Building {hoveredBuilding}
-                </h3>
-              </div>
-            )}
+              {/* Hover Display */}
+              {!selectedBuilding && hoveredBuilding && !isLoading && (
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-lg border border-gray-200 shadow-lg pointer-events-none">
+                  <h3 className="text-xl font-bold text-indigo-600">
+                    Building {hoveredBuilding}
+                  </h3>
+                </div>
+              )}
 
-            {selectedBuilding && hoveredFloor && !isLoading && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow-md pointer-events-none text-8xl font-bold opacity-50">
-                {hoveredFloor}
-              </div>
-            )}
+              {selectedBuilding && hoveredFloor && !isLoading && (
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl md:text-8xl opacity-70 pointer-events-none z-20 drop-shadow-lg">
+                  {hoveredFloor}
+                </div>
+              )}
 
-            {selectedBuilding && !isLoading && (
-              <button
-                className="absolute top-4 left-4 bg-white bg-opacity-80 px-4 py-2 rounded-lg shadow-md hover:bg-opacity-100 transition-all"
-                onClick={() => {
-                  setIsLoading(true);
-                  setTimeout(() => {
-                    setSelectedBuilding(null);
-                    setHoveredFloor(null);
-                    setIsLoading(false);
-                  }, 500);
-                }}
-              >
-                ← Back to Site Plan
-              </button>
-            )}
+              {/* Back Button */}
+              {selectedBuilding && !isLoading && (
+                <button
+                  className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-lg border border-gray-200 shadow-md hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
+                  onClick={() => {
+                    setIsLoading(true);
+                    setTimeout(() => {
+                      setSelectedBuilding(null);
+                      setHoveredFloor(null);
+                      setIsLoading(false);
+                    }, 500);
+                  }}
+                >
+                  <ArrowLeft size={16} />
+                  Back to Site Plan
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-        <div
-          className="w-full md:w-1/2 border border-gray-300 rounded-lg overflow-auto"
-          style={{ maxHeight: isMobile ? "auto" : undefined }}
-        >
-          <div className="bg-white p-6 rounded-lg shadow-sm h-full flex flex-col">
-            {renderRightPanel()}
+
+          {/* Information Panel */}
+          <div className="w-full lg:w-1/2">
+            <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 h-full">
+              {renderRightPanel()}
+            </div>
           </div>
         </div>
       </div>

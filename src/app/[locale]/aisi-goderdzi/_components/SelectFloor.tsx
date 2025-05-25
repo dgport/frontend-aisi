@@ -67,15 +67,20 @@ export default function SelectFloor() {
   const currentAreas = isMobile ? mobileAreas : desktopAreas;
 
   return (
-    <section>
-      <div className="flex flex-col md:flex-row gap-10">
-        <div ref={containerRef} className="relative w-full md:w-2/3">
-          <div className="relative w-full">
+    <section className="bg-white">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Select Your Floor
+        </h1>
+      </div>
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div ref={containerRef} className="relative w-full lg:w-2/3">
+          <div className="relative w-full bg-gray-50 rounded-lg border border-gray-200 overflow-hidden shadow-lg">
             <Image
               ref={imageRef}
-              src={currentImage}
+              src={currentImage || "/placeholder.svg"}
               alt="Floor plan image"
-              className="w-full rounded-lg"
+              className="w-full"
               priority
               onLoad={() => {
                 if (imageRef.current) {
@@ -98,57 +103,59 @@ export default function SelectFloor() {
                 scaleFactor={scaleFactor}
               />
             ))}
-
             {hoveredApartment && (
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-8xl opacity-50 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl md:text-8xl opacity-70 pointer-events-none z-20 drop-shadow-lg">
                 {hoveredApartment}
               </div>
             )}
           </div>
         </div>
-
-        <div className="w-full md:w-1/3 border border-gray-300 rounded-lg overflow-auto">
-          <div className="bg-white p-6 rounded-lg shadow-sm h-full flex flex-col">
-            <h2 className="text-2xl font-bold mb-4">Select Your Floor</h2>
-            <p className="text-gray-700 mb-6">
-              Explore our available floors and find your perfect home. Hover
-              over the floor plan on the left to view details for each floor.
-            </p>
-
-            <div className="mb-6">
-              <h3 className="font-semibold text-lg mb-3 flex items-center">
-                <Building className="mr-2 h-5 w-5" />
-                Building Overview:
-              </h3>
+        <div className="w-full lg:w-1/3">
+          <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 h-full">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
+              <Building className="mr-3 h-6 w-6 text-indigo-600" />
+              Building Overview
+            </h2>
+            <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                  <Layers className="h-5 w-5 mr-2 text-gray-500" />
-                  <div>
-                    <div className="text-sm text-gray-500">Total Floors</div>
-                    <div className="font-bold text-lg">4</div>
+                <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <Layers className="h-5 w-5 mr-2 text-indigo-600" />
+                    <span className="text-sm text-gray-600">Total Floors</span>
                   </div>
+                  <div className="font-bold text-2xl text-gray-900">4</div>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                  <Home className="h-5 w-5 mr-2 text-gray-500" />
-                  <div>
-                    <div className="text-sm text-gray-500">Total Units</div>
-                    <div className="font-bold text-lg">36</div>
+                <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <Home className="h-5 w-5 mr-2 text-indigo-600" />
+                    <span className="text-sm text-gray-600">Total Units</span>
                   </div>
+                  <div className="font-bold text-2xl text-gray-900">36</div>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                  <Car className="h-5 w-5 mr-2 text-gray-500" />
-                  <div>
-                    <div className="text-sm text-gray-500">Parking Spots</div>
-                    <div className="font-bold text-lg">42</div>
+                <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <Car className="h-5 w-5 mr-2 text-indigo-600" />
+                    <span className="text-sm text-gray-600">Parking Spots</span>
                   </div>
+                  <div className="font-bold text-2xl text-gray-900">42</div>
                 </div>
-                <div className="bg-gray-50 p-3 rounded-md flex items-center">
-                  <Calendar className="h-5 w-5 mr-2 text-gray-500" />
-                  <div>
-                    <div className="text-sm text-gray-500">Completion</div>
-                    <div className="font-bold text-lg">2025</div>
+                <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                  <div className="flex items-center mb-2">
+                    <Calendar className="h-5 w-5 mr-2 text-indigo-600" />
+                    <span className="text-sm text-gray-600">Completion</span>
                   </div>
+                  <div className="font-bold text-2xl text-gray-900">2025</div>
                 </div>
+              </div>
+              <div className="mt-6 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                <h4 className="text-gray-900 font-medium mb-2">
+                  How to Navigate
+                </h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Hover over colored areas to see floor numbers</li>
+                  <li>• Click on any floor to view apartment details</li>
+                  <li>• Each color represents a different floor level</li>
+                </ul>
               </div>
             </div>
           </div>
