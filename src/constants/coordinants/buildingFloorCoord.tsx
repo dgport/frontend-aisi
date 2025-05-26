@@ -5,7 +5,7 @@ export const buildings = [
   {
     id: "1",
     buidlingId: "2",
-    floorPlan: "3",
+    floorPlan: "5",
     coords: [
       { x: 102, y: 32 },
       { x: 113, y: 678 },

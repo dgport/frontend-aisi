@@ -193,12 +193,12 @@ export default function FloorPlanPage() {
     [apartmentAreas, hoveredApartment, handleApartmentClick]
   );
 
-  const shouldShowHeader = !isLoading;
+  
 
   return (
     <main
       className={`relative ${
-        isMobile ? "min-h-screen" : "h-screen"
+        isMobile ? "h-auto" : "h-auto"
       } w-full bg-gray-50 ${
         isMobile ? "overflow-y-auto" : "overflow-hidden"
       } z-50`}
@@ -226,37 +226,31 @@ export default function FloorPlanPage() {
           </div>
         </div>
       ) : (
-        <div className={`flex flex-col ${isMobile ? "" : "h-full"}`}>
-          {shouldShowHeader && (
-            <div className="bg-white flex justify-between items-center rounded-xl shadow-lg py-4 px-4 md:px-10">
-              <div className="flex-shrink-0">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleBack}
-                  className="flex items-center gap-1"
-                >
-                  <ChevronLeft size={16} />
-                  <span className="hidden md:inline">Back</span>
-                </Button>
-              </div>
-
-              <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
-                <FloorSelector
-                  currentFloor={Number.parseInt(floorId)}
-                  floorRangeStart={selectedFloorPlan?.floor_range_start}
-                  floorRangeEnd={selectedFloorPlan?.floor_range_end}
-                  buildingId={buildingId}
-                  floorPlanId={floorPlanId}
-                  route="aisi-goderdzi"
-                />
-              </div>
-
-              <div className="flex-shrink-0">
-                <LocaleSwitcher />
-              </div>
+        <div className="flex flex-col">
+          <div className="bg-white flex justify-start md:gap-10 items-center rounded-xl shadow-lg py-4 px-4 md:px-10">
+            <div className="flex-shrink-0">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleBack}
+                className="flex items-center gap-1"
+              >
+                <ChevronLeft size={16} />
+                <span className="hidden md:inline">Back</span>
+              </Button>
             </div>
-          )}
+
+            <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
+              <FloorSelector
+                currentFloor={Number.parseInt(floorId)}
+                floorRangeStart={selectedFloorPlan?.floor_range_start}
+                floorRangeEnd={selectedFloorPlan?.floor_range_end}
+                buildingId={buildingId}
+                floorPlanId={floorPlanId}
+                route="aisi-goderdzi"
+              />
+            </div>
+          </div>
 
           <div
             className={`${

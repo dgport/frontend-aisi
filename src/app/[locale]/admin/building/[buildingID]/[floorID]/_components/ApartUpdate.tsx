@@ -1,4 +1,8 @@
-import { useState } from "react";
+"use client";
+
+import type React from "react";
+
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,18 +31,24 @@ const UpdateApartmentDialog = ({
   floorId,
   onSuccess,
 }: UpdateApartmentDialogProps) => {
-  const [squareMeters, setSquareMeters] = useState<string>(
-    apartment.square_meters.toString()
-  );
-  const [mobilePaths, setMobilePaths] = useState<string>(
-    apartment.mobile_paths || ""
-  );
-  const [desktopPaths, setDesktopPaths] = useState<string>(
-    apartment.desktop_paths || ""
-  );
+  const [squareMeters, setSquareMeters] = useState<string>("");
+  const [mobilePaths, setMobilePaths] = useState<string>("");
+  const [desktopPaths, setDesktopPaths] = useState<string>("");
   const [imageFiles, setImageFiles] = useState<FileList | null>(null);
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  // Reset form values when dialog opens or apartment changes
+  useEffect(() => {
+    if (isOpen && apartment) {
+      setSquareMeters(apartment.square_meters.toString());
+      setMobilePaths(apartment.mobile_paths || "");
+      setDesktopPaths(apartment.desktop_paths || "");
+      setImageFiles(null);
+      setUpdateError(null);
+      setSuccessMessage(null);
+    }
+  }, [isOpen, apartment]);
 
   const updateMutation = useMutation({
     mutationFn: (formData: FormData) =>
@@ -60,6 +70,11 @@ const UpdateApartmentDialog = ({
 
   const handleClose = () => {
     if (!updateMutation.isPending) {
+      // Reset form state when closing
+      setSquareMeters("");
+      setMobilePaths("");
+      setDesktopPaths("");
+      setImageFiles(null);
       setUpdateError(null);
       setSuccessMessage(null);
       onClose();
@@ -107,7 +122,7 @@ const UpdateApartmentDialog = ({
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Update Apartment</DialogTitle>
+          <DialogTitle>Update Apartment #{apartment.flat_number}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4 py-4">
           {updateError && <div className="text-red-500">{updateError}</div>}

@@ -36,9 +36,9 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
 
   const getBackgroundColor = () => {
     if (isHovered) {
-      return "bg-indigo-400/60 border-2 border-white  shadow-lg";
+      return "bg-indigo-400/60 border-2 border-white shadow-lg";
     }
-    return "bg-indigo-500/30 border border-white ";
+    return "";
   };
 
   return (
@@ -47,7 +47,7 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
       style={{
         clipPath: getClipPathPolygon(coords, scaleFactor),
       }}
-      className={`absolute top-0 left-0 w-full h-full transition-all duration-300 cursor-pointer ${getBackgroundColor()} hover:shadow-xl `}
+      className={`absolute top-0 left-0 w-full h-full transition-all duration-300 cursor-pointer ${getBackgroundColor()} hover:shadow-xl`}
       onMouseEnter={() => setHoveredApartment(flatId)}
       onMouseLeave={() => setHoveredApartment(null)}
       onClick={() => handleFloorClick(flatId, flatNumber)}

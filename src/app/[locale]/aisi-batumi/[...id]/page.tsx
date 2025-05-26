@@ -97,6 +97,23 @@ export default function FloorPlanPage() {
     );
   }, [floorPlans, floorPlanId]);
 
+  // Determine block based on floorPlanId
+  const block = useMemo(() => {
+    if (floorPlanId === "2") return "a_block";
+    if (floorPlanId === "3") return "b_block";
+    // Default fallback
+    return "a_block";
+  }, [floorPlanId]);
+
+  // Get dimensions based on the determined block
+  const originalDimensions = useMemo(() => {
+    return BATUMI_ORIGINAL_DIMENSIONS[block];
+  }, [block]);
+
+  const maxDimensions = useMemo(() => {
+    return BATUMI_MAX_SIZE[block];
+  }, [block]);
+
   const {
     data: apartmentsData,
     isLoading: isLoadingApartments,
@@ -199,7 +216,7 @@ export default function FloorPlanPage() {
   return (
     <main
       className={`relative ${
-        isMobile ? "min-h-screen" : "h-screen"
+        isMobile ? "min-h-screen" : "h-auto"
       } w-full bg-gray-50 ${
         isMobile ? "overflow-y-auto" : "overflow-hidden"
       } z-50`}
@@ -269,8 +286,8 @@ export default function FloorPlanPage() {
               altText={`${
                 selectedFloorPlan?.name || "Building"
               } - Floor ${floorId} Plan`}
-              originalDimensions={BATUMI_ORIGINAL_DIMENSIONS}
-              maxDimensions={BATUMI_MAX_SIZE}
+              originalDimensions={originalDimensions}
+              maxDimensions={maxDimensions}
               isMobile={isMobile}
               priority
               key={`floor-${floorId}-plan-${floorPlanId}`}

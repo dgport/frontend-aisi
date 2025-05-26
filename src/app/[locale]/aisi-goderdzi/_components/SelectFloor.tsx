@@ -73,8 +73,8 @@ export default function SelectFloor() {
           Select Your Floor
         </h1>
       </div>
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div ref={containerRef} className="relative w-full lg:w-2/3">
+      <div className="flex flex-col xl:flex-row gap-8">
+        <div ref={containerRef} className="relative w-full xl:w-2/3">
           <div className="relative w-full bg-gray-50 rounded-lg border border-gray-200 overflow-hidden shadow-lg">
             <Image
               ref={imageRef}
@@ -110,7 +110,7 @@ export default function SelectFloor() {
             )}
           </div>
         </div>
-        <div className="w-full lg:w-1/3">
+        <div className="w-full xl:w-1/3">
           <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 h-full">
             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
               <Building className="mr-3 h-6 w-6 text-indigo-600" />

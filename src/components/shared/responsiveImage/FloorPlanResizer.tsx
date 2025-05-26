@@ -175,18 +175,14 @@ export function ImageResizer({
   const scaleFactorY = imagePosition.height / baseHeight;
 
   return (
-    <div
-      ref={containerRef}
-      className={`relative w-full ${isMobile ? "overflow-y-auto" : "h-full"}`}
-    >
+    <div ref={containerRef} className="relative w-full py-5">
       <div
-        className={`relative ${
-          isMobile ? "" : "h-full"
-        } flex justify-center items-center`}
+        className="relative  
+          flex justify-center items-center"
       >
         <div
           ref={imageContainerRef}
-          className="relative"
+          className="relative overflow-y-hidden overflow-x-hidden"
           style={{
             width: isMobile
               ? maxDimensions.mobile.width

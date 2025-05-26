@@ -120,22 +120,6 @@ const UpdateApartmentStatus = ({
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="sqmPrice" className="text-sm font-medium">
-              Price per m²
-            </label>
-            <Input
-              id="sqmPrice"
-              type="number"
-              min="0"
-              step="0.01"
-              value={sqmPrice}
-              onChange={handleSqmPriceChange}
-              placeholder="Enter price per square meter"
-              disabled={updateStatusMutation.isPending}
-            />
-          </div>
-
           <div className="flex justify-end gap-2 pt-4">
             <Button
               variant="outline"

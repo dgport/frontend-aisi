@@ -38,13 +38,7 @@ const ApartmentCard = ({
     }
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(price);
-  };
+  
 
   const handleUpdateClick = () => {
     setIsStatusDialogOpen(true);
@@ -65,7 +59,6 @@ const ApartmentCard = ({
       setIsUpdating(false);
     }, 500);
   };
- 
 
   return (
     <div className="p-4 border rounded shadow relative">
@@ -129,51 +122,13 @@ const ApartmentCard = ({
             ))}
           </div>
         )}
-
       <div className="grid grid-cols-1 gap-1 mb-3 justify-center">
         <p className="flex items-center gap-1">
           <Tag className="h-3.5 w-3.5 mr-2 text-indigo-400" />
           <span className="font-semibold">Square Meters: </span>
           <span> {apartment.square_meters} m²</span>
         </p>
-
-        {apartment.sqm_price && apartment.sqm_price > 0 ? (
-          <>
-            <p className="flex items-center  gap-1">
-              <Tag className="h-3.5 w-3.5 mr-2 text-indigo-400" />
-              <span className="font-semibold">Price per m²: </span>{" "}
-              <span> {formatPrice(apartment.sqm_price)}</span>
-            </p>
-            {apartment.square_meters && (
-              <p className="flex items-center">
-                <Tag className="h-3.5 w-3.5 mr-2 text-indigo-400" />
-                <span>
-                  <span className="font-semibold">Total Price: </span>
-                  {formatPrice(apartment.square_meters * apartment.sqm_price)}
-                </span>
-              </p>
-            )}
-          </>
-        ) : (
-          <p className="text-gray-500 italic">No price information</p>
-        )}
       </div>
-
-      <div className="flex flex-wrap gap-3 text-sm">
-        {apartment.mobile_paths && (
-          <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded">
-            <span>Mobile Paths:</span>
-            <CheckCircle className="text-green-500 w-4 h-4" />
-          </div>
-        )}
-        {apartment.desktop_paths && (
-          <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded">
-            <span>Desktop Paths:</span>
-            <CheckCircle className="text-green-500 w-4 h-4" />
-          </div>
-        )}
-      </div>
-
       <UpdateApartmentStatus
         apartment={apartment}
         isOpen={isStatusDialogOpen}
