@@ -9,6 +9,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  Loader2,
 } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -43,11 +44,29 @@ export const ApartmentDetailsModal = ({
   });
 
   const [selectedImage, setSelectedImage] = useState(0);
- const isZoomed = false;
+  const [imageLoading, setImageLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Reset states when modal opens/closes
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedImage(0);
+      setImageLoading(true);
+      setFormData({ firstName: "", lastName: "", phoneNumber: "" });
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  // Handle escape key
   useEffect(() => {
     const handleEscKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !isZoomed) {
+      if (e.key === "Escape") {
         onClose();
       }
     };
@@ -59,18 +78,7 @@ export const ApartmentDetailsModal = ({
     return () => {
       window.removeEventListener("keydown", handleEscKey);
     };
-  }, [isOpen, isZoomed, onClose]);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen || !apartment) return null;
 
@@ -92,24 +100,39 @@ export const ApartmentDetailsModal = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Add your submission logic here
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API call
+      console.log("Form submitted:", formData);
+      // Reset form after successful submission
+      setFormData({ firstName: "", lastName: "", phoneNumber: "" });
+    } catch (error) {
+      console.error("Submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget && !isZoomed) {
+    if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
   const nextImage = () => {
     if (apartment.images && apartment.images.length > 0) {
+      setImageLoading(true);
       setSelectedImage((prev) => (prev + 1) % apartment.images!.length);
     }
   };
 
   const prevImage = () => {
     if (apartment.images && apartment.images.length > 0) {
+      setImageLoading(true);
       setSelectedImage(
         (prev) =>
           (prev - 1 + apartment.images!.length) % apartment.images!.length
@@ -117,176 +140,173 @@ export const ApartmentDetailsModal = ({
     }
   };
 
+  const handleImageLoad = () => {
+    setImageLoading(false);
+  };
+
+  const handleThumbnailClick = (index: number) => {
+    setImageLoading(true);
+    setSelectedImage(index);
+  };
+
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
     >
       <div
-        className="bg-white rounded-none md:rounded-lg shadow-xl w-full h-full md:h-auto md:max-w-screen-xl flex flex-col md:flex-row relative md:overflow-hidden md:m-6 overflow-y-scroll"
+        className="bg-white rounded-lg shadow-xl w-full max-w-6xl h-auto flex flex-col lg:flex-row relative overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Close Button */}
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-4 right-4 rounded-full h-8 w-8 z-10 cursor-pointer"
+          className="absolute top-4 right-4 rounded-full h-8 w-8 z-20 bg-white/90 hover:bg-white"
           aria-label="Close"
-          onClick={() => !isZoomed && onClose()}
+          onClick={onClose}
         >
           <X className="h-4 w-4" />
         </Button>
 
-        <div className="md:w-1/2 p-4 flex flex-col overflow-hidden">
-          <div className="flex-1 flex flex-col">
-            {apartment.images && apartment.images.length > 0 ? (
-              <>
-                <div className="relative rounded-lg overflow-hidden flex-1 bg-gray-100 h-[300px] md:h-96">
-                  <Zoom zoomMargin={10}>
-                    <div className="h-full w-full flex items-center justify-center">
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${apartment.images[selectedImage]}`}
-                        alt={`Apartment ${apartment.number}`}
-                        className="object-cover w-full h-full cursor-zoom-in"
-                        width={800}
-                        height={600}
-                      />
-                    </div>
-                  </Zoom>
-
-                  {/* Image navigation arrows */}
-                  {apartment.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={prevImage}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-1.5 shadow-md cursor-pointer"
-                        aria-label="Previous image"
-                      >
-                        <ChevronLeft className="h-5 w-5" />
-                      </button>
-                      <button
-                        onClick={nextImage}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-1.5 shadow-md cursor-pointer"
-                        aria-label="Next image"
-                      >
-                        <ChevronRight className="h-5 w-5" />
-                      </button>
-                    </>
-                  )}
-                </div>
-                {apartment.images.length > 1 && (
-                  <div className="mt-3 mb-2 md:hidden">
-                    <p className="text-sm font-medium mb-2">Gallery Images:</p>
-                    <div className="flex gap-3 overflow-x-auto pb-4 pt-1 px-1 bg-gray-50 rounded-lg">
-                      {apartment.images.map((img, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setSelectedImage(idx)}
-                          className={`relative rounded-md overflow-hidden h-20 w-20 flex-shrink-0 transition cursor-pointer ${
-                            selectedImage === idx
-                              ? "ring-2 ring-blue-500 shadow-md transform scale-105"
-                              : "border border-gray-200"
-                          }`}
-                        >
-                          <Image
-                            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${img}`}
-                            alt={`Thumbnail ${idx + 1}`}
-                            className="w-full h-full object-cover"
-                            width={100}
-                            height={100}
-                          />
-                        </button>
-                      ))}
-                    </div>
+        {/* Image Section */}
+        <div className="lg:w-1/2 flex flex-col min-h-0">
+          {apartment.images && apartment.images.length > 0 ? (
+            <>
+              {/* Main Image */}
+              <div className="relative justify-center items-center flex flex-col  h-full">
+                {imageLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
+                    <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
                   </div>
                 )}
-              </>
-            ) : (
-              <div className="flex-1 flex items-center justify-center bg-gray-100 rounded-lg h-64 md:h-96">
-                <p className="text-gray-500">No images available</p>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="md:w-1/2 flex flex-col">
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center">
-              <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 md:gap-3">
-                Apartment #{apartment.number}
-                <div
-                  className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full border flex  border-indigo-400 items-center gap-1 md:gap-1.5 text-sm md:text-base font-medium ${getStatusStyles()}`}
-                >
-                  {apartment.status === "available" && (
-                    <CheckCircle2 className="h-3 w-3 md:h-4 md:w-4 " />
-                  )}
-                  {apartment.status === "available" ? (
-                    <span>Available</span>
-                  ) : apartment.status === "sold" ? (
-                    <span>Sold</span>
-                  ) : apartment.status === "reserved" ? (
-                    <span>Reserved</span>
-                  ) : null}
-                </div>
-              </h2>
-            </div>
-          </div>
-          {apartment.images && apartment.images.length > 1 && (
-            <div className="hidden md:block p-4 border-b border-gray-200">
-              <p className="text-sm font-medium mb-2">Gallery Images:</p>
-              <div className="flex flex-wrap gap-2">
-                {apartment.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`relative rounded-md overflow-hidden h-16 w-16 flex-shrink-0 transition cursor-pointer ${
-                      selectedImage === idx
-                        ? "ring-2 ring-blue-500 shadow-md transform scale-105"
-                        : "border border-gray-200"
-                    }`}
-                  >
+
+                <Zoom zoomMargin={10}>
+                  <div className="h-full w-full rounded-lg">
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${img}`}
-                      alt={`Thumbnail ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                      width={100}
-                      height={100}
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${apartment.images[selectedImage]}`}
+                      alt={`Apartment ${apartment.number}`}
+                      className="object-cover w-full h-full cursor-zoom-in rounded-lg"
+                      width={800}
+                      height={600}
+                      onLoad={handleImageLoad}
+                      priority={selectedImage === 0}
                     />
-                  </button>
-                ))}
+                  </div>
+                </Zoom>
+
+                {/* Navigation Arrows */}
+                {apartment.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md transition-all"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-md transition-all"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Image Counter */}
+                {apartment.images.length > 1 && (
+                  <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                    {selectedImage + 1} / {apartment.images.length}
+                  </div>
+                )}
               </div>
+
+              {/* Thumbnails */}
+              {apartment.images.length > 1 && (
+                <div className="p-4 border-t bg-gray-50">
+                  <div className="flex gap-2 overflow-x-auto pb-2">
+                    {apartment.images.map((img, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleThumbnailClick(idx)}
+                        className={`relative rounded-lg overflow-hidden flex-shrink-0 transition-all ${
+                          selectedImage === idx
+                            ? "ring-2 ring-blue-500 shadow-md"
+                            : "ring-1 ring-gray-200 hover:ring-gray-300"
+                        }`}
+                      >
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${img}`}
+                          alt={`Thumbnail ${idx + 1}`}
+                          className="w-16 h-16 object-cover"
+                          width={64}
+                          height={64}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center bg-gray-100 min-h-[300px]">
+              <p className="text-gray-500">No images available</p>
             </div>
           )}
+        </div>
 
-          <div className="flex-1 p-4 space-y-4 md:space-y-6">
-            <div className=" grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-2 md:gap-3 bg-gray-100 p-3 md:p-4 rounded-lg  ">
-                <Ruler className="h-4 w-4 md:h-5 md:w-5 text-gray-500 flex-shrink-0" />
-                <div className="flex gap-2  items-center">
-                  <p className="text-xs md:text-sm text-gray-500">Area</p>
-                  <p className="font-semibold text-sm md:text-base">
+        {/* Content Section */}
+        <div className="lg:w-1/2 flex flex-col min-h-0">
+          {/* Header */}
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex items-center gap-3">
+              <h2 className="text-xl lg:text-2xl font-bold">
+                Apartment #{apartment.number}
+              </h2>
+              <div
+                className={`px-3 py-1 rounded-full border flex items-center gap-1.5 text-sm font-medium ${getStatusStyles()}`}
+              >
+                {apartment.status === "available" && (
+                  <CheckCircle2 className="h-4 w-4" />
+                )}
+                <span className="capitalize">{apartment.status}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Details and Form */}
+          <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+            {/* Property Details */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg">
+                <Ruler className="h-5 w-5 text-gray-500 flex-shrink-0" />
+                <div>
+                  <p className="text-sm text-gray-500">Area</p>
+                  <p className="font-semibold">
                     {apartment.area ? `${apartment.area} m²` : "N/A"}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 md:gap-3 bg-gray-100 p-3 md:p-4 rounded-lg  ">
-                <Tag className="h-4 w-4 md:h-5 md:w-5 text-gray-500 flex-shrink-0" />
-                <div className="flex gap-2  items-center">
-                  <p className="text-xs md:text-sm text-gray-500">Floor:</p>
-                  <p className="font-semibold text-sm md:text-base">
-                    {apartment.floor || "N/A"}
-                  </p>
+              <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg">
+                <Tag className="h-5 w-5 text-gray-500 flex-shrink-0" />
+                <div>
+                  <p className="text-sm text-gray-500">Floor</p>
+                  <p className="font-semibold">{apartment.floor || "N/A"}</p>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
-              <h3 className="font-medium mb-2 md:mb-3 text-sm md:text-base">
-                Contact Sales
-              </h3>
-              <form onSubmit={handleSubmit} className="space-y-2 md:space-y-3">
-                <div className="grid grid-cols-2 gap-2 md:gap-3">
+
+            {/* Contact Form */}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h3 className="font-semibold mb-4 text-lg">Contact Sales</h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label
                       htmlFor="firstName"
-                      className="block text-xs md:text-sm text-gray-600 mb-1"
+                      className="block text-sm font-medium text-gray-700 mb-1"
                     >
                       First Name
                     </label>
@@ -297,12 +317,13 @@ export const ApartmentDetailsModal = ({
                       value={formData.firstName}
                       onChange={handleInputChange}
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="lastName"
-                      className="block text-xs md:text-sm text-gray-600 mb-1"
+                      className="block text-sm font-medium text-gray-700 mb-1"
                     >
                       Last Name
                     </label>
@@ -313,13 +334,14 @@ export const ApartmentDetailsModal = ({
                       value={formData.lastName}
                       onChange={handleInputChange}
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
                 <div>
                   <label
                     htmlFor="phoneNumber"
-                    className="block text-xs md:text-sm text-gray-600 mb-1"
+                    className="block text-sm font-medium text-gray-700 mb-1"
                   >
                     Phone Number
                   </label>
@@ -330,13 +352,22 @@ export const ApartmentDetailsModal = ({
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full md:w-1/2 mt-2 cursor-pointer text-white bg-indigo-400 hover:bg-indigo-500"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                  disabled={isSubmitting}
                 >
-                  Submit Inquiry
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Inquiry"
+                  )}
                 </Button>
               </form>
             </div>

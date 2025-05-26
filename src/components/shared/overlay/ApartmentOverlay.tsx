@@ -1,7 +1,6 @@
 "use client";
 
-import { type FC, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { type FC } from "react";
 
 interface Coordinate {
   x: number;
@@ -25,10 +24,7 @@ const getClipPathPolygon = (
   scaleFactorX = 1,
   scaleFactorY = 1
 ) => {
-  if (!coords || coords.length < 3) {
-    console.error("Invalid coordinates for clip path", coords);
-    return "none";
-  }
+  if (!coords || coords.length < 3) return "none";
 
   return `polygon(${coords
     .map(({ x, y }) => `${x * scaleFactorX}px ${y * scaleFactorY}px`)
@@ -67,20 +63,6 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
   scaleFactorX = 1,
   scaleFactorY = 1,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(false);
-
-    const showTimeout = setTimeout(() => {
-      setIsVisible(true);
-    }, (flatId % 8) * 80);
-
-    return () => {
-      clearTimeout(showTimeout);
-    };
-  }, [coords, flatId]);
-
   const getStatusStyles = () => {
     const isHovered = hoveredApartment === flatId;
 
@@ -88,31 +70,27 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
       case "free":
       case "available":
         return {
-          background: isHovered ? "bg-emerald-500/40" : "bg-emerald-500/25",
-          textColor: "text-emerald-700",
-          badgeColor: "bg-emerald-100 text-emerald-800 border-emerald-200",
-          glowColor: "shadow-emerald-500/20",
+          background: isHovered ? "bg-green-600/70" : "bg-green-500/40",
+          textColor: "text-green-800",
+          badgeColor: "bg-green-100 text-green-800 border-green-300",
         };
       case "reserved":
         return {
-          background: isHovered ? "bg-amber-500/40" : "bg-amber-500/25",
-          textColor: "text-amber-700",
-          badgeColor: "bg-amber-100 text-amber-800 border-amber-200",
-          glowColor: "shadow-amber-500/20",
+          background: isHovered ? "bg-yellow-600/70" : "bg-yellow-500/40",
+          textColor: "text-yellow-800",
+          badgeColor: "bg-yellow-100 text-yellow-800 border-yellow-300",
         };
       case "sold":
         return {
-          background: isHovered ? "bg-red-500/40" : "bg-red-500/25",
-          textColor: "text-red-700",
-          badgeColor: "bg-red-100 text-red-800 border-red-200",
-          glowColor: "shadow-red-500/20",
+          background: isHovered ? "bg-red-600/70" : "bg-red-500/40",
+          textColor: "text-red-800",
+          badgeColor: "bg-red-100 text-red-800 border-red-300",
         };
       default:
         return {
-          background: isHovered ? "bg-slate-500/40" : "bg-slate-500/25",
-          textColor: "text-slate-700",
-          badgeColor: "bg-slate-100 text-slate-800 border-slate-200",
-          glowColor: "shadow-slate-500/20",
+          background: isHovered ? "bg-gray-600/70" : "bg-gray-500/40",
+          textColor: "text-gray-800",
+          badgeColor: "bg-gray-100 text-gray-800 border-gray-300",
         };
     }
   };
@@ -141,10 +119,8 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
 
   return (
     <>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.95 }}
-        transition={{ duration: 0.4, delay: (flatId % 8) * 0.08 }}
+      {/* Main clickable apartment area */}
+      <div
         style={{
           position: "absolute",
           top: 0,
@@ -158,42 +134,16 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
         className={`
           ${styles.background}
           border-2 border-white
-          ${isHovered ? `${styles.glowColor} shadow-lg` : ""}
-          transition-all duration-300 ease-out
+          transition-all duration-200
+          ${isHovered ? "shadow-lg" : ""}
         `}
         onMouseEnter={() => setHoveredApartment(flatId)}
         onMouseLeave={() => setHoveredApartment(null)}
         onClick={() => onApartmentClick(flatId, flatNumber)}
       />
 
-      {isHovered && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            clipPath: getClipPathPolygon(coords, scaleFactorX, scaleFactorY),
-            pointerEvents: "none",
-            filter: "blur(8px)",
-          }}
-          className={`${styles.background} border-white border-4`}
-        />
-      )}
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: 10 }}
-        animate={{
-          opacity: isVisible ? 1 : 0,
-          scale: isVisible ? 1 : 0.8,
-          y: isVisible ? 0 : 10,
-        }}
-        transition={{ duration: 0.4, delay: (flatId % 8) * 0.08 + 0.2 }}
+      {/* Apartment number and status labels */}
+      <div
         style={{
           position: "absolute",
           left: `${center.x}px`,
@@ -202,11 +152,12 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
           pointerEvents: "none",
           zIndex: 20,
         }}
-        className="flex flex-col items-center justify-center gap-1"
+        className="flex flex-col items-center gap-1"
       >
         <div className="bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200">
           <span className="font-bold text-lg text-gray-900">{flatNumber}</span>
         </div>
+
         <div
           className={`
             ${styles.badgeColor}
@@ -218,36 +169,11 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
           <span className="text-xs">{getStatusIcon()}</span>
           <span className="capitalize">{status}</span>
         </div>
-      </motion.div>
-      {status?.toLowerCase() === "available" && !isHovered && (
-        <motion.div
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            clipPath: getClipPathPolygon(coords, scaleFactorX, scaleFactorY),
-            pointerEvents: "none",
-          }}
-          className="border-2 border-emerald-400"
-        />
-      )}
+      </div>
+
+      {/* Simple hover tooltip */}
       {isHovered && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.2 }}
+        <div
           style={{
             position: "absolute",
             left: `${center.x}px`,
@@ -260,17 +186,10 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
         >
           <div className="text-center">
             <div className="font-semibold">Apartment {flatNumber}</div>
-            <div
-              className={`text-xs ${styles.textColor.replace(
-                "text-",
-                "text-"
-              )}`}
-            >
-              Status: {status}
-            </div>
+            <div className="text-xs text-slate-300">Status: {status}</div>
           </div>
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-800"></div>
-        </motion.div>
+        </div>
       )}
     </>
   );
