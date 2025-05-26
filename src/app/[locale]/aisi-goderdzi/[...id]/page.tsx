@@ -13,7 +13,6 @@ import {
 import { ImageResizer } from "@/components/shared/responsiveImage/FloorPlanResizer";
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import LocaleSwitcher from "@/i18n/LocaleSwitcher";
 
 import { FloorSelector } from "@/components/shared/floorInfo/FloorSelect";
 import { ApartmentDetailsModal } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";

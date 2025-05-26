@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Settings, PencilIcon, CheckCircle, Tag, Loader } from "lucide-react";
+import { Settings, PencilIcon, Tag, Loader } from "lucide-react";
 import type { Apartment } from "@/types/apartmentList";
 import UpdateApartmentStatus from "./ApartStatusUpdate";
 import Image from "next/image";

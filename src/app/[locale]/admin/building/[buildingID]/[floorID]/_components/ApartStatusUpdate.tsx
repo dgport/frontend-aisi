@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { apartmentsAPI } from "@/routes/apartments";
 import type { Apartment } from "@/types/apartmentList";
 
@@ -36,7 +35,7 @@ const UpdateApartmentStatus = ({
   floorId,
 }: UpdateApartmentStatusProps) => {
   const [status, setStatus] = useState<string>(apartment.status || "available");
-  const [sqmPrice, setSqmPrice] = useState<number>(apartment.sqm_price || 0);
+  const sqmPrice = apartment.sqm_price || 0;
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const queryClient = useQueryClient();
@@ -79,10 +78,6 @@ const UpdateApartmentStatus = ({
       flat_number: String(apartment.flat_number),
       sqm_price: Number(sqmPrice),
     });
-  };
-
-  const handleSqmPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSqmPrice(parseFloat(event.target.value));
   };
 
   return (
