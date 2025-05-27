@@ -1,15 +1,12 @@
 {
 
     "contactUs": "დაგვიკავშირდით",
-    "contactDescription": "contactDescription",
     "contactInfo": "საკონტაქტო ინფორმაცია",
-    "contactInfoDescription": "Reach out to us through any of these channels",
     "ourOffice": "ოფისი",
     "phone": "ტელეფონი",
     "email": "მეილი",
     "followUs": "გამოგვყევით",
-    "sendUsMessage": "მოგვწერეთ",
-    "sendUsDescribe": "Fill out the form below and we'll get back to you as soon as possible.",
+    "sendUsDescribe": "შეავსეთ ქვემოთ მოცემული ფორმა და ჩვენ დაგიკავშირდებით",
     "firstName": "სახელი",
     "lastName": "გვარი",
     "message": "ტექსტი",

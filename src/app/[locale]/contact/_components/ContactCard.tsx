@@ -25,11 +25,11 @@ interface FormData {
   message: string;
 }
 
-interface ContactInfo {
+type ContactInfo = {
   address: string;
-  phone: string;
+  phone: string[];
   email: string;
-}
+};
 
 const INITIAL_FORM_STATE: FormData = {
   firstName: "",
@@ -40,7 +40,7 @@ const INITIAL_FORM_STATE: FormData = {
 
 const CONTACT_INFO: ContactInfo = {
   address: "ანგისის პირველი შესახვევი #28, Batumi, Georgia",
-  phone: "+995 557 47 14 14",
+  phone: ["+995 557 47 14 14", "+995 514 04 30 00", "+995 514 03 40 00"],
   email: "aisistatus@gmail.com",
 };
 
@@ -124,12 +124,9 @@ const ContactCard: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-normal text-white mb-4">
+          <h1 className="text-3xl md:text-4xl   font-normal text-white mb-4">
             {t("contactUs")}
           </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            {t("contactDescription")}
-          </p>
         </motion.div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <motion.div
@@ -140,12 +137,9 @@ const ContactCard: React.FC = () => {
           >
             <Card className="bg-white/5 border border-white/10 backdrop-blur-sm h-full">
               <CardHeader>
-                <CardTitle className="text-white text-xl font-normal">
+                <CardTitle className="text-white text-lg font-normal">
                   {t("contactInfo")}
                 </CardTitle>
-                <CardDescription className="text-gray-400">
-                  {t("contactInfoDescription")}
-                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-start space-x-3">
@@ -169,12 +163,17 @@ const ContactCard: React.FC = () => {
                   />
                   <div>
                     <h3 className="text-white font-light mb-1">{t("phone")}</h3>
-                    <a
-                      href={`tel:${CONTACT_INFO.phone.replace(/[^0-9+]/g, "")}`}
-                      className="text-gray-400 hover:text-white transition-colors text-sm"
-                    >
-                      {CONTACT_INFO.phone}
-                    </a>
+                    <div className="flex flex-col space-y-1">
+                      {CONTACT_INFO.phone.map((number) => (
+                        <a
+                          key={number}
+                          href={`tel:${number.replace(/[^0-9+]/g, "")}`}
+                          className="text-gray-400 hover:text-white transition-colors text-sm"
+                        >
+                          {number}
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -236,9 +235,6 @@ const ContactCard: React.FC = () => {
           >
             <Card className="bg-white/5 border border-white/10 backdrop-blur-sm h-full">
               <CardHeader>
-                <CardTitle className="text-white text-xl font-normal">
-                  {t("sendUsMessage")}
-                </CardTitle>
                 <CardDescription className="text-gray-400">
                   {t("sendUsDescribe")}
                 </CardDescription>
@@ -249,7 +245,7 @@ const ContactCard: React.FC = () => {
                     <div className="space-y-2">
                       <label
                         htmlFor="firstName"
-                        className="text-white text-sm font-light"
+                        className="text-white text-sm font-light "
                       >
                         {t("firstName")}
                       </label>
@@ -259,8 +255,7 @@ const ContactCard: React.FC = () => {
                         value={formData.firstName}
                         onChange={handleChange}
                         required
-                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
-                        placeholder="Enter your first name"
+                        className="bg-white/10 border-white/20 mt-3 text-white placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
                       />
                     </div>
                     <div className="space-y-2">
@@ -276,8 +271,7 @@ const ContactCard: React.FC = () => {
                         value={formData.lastName}
                         onChange={handleChange}
                         required
-                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
-                        placeholder="Enter your last name"
+                        className="bg-white/10 border-white/20 mt-3 text-white placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
                       />
                     </div>
                   </div>
@@ -295,8 +289,7 @@ const ContactCard: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
-                      placeholder="Enter your email address"
+                      className="bg-white/10 border-white/20 mt-3 text-white placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
                     />
                   </div>
                   <div className="space-y-2">
@@ -313,8 +306,7 @@ const ContactCard: React.FC = () => {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400 resize-none"
-                      placeholder="Tell us about your project or inquiry..."
+                      className="bg-white/10 border-white/20 text-white mt-3 placeholder:text-gray-400 focus:border-indigo-400 focus:ring-indigo-400 resize-none"
                     />
                   </div>
                   {result && (
