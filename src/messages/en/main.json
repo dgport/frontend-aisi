@@ -67,6 +67,12 @@
   "faqAnswer3": "The purchasing process begins with selecting your preferred floor and unit. Once you've made your selection, our sales team will guide you through the reservation process, financing options, contract signing, and closing procedures. We're here to make your home-buying experience as seamless as possible.",
   "contactUs": "Contact Us",
   "navigation": "Navigation",
-  "followUs": "Follow Us"
+  "followUs": "Follow Us",
+  "apartment": "Apartment",
+  "status": "Status",
+  "available": "Available",
+  "reserved": "Reserved",
+  "sold": "Sold",
+  "area": "M2"
     
 }

@@ -10,14 +10,13 @@ import { ImageResizer } from "@/components/shared/responsiveImage/FloorPlanResiz
 import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LocaleSwitcher from "@/i18n/LocaleSwitcher";
- 
 import {
   BATUMI_MAX_SIZE,
   BATUMI_ORIGINAL_DIMENSIONS,
 } from "@/constants/batumiFloorSizes";
 import { FloorSelector } from "@/components/shared/floorInfo/FloorSelect";
-import { ApartmentDetailsModal } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
-
+import { ApartmentDetailsSheet } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
+ 
 interface ParamIds {
   buildingId: string;
   floorPlanId: string;
@@ -34,13 +33,34 @@ interface SelectedApartment {
   price?: number;
   images?: string[];
 }
+
 const MemoizedImageResizer = React.memo(ImageResizer);
 const MemoizedApartmentOverlay = React.memo(ApartmentOverlay);
 
 const LoadingIndicator = ({ message = "Loading..." }) => (
-  <div className="flex flex-col items-center justify-center h-full w-full">
+  <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-50">
     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600 mb-4"></div>
     <p className="text-gray-600 text-sm">{message}</p>
+  </div>
+);
+
+const ErrorDisplay = ({ onBack }: { onBack: () => void }) => (
+  <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-50">
+    <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+      <h1 className="text-2xl font-bold text-red-700 mb-2">
+        Unable to Load Data
+      </h1>
+      <p className="text-gray-700 mb-4">
+        We couldn't load the floor plan data. Please try again later or contact
+        support.
+      </p>
+      <Button
+        onClick={onBack}
+        className="bg-red-600 hover:bg-red-700 text-white"
+      >
+        Go Back
+      </Button>
+    </div>
   </div>
 );
 
@@ -74,14 +94,8 @@ export default function FloorPlanPage() {
     queryKey: ["floorPlanList", buildingId],
     queryFn: async () => {
       if (!buildingId) return [];
-
-      try {
-        const response = await floorPlansAPI.getList(buildingId);
-        return response;
-      } catch (err) {
-        console.error("Error fetching floor plans:", err);
-        return [];
-      }
+      const response = await floorPlansAPI.getList(buildingId);
+      return response;
     },
     staleTime: 5 * 60 * 1000,
     gcTime: 30 * 60 * 1000,
@@ -90,29 +104,21 @@ export default function FloorPlanPage() {
   });
 
   const selectedFloorPlan = useMemo(() => {
-    if (!floorPlans || floorPlans.length === 0) return null;
-
+    if (!floorPlans?.length) return null;
     return (
       floorPlans.find((plan) => plan.id.toString() === floorPlanId) || null
     );
   }, [floorPlans, floorPlanId]);
 
-  // Determine block based on floorPlanId
   const block = useMemo(() => {
-    if (floorPlanId === "2") return "a_block";
-    if (floorPlanId === "3") return "b_block";
-    // Default fallback
-    return "a_block";
+    return floorPlanId === "3" ? "b_block" : "a_block";
   }, [floorPlanId]);
 
-  // Get dimensions based on the determined block
-  const originalDimensions = useMemo(() => {
-    return BATUMI_ORIGINAL_DIMENSIONS[block];
-  }, [block]);
-
-  const maxDimensions = useMemo(() => {
-    return BATUMI_MAX_SIZE[block];
-  }, [block]);
+  const originalDimensions = useMemo(
+    () => BATUMI_ORIGINAL_DIMENSIONS[block],
+    [block]
+  );
+  const maxDimensions = useMemo(() => BATUMI_MAX_SIZE[block], [block]);
 
   const {
     data: apartmentsData,
@@ -166,21 +172,16 @@ export default function FloorPlanPage() {
     [apartmentsData]
   );
 
-  const handleCloseSheet = () => {
-    setIsSheetOpen(false);
-  };
-
-  const handleBack = useCallback(() => {
-    router.back();
-  }, [router]);
+  const handleBack = useCallback(() => router.back(), [router]);
 
   const imagePath = useMemo(() => {
-    if (selectedFloorPlan) {
-      return isMobile
-        ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan.mobile_image}`
-        : `${process.env.NEXT_PUBLIC_IMAGE_URL}/${selectedFloorPlan.desktop_image}`;
-    }
-    return "/placeholder.svg";
+    if (!selectedFloorPlan) return "/placeholder.svg";
+
+    const imageUrl = isMobile
+      ? selectedFloorPlan.mobile_image
+      : selectedFloorPlan.desktop_image;
+
+    return `${process.env.NEXT_PUBLIC_IMAGE_URL}/${imageUrl}`;
   }, [selectedFloorPlan, isMobile]);
 
   const apartmentOverlays = useCallback(
@@ -211,7 +212,13 @@ export default function FloorPlanPage() {
     [apartmentAreas, hoveredApartment, handleApartmentClick]
   );
 
-  const shouldShowHeader = !isLoading;
+  if (isLoading) {
+    return <LoadingIndicator message="Loading floor plan data..." />;
+  }
+
+  if (hasError) {
+    return <ErrorDisplay onBack={handleBack} />;
+  }
 
   return (
     <main
@@ -221,88 +228,63 @@ export default function FloorPlanPage() {
         isMobile ? "overflow-y-auto" : "overflow-hidden"
       } z-50`}
     >
-      {isLoading ? (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-          <LoadingIndicator message="Loading floor plan data..." />
-        </div>
-      ) : hasError ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-            <h1 className="text-2xl font-bold text-red-700 mb-2">
-              Unable to Load Data
-            </h1>
-            <p className="text-gray-700 mb-4">
-              We couldn't load the floor plan data. Please try again later or
-              contact support.
-            </p>
+      <div className={`flex flex-col ${isMobile ? "" : "h-full"}`}>
+        {/* Header */}
+        <div className="bg-white flex justify-between items-center rounded-xl shadow-lg py-4 px-4 md:px-10">
+          <div className="flex-shrink-0">
             <Button
+              variant="outline"
+              size="sm"
               onClick={handleBack}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="flex items-center gap-1"
             >
-              Go Back
+              <ChevronLeft size={16} />
+              <span className="hidden md:inline">Back</span>
             </Button>
           </div>
-        </div>
-      ) : (
-        <div className={`flex flex-col ${isMobile ? "" : "h-full"}`}>
-          {shouldShowHeader && (
-            <div className="bg-white flex justify-between items-center rounded-xl shadow-lg py-4 px-4 md:px-10">
-              <div className="flex-shrink-0">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleBack}
-                  className="flex items-center gap-1"
-                >
-                  <ChevronLeft size={16} />
-                  <span className="hidden md:inline">Back</span>
-                </Button>
-              </div>
 
-              <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
-                <FloorSelector
-                  currentFloor={Number.parseInt(floorId)}
-                  floorRangeStart={selectedFloorPlan?.floor_range_start}
-                  floorRangeEnd={selectedFloorPlan?.floor_range_end}
-                  buildingId={buildingId}
-                  floorPlanId={floorPlanId}
-                  route="aisi-batumi"
-                />
-              </div>
-
-              <div className="flex-shrink-0">
-                <LocaleSwitcher />
-              </div>
-            </div>
-          )}
-
-          <div
-            className={`${
-              isMobile ? "mt-2" : "flex-1 overflow-hidden min-h-0"
-            }`}
-          >
-            <MemoizedImageResizer
-              imageSrc={imagePath || "/placeholder.svg"}
-              altText={`${
-                selectedFloorPlan?.name || "Building"
-              } - Floor ${floorId} Plan`}
-              originalDimensions={originalDimensions}
-              maxDimensions={maxDimensions}
-              isMobile={isMobile}
-              priority
-              key={`floor-${floorId}-plan-${floorPlanId}`}
-            >
-              {apartmentOverlays}
-            </MemoizedImageResizer>
+          <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
+            <FloorSelector
+              currentFloor={Number.parseInt(floorId)}
+              floorRangeStart={selectedFloorPlan?.floor_range_start}
+              floorRangeEnd={selectedFloorPlan?.floor_range_end}
+              buildingId={buildingId}
+              floorPlanId={floorPlanId}
+              route="aisi-batumi"
+            />
           </div>
 
-          <ApartmentDetailsModal
-            isOpen={isSheetOpen}
-            onClose={handleCloseSheet}
-            apartment={selectedApartment || null}
-          />
+          <div className="flex-shrink-0">
+            <LocaleSwitcher />
+          </div>
         </div>
-      )}
+
+        {/* Floor Plan */}
+        <div
+          className={`${isMobile ? "mt-2" : "flex-1 overflow-hidden min-h-0"}`}
+        >
+          <MemoizedImageResizer
+            imageSrc={imagePath}
+            altText={`${
+              selectedFloorPlan?.name || "Building"
+            } - Floor ${floorId} Plan`}
+            originalDimensions={originalDimensions}
+            maxDimensions={maxDimensions}
+            isMobile={isMobile}
+            priority
+            key={`floor-${floorId}-plan-${floorPlanId}`}
+          >
+            {apartmentOverlays}
+          </MemoizedImageResizer>
+        </div>
+
+        {/* Apartment Details Modal */}
+        <ApartmentDetailsSheet
+          isOpen={isSheetOpen}
+          onClose={() => setIsSheetOpen(false)}
+          apartment={selectedApartment || null}
+        />
+      </div>
     </main>
   );
 }

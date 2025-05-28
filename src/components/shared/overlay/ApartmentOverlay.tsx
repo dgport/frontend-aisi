@@ -1,6 +1,7 @@
 "use client";
 
-import { type FC } from "react";
+import { useTranslations } from "next-intl";
+import { useTransition, type FC } from "react";
 
 interface Coordinate {
   x: number;
@@ -12,6 +13,7 @@ interface ApartmentAreaProps {
   flatNumber: number;
   status: string;
   coords: Coordinate[];
+  area?: number; // Area in square meters
   hoveredApartment: number | null;
   setHoveredApartment: (id: number | null) => void;
   onApartmentClick?: (flatId: number, flatNumber: number) => void;
@@ -57,12 +59,15 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
   flatNumber,
   status,
   coords,
+  area,
   hoveredApartment,
   setHoveredApartment,
   onApartmentClick = () => {},
   scaleFactorX = 1,
   scaleFactorY = 1,
 }) => {
+  const t = useTranslations("main");
+
   const getStatusStyles = () => {
     const isHovered = hoveredApartment === flatId;
 
@@ -109,6 +114,20 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
     }
   };
 
+  const getTranslatedStatus = () => {
+    switch (status?.toLowerCase()) {
+      case "free":
+      case "available":
+        return t("available");
+      case "reserved":
+        return t("res");
+      case "sold":
+        return t("sold");
+      default:
+        return status;
+    }
+  };
+
   if (!coords || coords.length < 3) {
     return null;
   }
@@ -119,7 +138,6 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
 
   return (
     <>
-      {/* Main clickable apartment area */}
       <div
         style={{
           position: "absolute",
@@ -141,8 +159,6 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
         onMouseLeave={() => setHoveredApartment(null)}
         onClick={() => onApartmentClick(flatId, flatNumber)}
       />
-
-      {/* Apartment number and status labels */}
       <div
         style={{
           position: "absolute",
@@ -154,8 +170,12 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
         }}
         className="flex flex-col items-center gap-1"
       >
-        <div className="bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200">
-          <span className="font-bold text-lg text-gray-900">{flatNumber}</span>
+        <div className="bg-white/95 backdrop-blur-sm rounded-lg px-2 py-1 shadow-lg border border-gray-200">
+          <div className="text-center">
+            <span className="font-bold text-sm text-gray-900">
+              # {flatNumber}
+            </span>
+          </div>
         </div>
 
         <div
@@ -165,19 +185,14 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
             border shadow-sm backdrop-blur-sm
             flex items-center gap-1
           `}
-        >
-          <span className="text-xs">{getStatusIcon()}</span>
-          <span className="capitalize">{status}</span>
-        </div>
+        ></div>
       </div>
-
-      {/* Simple hover tooltip */}
       {isHovered && (
         <div
           style={{
             position: "absolute",
             left: `${center.x}px`,
-            top: `${center.y - 60}px`,
+            top: `${center.y - 70}px`,
             transform: "translateX(-50%)",
             pointerEvents: "none",
             zIndex: 30,
@@ -185,8 +200,11 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
           className="bg-slate-800 text-white px-3 py-2 rounded-lg shadow-xl border border-slate-600 text-sm font-medium"
         >
           <div className="text-center">
-            <div className="font-semibold">Apartment {flatNumber}</div>
-            <div className="text-xs text-slate-300">Status: {status}</div>
+            <div className="font-semibold">
+              {t("apartment")} # {flatNumber}
+            </div>
+            <span className="text-xs mr-2 ">{getStatusIcon()}</span>
+            <span className="capitalize">{getTranslatedStatus()}</span>
           </div>
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-800"></div>
         </div>

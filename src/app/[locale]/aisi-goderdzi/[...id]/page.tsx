@@ -15,7 +15,7 @@ import { ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { FloorSelector } from "@/components/shared/floorInfo/FloorSelect";
-import { ApartmentDetailsModal } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
+ 
 
 interface ParamIds {
   buildingId: string;
@@ -271,11 +271,11 @@ export default function FloorPlanPage() {
             </MemoizedImageResizer>
           </div>
 
-          <ApartmentDetailsModal
+          {/* <ApartmentDetailsModal
             isOpen={isSheetOpen}
             onClose={handleCloseSheet}
             apartment={selectedApartment || null}
-          />
+          /> */}
         </div>
       )}
     </main>

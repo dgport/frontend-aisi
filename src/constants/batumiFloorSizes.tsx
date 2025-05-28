@@ -5,8 +5,8 @@ export const BATUMI_ORIGINAL_DIMENSIONS = {
       height: 671,
     },
     mobile: {
-     width: 1920,
-      height: 2957,
+      width: 1948,
+      height: 3044,
     },
   },
   b_block: {
@@ -28,12 +28,12 @@ export const BATUMI_MAX_SIZE = {
       height: 671,
     },
     mobile: {
-     width: 1920,
-      height: 2957,
+      width: 1948,
+      height: 3044,
     },
   },
   b_block: {
-     desktop: {
+    desktop: {
       width: 1440,
       height: 671,
     },
