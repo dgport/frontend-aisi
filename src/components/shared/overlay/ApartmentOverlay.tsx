@@ -170,12 +170,10 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
         }}
         className="flex flex-col items-center gap-1"
       >
-        <div className="bg-white/95 backdrop-blur-sm rounded-lg px-2 py-1 shadow-lg border border-gray-200">
-          <div className="text-center">
-            <span className="font-bold text-sm text-gray-900">
-              # {flatNumber}
-            </span>
-          </div>
+        <div className="bg-white/85 backdrop-blur-sm rounded-full px-2 py-0.5 shadow-sm border border-gray-200">
+          <span className="font-medium text-xs text-gray-700">
+            #{flatNumber}
+          </span>
         </div>
 
         <div

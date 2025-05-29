@@ -175,7 +175,7 @@ export function ImageResizer({
   const scaleFactorY = imagePosition.height / baseHeight;
 
   return (
-    <div ref={containerRef} className="relative w-full py-5">
+    <div ref={containerRef} className="relative w-full pb-5">
       <div
         className="relative  
           flex justify-center items-center"
@@ -201,7 +201,7 @@ export function ImageResizer({
             fill
             priority={priority}
             onLoad={updateImageMetrics}
-            className="rounded-lg"
+            className="md:rounded-lg"
           />
 
           <div

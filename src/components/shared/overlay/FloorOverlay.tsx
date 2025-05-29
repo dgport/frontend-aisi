@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import { useEffect, useState } from "react";
 
 interface Coordinate {
   x: number;
@@ -32,13 +33,30 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
   handleFloorClick = () => alert(`Apartment #${flatNumber} clicked`),
   scaleFactor,
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
   const isHovered = hoveredApartment === flatId;
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || "ontouchstart" in window);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const getBackgroundColor = () => {
-    if (isHovered) {
-      return "bg-indigo-400/60 border-2 border-white shadow-lg";
+    if (isMobile) {
+      return isHovered
+        ? "bg-indigo-500/70 border-2 border-white shadow-xl"
+        : "bg-indigo-300/40 border border-indigo-200";
+    } else {
+      return isHovered
+        ? "bg-indigo-400/60 border-2 border-white shadow-lg"
+        : "";
     }
-    return "";
   };
 
   return (
@@ -48,9 +66,14 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
         clipPath: getClipPathPolygon(coords, scaleFactor),
       }}
       className={`absolute top-0 left-0 w-full h-full transition-all duration-300 cursor-pointer ${getBackgroundColor()} hover:shadow-xl`}
-      onMouseEnter={() => setHoveredApartment(flatId)}
-      onMouseLeave={() => setHoveredApartment(null)}
-      onClick={() => handleFloorClick(flatId, flatNumber)}
+      onMouseEnter={() => !isMobile && setHoveredApartment(flatId)}
+      onMouseLeave={() => !isMobile && setHoveredApartment(null)}
+      onClick={() => {
+        if (isMobile) {
+          setHoveredApartment(isHovered ? null : flatId);
+        }
+        handleFloorClick(flatId, flatNumber);
+      }}
     />
   );
 };

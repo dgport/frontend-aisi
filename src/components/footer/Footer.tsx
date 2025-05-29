@@ -67,6 +67,14 @@ export default function Footer() {
                   {item.name}
                 </Link>
               ))}
+              <a
+                className="text-gray-400 hover:text-white"
+                href="https://korter.ge"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Korter.ge
+              </a>
             </div>
           </motion.div>
           <motion.div

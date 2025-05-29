@@ -5,17 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { floorPlansAPI } from "@/routes/floorPlans";
 import { useApartmentPaths } from "@/hooks/UseApartmentsPaths";
 import { ApartmentOverlay } from "@/components/shared/overlay/ApartmentOverlay";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import {
   GODERDZI_MAX_SIZE,
   GODERDZI_ORIGINAL_DIMENSIONS,
 } from "@/constants/goderdziFloorSizes";
 import { ImageResizer } from "@/components/shared/responsiveImage/FloorPlanResizer";
-import { ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
 import { FloorSelector } from "@/components/shared/floorInfo/FloorSelect";
- 
+import { ApartmentDetailsSheet } from "@/components/shared/apartmentInfo/ApartmentDetailsSheet";
 
 interface ParamIds {
   buildingId: string;
@@ -37,13 +34,6 @@ interface SelectedApartment {
 const MemoizedImageResizer = React.memo(ImageResizer);
 const MemoizedApartmentOverlay = React.memo(ApartmentOverlay);
 
-const LoadingIndicator = ({ message = "Loading..." }) => (
-  <div className="flex flex-col items-center justify-center h-full w-full">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600 mb-4"></div>
-    <p className="text-gray-600 text-sm">{message}</p>
-  </div>
-);
-
 export default function FloorPlanPage() {
   const [hoveredApartment, setHoveredApartment] = useState<number | null>(null);
   const [selectedApartment, setSelectedApartment] = useState<
@@ -52,7 +42,6 @@ export default function FloorPlanPage() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const params = useParams();
-  const router = useRouter();
 
   const parseIds = useCallback((): ParamIds => {
     const idArray = Array.isArray(params.id) ? params.id : [params.id];
@@ -66,11 +55,7 @@ export default function FloorPlanPage() {
   const { buildingId, floorPlanId, floorId } = parseIds();
   const hasValidIds = Boolean(buildingId && floorPlanId && floorId);
 
-  const {
-    data: floorPlans = [],
-    isLoading: isLoadingFloorPlans,
-    error: floorPlansError,
-  } = useQuery<any[]>({
+  const { data: floorPlans = [] } = useQuery<any[]>({
     queryKey: ["floorPlanList", buildingId],
     queryFn: async () => {
       if (!buildingId) return [];
@@ -95,11 +80,7 @@ export default function FloorPlanPage() {
     );
   }, [floorPlans, floorPlanId]);
 
-  const {
-    data: apartmentsData,
-    isLoading: isLoadingApartments,
-    error: apartmentsError,
-  } = useQuery({
+  const { data: apartmentsData } = useQuery({
     queryKey: ["apartments", buildingId, floorPlanId, floorId],
     queryFn: async () => {
       if (!hasValidIds) throw new Error("Missing required IDs");
@@ -110,12 +91,6 @@ export default function FloorPlanPage() {
     retry: 2,
     enabled: hasValidIds,
   });
-
-  const isLoading = isLoadingFloorPlans || isLoadingApartments;
-  const hasError =
-    floorPlansError ||
-    apartmentsError ||
-    (!isLoading && (!floorPlans.length || !selectedFloorPlan));
 
   const { isMobile, apartmentAreas } = useApartmentPaths(apartmentsData);
 
@@ -146,14 +121,6 @@ export default function FloorPlanPage() {
     },
     [apartmentsData]
   );
-
-  const handleCloseSheet = () => {
-    setIsSheetOpen(false);
-  };
-
-  const handleBack = useCallback(() => {
-    router.push("/aisi-goderdzi");
-  }, [router]);
 
   const imagePath = useMemo(() => {
     if (selectedFloorPlan) {
@@ -192,92 +159,45 @@ export default function FloorPlanPage() {
     [apartmentAreas, hoveredApartment, handleApartmentClick]
   );
 
-  
-
   return (
     <main
-      className={`relative ${
-        isMobile ? "h-auto" : "h-auto"
-      } w-full bg-gray-50 ${
-        isMobile ? "overflow-y-auto" : "overflow-hidden"
-      } z-50`}
+      className={` w-full  pt-24 md:pt-28 pb-10 min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900  ${
+        isMobile ? "min-h-screen overflow-y-auto" : "h-auto"
+      }`}
     >
-      {isLoading ? (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
-          <LoadingIndicator message="Loading floor plan data..." />
+      <div className={`flex flex-col ${isMobile ? "" : "h-full"}`}>
+        <div className="flex w-full justify-center items-center">
+          <FloorSelector
+            currentFloor={Number.parseInt(floorId)}
+            floorRangeStart={selectedFloorPlan?.floor_range_start}
+            floorRangeEnd={selectedFloorPlan?.floor_range_end}
+            buildingId={buildingId}
+            floorPlanId={floorPlanId}
+            route="aisi-batumi"
+          />
         </div>
-      ) : hasError ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-            <h1 className="text-2xl font-bold text-red-700 mb-2">
-              Unable to Load Data
-            </h1>
-            <p className="text-gray-700 mb-4">
-              We couldn't load the floor plan data. Please try again later or
-              contact support.
-            </p>
-            <Button
-              onClick={handleBack}
-              className="bg-red-600 hover:bg-red-700 text-white"
-            >
-              Go Back
-            </Button>
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col">
-          <div className="bg-white flex justify-start md:gap-10 items-center rounded-xl shadow-lg py-4 px-4 md:px-10">
-            <div className="flex-shrink-0">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleBack}
-                className="flex items-center gap-1"
-              >
-                <ChevronLeft size={16} />
-                <span className="hidden md:inline">Back</span>
-              </Button>
-            </div>
 
-            <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
-              <FloorSelector
-                currentFloor={Number.parseInt(floorId)}
-                floorRangeStart={selectedFloorPlan?.floor_range_start}
-                floorRangeEnd={selectedFloorPlan?.floor_range_end}
-                buildingId={buildingId}
-                floorPlanId={floorPlanId}
-                route="aisi-goderdzi"
-              />
-            </div>
-          </div>
-
-          <div
-            className={`${
-              isMobile ? "mt-2" : "flex-1 overflow-hidden min-h-0"
-            }`}
+        <div className="flex-1 min-h-0">
+          <MemoizedImageResizer
+            imageSrc={imagePath}
+            altText={`${
+              selectedFloorPlan?.name || "Building"
+            } - Floor ${floorId} Plan`}
+            originalDimensions={GODERDZI_ORIGINAL_DIMENSIONS}
+            maxDimensions={GODERDZI_MAX_SIZE}
+            isMobile={isMobile}
+            priority
+            key={`floor-${floorId}-plan-${floorPlanId}`}
           >
-            <MemoizedImageResizer
-              imageSrc={imagePath || "/placeholder.svg"}
-              altText={`${
-                selectedFloorPlan?.name || "Building"
-              } - Floor ${floorId} Plan`}
-              originalDimensions={GODERDZI_ORIGINAL_DIMENSIONS}
-              maxDimensions={GODERDZI_MAX_SIZE}
-              isMobile={isMobile}
-              priority
-              key={`floor-${floorId}-plan-${floorPlanId}`}
-            >
-              {apartmentOverlays}
-            </MemoizedImageResizer>
-          </div>
-
-          {/* <ApartmentDetailsModal
-            isOpen={isSheetOpen}
-            onClose={handleCloseSheet}
-            apartment={selectedApartment || null}
-          /> */}
+            {apartmentOverlays}
+          </MemoizedImageResizer>
         </div>
-      )}
+        <ApartmentDetailsSheet
+          isOpen={isSheetOpen}
+          onClose={() => setIsSheetOpen(false)}
+          apartment={selectedApartment || null}
+        />
+      </div>
     </main>
   );
 }

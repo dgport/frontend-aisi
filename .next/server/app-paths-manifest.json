@@ -7,5 +7,8 @@
   "/[locale]/aisi-batumi/page": "app/[locale]/aisi-batumi/page.js",
   "/[locale]/aisi-goderdzi/[...id]/page": "app/[locale]/aisi-goderdzi/[...id]/page.js",
   "/[locale]/aisi-goderdzi/page": "app/[locale]/aisi-goderdzi/page.js",
+  "/[locale]/contact/page": "app/[locale]/contact/page.js",
+  "/[locale]/icon.png/route": "app/[locale]/icon.png/route.js",
+  "/[locale]/signin/page": "app/[locale]/signin/page.js",
   "/_not-found/page": "app/_not-found/page.js"
 }
