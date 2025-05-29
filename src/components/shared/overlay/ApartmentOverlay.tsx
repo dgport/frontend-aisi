@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useTransition, type FC } from "react";
+import { type FC } from "react";
 
 interface Coordinate {
   x: number;
@@ -13,7 +13,6 @@ interface ApartmentAreaProps {
   flatNumber: number;
   status: string;
   coords: Coordinate[];
-  area?: number; // Area in square meters
   hoveredApartment: number | null;
   setHoveredApartment: (id: number | null) => void;
   onApartmentClick?: (flatId: number, flatNumber: number) => void;
@@ -59,7 +58,6 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
   flatNumber,
   status,
   coords,
-  area,
   hoveredApartment,
   setHoveredApartment,
   onApartmentClick = () => {},

@@ -42,88 +42,97 @@ export const ApartmentDetailsSheet = ({ isOpen, onOpenChange, onClose, apartment
     setSelectedImage((prev) => (prev > 0 ? prev - 1 : prev))
   }
 
-  const nextImage = () => {
-    setSelectedImage((prev) => (prev < apartment?.images?.length! - 1 ? prev + 1 : prev))
+const nextImage = () => {
+  setSelectedImage((prev) => {
+    const imagesLength = apartment?.images?.length ?? 0;
+    return prev < imagesLength - 1 ? prev + 1 : prev;
+  });
+};
+
+useEffect(() => {
+  if (isOpen) {
+    setSelectedImage(0);
+    setImageLoading(true);
+    setShowContactForm(false);
+    setShowZoom(false);
+    setFormData({ firstName: "", lastName: "", phoneNumber: "" });
   }
+}, [isOpen]);
 
-  useEffect(() => {
-    if (isOpen) {
-      setSelectedImage(0)
-      setImageLoading(true)
-      setShowContactForm(false)
-      setShowZoom(false)
-      setFormData({ firstName: "", lastName: "", phoneNumber: "" })
-    }
-  }, [isOpen])
+if (!apartment) return null;
 
-  if (!apartment) return null
-
-  const getStatusStyles = () => {
-    switch (apartment.status?.toLowerCase()) {
-      case "available":
-        return "bg-green-50 text-green-600 border-green-200"
-      case "reserved":
-        return "bg-amber-50 text-amber-600 border-amber-200"
-      case "sold":
-        return "bg-red-50 text-red-600 border-red-200"
-      default:
-        return "bg-gray-50 text-gray-600 border-gray-200"
-    }
+const getStatusStyles = () => {
+  switch (apartment.status?.toLowerCase()) {
+    case "available":
+      return "bg-green-50 text-green-600 border-green-200";
+    case "reserved":
+      return "bg-amber-50 text-amber-600 border-amber-200";
+    case "sold":
+      return "bg-red-50 text-red-600 border-red-200";
+    default:
+      return "bg-gray-50 text-gray-600 border-gray-200";
   }
+};
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setFormData((prev) => ({ ...prev, [name]: value }));
+};
+
+const handleClose = (open: boolean) => {
+  if (onOpenChange) {
+    onOpenChange(open);
   }
-
-  const handleClose = (open: boolean) => {
-    if (onOpenChange) {
-      onOpenChange(open)
-    }
-    if (onClose && !open) {
-      onClose()
-    }
+  if (onClose && !open) {
+    onClose();
   }
+};
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      setFormData({ firstName: "", lastName: "", phoneNumber: "" })
-      setShowContactForm(false)
-      handleClose(false)
-    } catch (error) {
-      console.error("Submission error:", error)
-    } finally {
-      setIsSubmitting(false)
-    }
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setFormData({ firstName: "", lastName: "", phoneNumber: "" });
+    setShowContactForm(false);
+    handleClose(false);
+  } catch (error) {
+    console.error("Submission error:", error);
+  } finally {
+    setIsSubmitting(false);
   }
+};
 
-  const handleImageLoad = () => {
-    setImageLoading(false)
-  }
+const handleImageLoad = () => {
+  setImageLoading(false);
+};
 
-  const handleThumbnailClick = (index: number) => {
-    if (selectedImage !== index) {
-      setImageLoading(true)
-      setSelectedImage(index)
-    }
+const handleThumbnailClick = (index: number) => {
+  if (selectedImage !== index) {
+    setImageLoading(true);
+    setSelectedImage(index);
   }
+};
 
-  const handleImageZoom = (index: number) => {
-    setZoomImageIndex(index)
-    setShowZoom(true)
-  }
+const handleImageZoom = (index: number) => {
+  setZoomImageIndex(index);
+  setShowZoom(true);
+};
+const nextZoomImage = () => {
+  setZoomImageIndex((prev) => {
+    const imagesLength = apartment?.images?.length ?? 0;
+    return imagesLength > 0 ? (prev < imagesLength - 1 ? prev + 1 : 0) : prev;
+  });
+};
 
-  const nextZoomImage = () => {
-    setZoomImageIndex((prev) => (prev < apartment?.images?.length! - 1 ? prev + 1 : 0))
-  }
+const prevZoomImage = () => {
+  setZoomImageIndex((prev) => {
+    const imagesLength = apartment?.images?.length ?? 0;
+    return imagesLength > 0 ? (prev > 0 ? prev - 1 : imagesLength - 1) : prev;
+  });
+};
 
-  const prevZoomImage = () => {
-    setZoomImageIndex((prev) => (prev > 0 ? prev - 1 : apartment?.images?.length! - 1))
-  }
 
   const images = apartment.images || []
 
