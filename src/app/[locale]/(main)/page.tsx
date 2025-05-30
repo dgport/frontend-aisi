@@ -3,8 +3,10 @@ import PaymentCalculator from "@/components/shared/calculator/Calculator";
 import Cover from "./_components/Cover";
 import MainFAQ from "./_components/MainFAQ";
 import ProjectsSection from "./_components/ProjectsSection";
-import WhyInvest from "./_components/WhyInvest";
+
 import WhyChooseUs from "./_components/WhyUsSection";
+import ClientWrapper from "@/components/shared/clientwrapper/ClientWrapper";
+import VisualBridge from "@/components/shared/visualBridge/VisualBridge";
 
 export const metadata: Metadata = {
   title: "AISI Group",
@@ -53,6 +55,8 @@ export const metadata: Metadata = {
     title: "Premium Real Estate Investment Opportunities",
     description:
       "Discover exceptional real estate investment opportunities with guaranteed returns. Explore our premium projects and start your investment journey today.",
+    // url: "https://yourwebsite.com",
+    // siteName: "Your Company Name",
     images: ["/twitter-image.jpg"],
     creator: "@yourcompany",
   },
@@ -75,13 +79,13 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <>
+    <ClientWrapper>
       <Cover />
+      <VisualBridge />
       <ProjectsSection />
-      <WhyChooseUs />
       <PaymentCalculator />
-      <WhyInvest />
+      <WhyChooseUs />
       <MainFAQ />
-    </>
+    </ClientWrapper>
   );
 }

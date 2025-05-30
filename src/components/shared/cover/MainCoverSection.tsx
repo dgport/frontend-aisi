@@ -47,9 +47,11 @@ export default function CoverSection({
 
   return (
     <motion.div
-      className={` ${height} relative h-[700px]  w-full overflow-hidden px-6 lg:px-16`}
+      className={`${height} relative h-[700px] w-full overflow-hidden px-6 lg:px-16`}
     >
-      <div className={`absolute inset-0 bg-zinc-900/60 z-10`}></div>
+      {/* Lighter overlay with reduced opacity */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-slate-900/70 z-10"></div>
+      <div className="absolute inset-0 bg-black/5 z-10"></div>
 
       {images.length > 0 && (
         <div className="absolute inset-0">
@@ -81,29 +83,29 @@ export default function CoverSection({
 
       <div className="relative z-20 h-full w-full max-w-7xl mx-auto">
         <div className="flex flex-col h-full justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-16 items-end md:items-center h-full   pb-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-16 items-end md:items-center h-full pb-2">
             {(title || description || (tags && tags.length > 0)) && (
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="max-w-lg  pt-10 lg:pt-0"
+                className="max-w-lg pt-10 lg:pt-0"
               >
                 {title && (
                   <div className="mb-4 relative">
                     <div className="pr-28">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: "5rem" }}
+                        animate={{ width: "7rem" }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="h-[3px] bg-gradient-to-r from-indigo-400 via-white to-indigo-400 mb-4"
+                        className="h-[2px] bg-gradient-to-r from-white/40 via-white/70 to-white/40 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.4)] mb-4"
                       />
                     </div>
                     <motion.h1
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.8, delay: 0.6 }}
-                      className="text-transparent h-12 bg-gradient-to-r from-indigo-100 via-indigo-50 to-indigo-100 bg-clip-text text-3xl lg:text-4xl  font-normal tracking-wider"
+                      className="text-transparent h-12 bg-gradient-to-r from-white/95 via-white/100 to-white/95 bg-clip-text text-3xl lg:text-4xl font-normal tracking-wider drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                     >
                       {title.split(" ").map((word, i) => (
                         <motion.span
@@ -120,9 +122,9 @@ export default function CoverSection({
                     <div className="pr-28">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: "5rem" }}
+                        animate={{ width: "7rem" }}
                         transition={{ duration: 0.6, delay: 0.8 }}
-                        className="h-[3px] bg-gradient-to-r from-indigo-400 via-white to-indigo-400 mt-4 ml-auto"
+                        className="h-[2px] bg-gradient-to-r from-white/40 via-white/70 to-white/40 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.4)] mt-4 ml-auto"
                       />
                     </div>
                   </div>
@@ -133,7 +135,7 @@ export default function CoverSection({
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.9 }}
-                    className="text-white text-sm lg:text-base xl:text-lg mt-2"
+                    className="text-white/98 text-sm lg:text-base xl:text-lg mt-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
                   >
                     {subtitle}
                   </motion.p>
@@ -144,7 +146,7 @@ export default function CoverSection({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1 }}
-                    className="text-white text-base lg:text-lg xl:text-lg mt-4"
+                    className="text-white/98 text-base lg:text-lg xl:text-lg mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
                   >
                     {description}
                   </motion.p>
@@ -165,11 +167,11 @@ export default function CoverSection({
                         transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
                         whileHover={{
                           scale: 1.05,
-                          backgroundColor: "rgba(255, 255, 255, 0.3)",
+                          backgroundColor: "rgba(255, 255, 255, 0.25)",
                         }}
-                        className="bg-white/10 backdrop-blur-xs px-3 py-1 border border-indigo-100 rounded"
+                        className="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700/40 via-slate-600/30 to-slate-800/50 backdrop-blur-xl border border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.3),0_2px_8px_rgba(255,255,255,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.3),0_4px_12px_rgba(255,255,255,0.12)] hover:border-white/30 transition-all duration-500 px-4 py-1.5"
                       >
-                        <span className="text-white text-sm lg:text-sm font-light tracking-wider">
+                        <span className="text-white text-sm lg:text-sm font-medium tracking-wider drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
                           {tag.text}
                         </span>
                       </motion.div>
@@ -185,27 +187,31 @@ export default function CoverSection({
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="max-w-lg lg:ml-auto mt-8 lg:mt-0"
               >
-                {secondaryTitle && (
-                  <motion.h2
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                    className="text-xl lg:text-2xl text-center lg:text-start xl:text-4xl font-normal text-white mb-3 lg:mb-5"
-                  >
-                    {secondaryTitle}
-                  </motion.h2>
-                )}
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700/30 via-slate-600/20 to-slate-800/40 backdrop-blur-xs border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.3),0_4px_16px_rgba(255,255,255,0.08)] p-6">
+                  {/* Decorative corner elements */}
 
-                {secondaryDescription && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                    className="text-white mb-3 lg:mb-4 text-center lg:text-start text-sm lg:text-base xl:text-xl"
-                  >
-                    {secondaryDescription}
-                  </motion.p>
-                )}
+                  {secondaryTitle && (
+                    <motion.h2
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.6, delay: 0.6 }}
+                      className="text-xl lg:text-2xl text-center lg:text-start xl:text-4xl font-normal text-white mb-3 lg:mb-5 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+                    >
+                      {secondaryTitle}
+                    </motion.h2>
+                  )}
+
+                  {secondaryDescription && (
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.6, delay: 0.8 }}
+                      className="text-white/98 mb-3 lg:mb-4 text-center lg:text-start text-sm lg:text-base drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+                    >
+                      {secondaryDescription}
+                    </motion.p>
+                  )}
+                </div>
 
                 {images.length > 1 && (
                   <div className="flex mt-6 mb-10 gap-2 justify-center lg:justify-start">
@@ -213,10 +219,10 @@ export default function CoverSection({
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`w-2 h-2 rounded-full transition-all duration-500 ${
+                        className={`h-2 rounded-full transition-all duration-500 ${
                           currentImageIndex === index
-                            ? "bg-white w-4"
-                            : "bg-white/40"
+                            ? "bg-white w-8 shadow-[0_0_10px_rgba(255,255,255,0.6)]"
+                            : "bg-white/50 w-2 hover:bg-white/70"
                         }`}
                         aria-label={`Show image ${index + 1}`}
                       />

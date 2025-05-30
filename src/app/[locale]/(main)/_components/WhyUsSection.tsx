@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { Home, Building2, SmilePlus, Clock } from "lucide-react";
@@ -15,17 +15,18 @@ interface WhyUsProps {
 
 export default function WhyChooseUs() {
   const t = useTranslations("main");
+
   const Counter = ({ value, label, icon }: WhyUsProps) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
+    const isInView = useInView(ref, { once: true, margin: "-50px" });
     const [count, setCount] = useState(0);
 
     useEffect(() => {
       if (isInView) {
         let start = 0;
         const end = Number.parseInt(value);
-        const duration = Math.min(1500, Math.max(800, end / 10));
-        const stepSize = Math.max(1, Math.floor(end / 100));
+        const duration = Math.min(1000, Math.max(600, end / 15));
+        const stepSize = Math.max(1, Math.floor(end / 50));
 
         const timer = setInterval(() => {
           start += stepSize;
@@ -42,23 +43,45 @@ export default function WhyChooseUs() {
     }, [isInView, value]);
 
     return (
-      <div ref={ref} className="flex flex-col items-center text-center">
-        <div className="text-teal-500 mb-2">{icon}</div>
+      <div ref={ref} className="flex flex-col items-center text-center group">
+        {/* Simplified icon container with lighter animations */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="relative mb-3 p-3 rounded-xl bg-gradient-to-br from-slate-800/50 via-slate-700/40 to-slate-900/60 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_4px_16px_rgba(255,255,255,0.05)] group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.4),0_6px_20px_rgba(255,255,255,0.1)] group-hover:border-white/25 transition-all duration-300"
+        >
+          <div className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] group-hover:scale-105 transition-transform duration-200">
+            {icon}
+          </div>
+        </motion.div>
+
+        {/* Counter with lighter animation */}
         <motion.h3
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-2xl md:text-3xl font-normal text-white mb-0.5"
+          transition={{ duration: 0.3, delay: 0.1 }}
+          className="text-2xl md:text-3xl font-bold text-white mb-1 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-200"
         >
-          {isInView ? count : 0}+
+          {count}+
         </motion.h3>
-        <p className="text-white/80 text-xs md:text-sm">{label}</p>
+
+        {/* Label with lighter animation */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          className="text-white/90 text-sm md:text-base font-medium tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+        >
+          {label}
+        </motion.p>
       </div>
     );
   };
 
   return (
-    <section className="relative py-6 md:py-12 overflow-hidden">
+    <section className="relative py-12 md:py-16 overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0 z-0">
         <Image
           src={test || "/placeholder.svg"}
@@ -67,76 +90,123 @@ export default function WhyChooseUs() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-black/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-slate-900/85 to-slate-950/90"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
+
       <div className="relative z-10 container mx-auto px-4 md:px-8">
-        <div className="flex flex-col items-center text-center mb-4">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-xl md:text-3xl font-normal text-white mb-5"
-          >
-            {t("whyChoose")}
-          </motion.h2>
+        {/* Header with lighter animations */}
+        <div className="flex flex-col items-center text-center mb-8">
           <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: "80px" }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="h-1 bg-teal-500 mb-2"
-          ></motion.div>
-          
+            transition={{ duration: 0.4 }}
+            className="text-center mb-6 w-full"
+          >
+            <div className="flex justify-center items-center mb-4">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "7rem" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="h-[2px] bg-gradient-to-r from-white/30 via-white/60 to-white/30 rounded-full mr-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+              ></motion.div>
+
+              <h2 className="text-xl md:text-3xl font-normal tracking-widest text-white uppercase leading-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                {t("whyChoose")}
+              </h2>
+
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "7rem" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="h-[2px] bg-gradient-to-r from-white/30 via-white/60 to-white/30 rounded-full ml-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+              ></motion.div>
+            </div>
+          </motion.div>
         </div>
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 relative">
-            <div className="px-2 py-2">
-              <Counter
-                value="1000"
-                label={t("deliveredFlats")}
-                icon={<Home size={24} className="mx-auto" />}
-              />
+
+        {/* Stats container with lighter animation */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="max-w-5xl mx-auto"
+        >
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/40 via-slate-700/30 to-slate-900/50 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_4px_16px_rgba(255,255,255,0.05)] p-6 md:p-8">
+            {/* Stats grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative">
+              <div className="flex justify-center">
+                <Counter
+                  value="1000"
+                  label={t("deliveredFlats")}
+                  icon={<Home size={24} className="mx-auto" />}
+                />
+              </div>
+
+              {/* Simplified separators */}
+              <div
+                className="hidden md:block absolute h-16 w-[1px] bg-gradient-to-b from-transparent via-white/30 to-transparent"
+                style={{
+                  top: "50%",
+                  left: "25%",
+                  transform: "translateY(-50%)",
+                }}
+              ></div>
+
+              <div className="flex justify-center">
+                <Counter
+                  value="4"
+                  label={t("building")}
+                  icon={<Building2 size={24} className="mx-auto" />}
+                />
+              </div>
+
+              <div
+                className="hidden md:block absolute h-16 w-[1px] bg-gradient-to-b from-transparent via-white/30 to-transparent"
+                style={{
+                  top: "50%",
+                  left: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              ></div>
+
+              <div className="flex justify-center">
+                <Counter
+                  value="1000"
+                  label={t("happyClients")}
+                  icon={<SmilePlus size={24} className="mx-auto" />}
+                />
+              </div>
+
+              <div
+                className="hidden md:block absolute h-16 w-[1px] bg-gradient-to-b from-transparent via-white/30 to-transparent"
+                style={{
+                  top: "50%",
+                  left: "75%",
+                  transform: "translateY(-50%)",
+                }}
+              ></div>
+
+              <div className="flex justify-center">
+                <Counter
+                  value="6"
+                  label={t("yearsExprerience")}
+                  icon={<Clock size={24} className="mx-auto" />}
+                />
+              </div>
+
+              {/* Mobile separator */}
+              <div
+                className="block md:hidden absolute w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                style={{ top: "50%", left: 0 }}
+              ></div>
             </div>
-            <div
-              className="hidden md:block absolute h-12 w-px bg-white/20"
-              style={{ top: "50%", left: "25%", transform: "translateY(-50%)" }}
-            ></div>
-            <div className="px-2 py-2">
-              <Counter
-                value="4"
-                label={t("building")}
-                icon={<Building2 size={24} className="mx-auto" />}
-              />
-            </div>
-            <div
-              className="hidden md:block absolute h-12 w-px bg-white/20"
-              style={{ top: "50%", left: "50%", transform: "translateY(-50%)" }}
-            ></div>
-            <div className="px-2 py-2">
-              <Counter
-                value="1000"
-                label={t("happyClients")}
-                icon={<SmilePlus size={24} className="mx-auto" />}
-              />
-            </div>
-            <div
-              className="hidden md:block absolute h-12 w-px bg-white/20"
-              style={{ top: "50%", left: "75%", transform: "translateY(-50%)" }}
-            ></div>
-            <div className="px-2 py-2">
-              <Counter
-                value="6"
-                label={t("yearsExprerience")}
-                icon={<Clock size={24} className="mx-auto" />}
-              />
-            </div>
-            <div
-              className="block md:hidden absolute w-full h-px bg-white/20"
-              style={{ top: "50%", left: 0 }}
-            ></div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

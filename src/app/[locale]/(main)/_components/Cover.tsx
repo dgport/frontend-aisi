@@ -13,11 +13,11 @@ export default function Cover() {
       title={t("aisiGroup")}
       subtitle={t("premiumDev")}
       description={t("transformingFrom")}
-      secondaryTitle={t("coverTitle")}
+      secondaryTitle=""
       secondaryDescription={t("coverDesc")}
       tags={[{ text: t("modern") }, { text: t("exclu") }]}
       slideInterval={7000}
-      height="lg:min-h-screen"
+      height="lg:min-h-[50vh]"
     />
   );
 }
