@@ -15,8 +15,6 @@ export default function PaymentCalculator() {
 
   const [isUpdatingPercent, setIsUpdatingPercent] = useState(false);
 
-  // Custom Slider Component
-
   useEffect(() => {
     if (!isUpdatingPercent) {
       const amount = (propertyValue * downPaymentPercent) / 100;
@@ -51,7 +49,6 @@ export default function PaymentCalculator() {
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Enhanced subtle dot pattern overlay */}
       <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <div
           className="absolute inset-0"
@@ -61,70 +58,49 @@ export default function PaymentCalculator() {
           }}
         ></div>
       </div>
-
-      {/* Enhanced floating particles effect */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 bg-slate-400/30 rounded-full animate-pulse"
             style={{
-              left: `${5 + i * 8}%`,
-              top: `${15 + (i % 4) * 20}%`,
-              animationDelay: `${i * 0.3}s`,
+              left: `${10 + i * 10}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              animationDelay: `${i * 0.5}s`,
               animationDuration: "4s",
             }}
           />
         ))}
       </div>
 
-      <div className="relative z-10 sm:px-8 md:px-20  md:py-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative w-full p-4 px-8 md:px-16 pb-20 pt-0 mx-auto overflow-hidden md:rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.05)] border border-white/10">
-            {/* Enhanced background with stronger overlay */}
+      <div className="relative z-10 px-4 py-16 sm:px-8 md:px-20 md:py-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative w-full p-3 px-4 sm:px-8 md:px-12 pb-8 sm:pb-16 pt-0 mx-auto overflow-hidden rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.05)] border border-white/10">
             <div className="absolute inset-0">
-              <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-slate-800/70 via-slate-800/50 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-800/50 via-slate-700/40 to-slate-800/50"></div>
-              <div className="absolute inset-0 bg-black/20"></div>
-              <div className="absolute inset-0 backdrop-blur-sm bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95"></div>
-              {/* Additional shadow layer for depth */}
-              <div className="absolute inset-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_-1px_0_rgba(0,0,0,0.2)]"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm"></div>
             </div>
 
-            <div className="relative z-10 sm:p-8 pt-16">
-              {/* Header with enhanced styling */}
-              <div className="flex flex-col mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <div className="flex items-center">
-                    <Calculator className="h-6 w-6 text-white mr-3 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
-                    <h2 className="text-xl sm:text-2xl font-normal text-white tracking-wide drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                      Payment Calculator
-                    </h2>
-                  </div>
+            <div className="relative z-10 p-3 sm:p-6 pt-8 sm:pt-12">
+              <div className="flex flex-col items-center mb-6 sm:mb-10">
+                <div className="flex items-center mb-2 sm:mb-4">
+                  <Calculator className="h-5 w-5 sm:h-6 sm:w-6 text-white mr-2 sm:mr-3" />
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-normal text-white tracking-wide">
+                    Payment Calculator
+                  </h2>
                 </div>
-
-                {/* Enhanced decorative line */}
-                <div className="flex justify-center items-center">
-                  <div className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-white/30 rounded-full w-32 shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
-                  <div className="mx-4 w-3 h-3 bg-gradient-to-br from-white/80 via-white/60 to-white/40 rounded-sm shadow-[0_0_20px_rgba(255,255,255,0.4)] border border-white/30 rotate-45">
-                    <div className="absolute inset-1 bg-gradient-to-br from-slate-700/50 to-slate-800/70 rounded-sm"></div>
-                  </div>
-                  <div className="h-[2px] bg-gradient-to-l from-transparent via-white/60 to-white/30 rounded-full w-32 shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
-                </div>
+                <div className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full w-24 sm:w-32"></div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Controls Section */}
-                <div className="space-y-6">
-                  {/* Property Value */}
-                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700/50 via-slate-600/40 to-slate-800/60 backdrop-blur-xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.6),0_8px_16px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1)] p-6">
-                    <div className="space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="rounded-lg sm:rounded-xl bg-gradient-to-br from-slate-700/50 via-slate-600/40 to-slate-800/60 backdrop-blur-xl border border-white/20 shadow-lg p-3 sm:p-5">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex justify-between items-center">
-                        <label className="text-white/90 flex items-center font-medium">
-                          <DollarSign className="h-4 w-4 mr-2 text-white/70" />
+                        <label className="text-white/90 flex items-center font-medium text-sm sm:text-base">
+                          <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-white/70" />
                           Property Value
                         </label>
-                        <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20">
+                        <div className="bg-white/10 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20">
                           <input
                             type="number"
                             value={propertyValue}
@@ -133,7 +109,7 @@ export default function PaymentCalculator() {
                                 Math.max(0, Number(e.target.value))
                               )
                             }
-                            className="w-24 bg-transparent text-white font-medium text-right focus:outline-none placeholder-white/50"
+                            className="w-20 sm:w-24 bg-transparent text-white font-medium text-right focus:outline-none text-sm sm:text-base"
                           />
                         </div>
                       </div>
@@ -144,23 +120,17 @@ export default function PaymentCalculator() {
                         step={5000}
                         onValueChange={(value) => setPropertyValue(value[0])}
                       />
-                      <div className="flex justify-between text-xs text-white/60">
-                        <span>$10,000</span>
-                        <span>$1,000,000</span>
-                      </div>
                     </div>
                   </div>
-
-                  {/* Down Payment */}
-                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700/50 via-slate-600/40 to-slate-800/60 backdrop-blur-xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.6),0_8px_16px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1)] p-6">
-                    <div className="space-y-4">
+                  <div className="rounded-lg sm:rounded-xl bg-gradient-to-br from-slate-700/50 via-slate-600/40 to-slate-800/60 backdrop-blur-xl border border-white/20 shadow-lg p-3 sm:p-5">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex justify-between items-center">
-                        <label className="text-white/90 flex items-center font-medium">
-                          <Percent className="h-4 w-4 mr-2 text-white/70" />
+                        <label className="text-white/90 flex items-center font-medium text-sm sm:text-base">
+                          <Percent className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-white/70" />
                           Down Payment
                         </label>
-                        <div className="flex space-x-2">
-                          <div className="bg-white/10 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/20">
+                        <div className="flex space-x-1 sm:space-x-2">
+                          <div className="bg-white/10 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-2 rounded-lg border border-white/20">
                             <input
                               type="number"
                               value={downPaymentPercent}
@@ -172,11 +142,13 @@ export default function PaymentCalculator() {
                                   )
                                 );
                               }}
-                              className="w-12 bg-transparent text-white font-medium text-right focus:outline-none"
+                              className="w-8 sm:w-12 bg-transparent text-white font-medium text-right focus:outline-none text-sm sm:text-base"
                             />
-                            <span className="text-white/90 font-medium">%</span>
+                            <span className="text-white/90 font-medium text-sm sm:text-base">
+                              %
+                            </span>
                           </div>
-                          <div className="bg-white/10 backdrop-blur-sm px-3 py-2 rounded-lg border border-white/20">
+                          <div className="bg-white/10 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-2 rounded-lg border border-white/20">
                             <input
                               type="number"
                               value={Math.round(downPaymentAmount)}
@@ -190,7 +162,7 @@ export default function PaymentCalculator() {
                                 );
                                 handleDownPaymentAmountChange(value);
                               }}
-                              className="w-20 bg-transparent text-white font-medium text-right focus:outline-none"
+                              className="w-16 sm:w-20 bg-transparent text-white font-medium text-right focus:outline-none text-sm sm:text-base"
                             />
                           </div>
                         </div>
@@ -204,22 +176,16 @@ export default function PaymentCalculator() {
                           setDownPaymentPercent(value[0])
                         }
                       />
-                      <div className="flex justify-between text-xs text-white/60">
-                        <span>0%</span>
-                        <span>100%</span>
-                      </div>
                     </div>
                   </div>
-
-                  {/* Payment Period */}
-                  <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700/50 via-slate-600/40 to-slate-800/60 backdrop-blur-xl border border-white/20 shadow-[0_20px_40px_rgba(0,0,0,0.6),0_8px_16px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.1)] p-6">
-                    <div className="space-y-4">
+                  <div className="rounded-lg sm:rounded-xl bg-gradient-to-br from-slate-700/50 via-slate-600/40 to-slate-800/60 backdrop-blur-xl border border-white/20 shadow-lg p-3 sm:p-5">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex justify-between items-center">
-                        <label className="text-white/90 flex items-center font-medium">
-                          <Clock className="h-4 w-4 mr-2 text-white/70" />
+                        <label className="text-white/90 flex items-center font-medium text-sm sm:text-base">
+                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-white/70" />
                           Payment Period
                         </label>
-                        <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/20 flex items-center">
+                        <div className="bg-white/10 backdrop-blur-sm px-2 sm:px-4 py-1 sm:py-2 rounded-lg border border-white/20 flex items-center">
                           <input
                             type="number"
                             value={months}
@@ -231,9 +197,9 @@ export default function PaymentCalculator() {
                                 )
                               )
                             }
-                            className="w-12 bg-transparent text-white font-medium text-right focus:outline-none"
+                            className="w-8 sm:w-12 bg-transparent text-white font-medium text-right focus:outline-none text-sm sm:text-base"
                           />
-                          <span className="text-white/90 font-medium ml-2">
+                          <span className="text-white/90 font-medium ml-1 sm:ml-2 text-sm sm:text-base">
                             months
                           </span>
                         </div>
@@ -245,72 +211,55 @@ export default function PaymentCalculator() {
                         step={1}
                         onValueChange={(value) => setMonths(value[0])}
                       />
-                      <div className="flex justify-between text-xs text-white/60">
-                        <span>1 month</span>
-                        <span>60 months</span>
-                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Results Section */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700/60 via-slate-600/50 to-slate-800/70 backdrop-blur-xl border border-white/20 shadow-[0_25px_50px_rgba(0,0,0,0.7),0_12px_24px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.1)] p-6">
-                  <div className="flex flex-col mb-6">
-                    <h3 className="text-lg font-semibold text-white/95 mb-4">
+                <div className="rounded-lg sm:rounded-xl bg-gradient-to-br from-slate-700/60 via-slate-600/50 to-slate-800/70 backdrop-blur-xl border border-white/20 shadow-xl p-4 sm:p-6">
+                  <div className="mb-4 sm:mb-6">
+                    <h3 className="text-base sm:text-lg font-semibold text-white/95 mb-2 sm:mb-3">
                       Payment Summary
                     </h3>
-                    <div className="h-[2px] bg-gradient-to-r from-white/30 via-white/60 to-white/30 rounded-full w-full shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
+                    <div className="h-[2px] bg-gradient-to-r from-white/30 via-white/60 to-white/30 rounded-full w-full"></div>
                   </div>
-
-                  <div className="space-y-4">
-                    {/* Monthly Payment - Featured */}
-                    <div className="bg-gradient-to-br from-slate-600/70 via-slate-500/60 to-slate-700/80 backdrop-blur-sm rounded-xl p-5 border border-white/30 shadow-[0_8px_24px_rgba(0,0,0,0.5),0_4px_12px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]">
-                      <div className="text-white/70 text-sm font-medium mb-1">
+                  <div className="grid grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2 sm:gap-4">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                      <div className="text-white/60 text-xs font-medium mb-1 sm:mb-2">
+                        Property Value
+                      </div>
+                      <div className="text-sm sm:text-lg font-semibold text-white/95">
+                        {formatCurrency(propertyValue)}
+                      </div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                      <div className="text-white/60 text-xs font-medium mb-1 sm:mb-2">
+                        Payment Period
+                      </div>
+                      <div className="text-sm sm:text-lg font-semibold text-white/95">
+                        {months} months
+                      </div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                      <div className="text-white/60 text-xs font-medium mb-1 sm:mb-2">
+                        Down Payment
+                      </div>
+                      <div className="text-sm sm:text-lg font-semibold text-white/95">
+                        {formatCurrency(downPaymentAmount)}
+                      </div>
+                    </div>
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/20">
+                      <div className="text-white/60 text-xs font-medium mb-1 sm:mb-2">
+                        Finance Amount
+                      </div>
+                      <div className="text-sm sm:text-lg font-semibold text-white/95">
+                        {formatCurrency(totalPayment)}
+                      </div>
+                    </div>
+                    <div className="col-span-2 lg:col-span-1 xl:col-span-2 bg-gradient-to-br from-slate-600/70 via-slate-500/60 to-slate-700/80 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/30 shadow-lg">
+                      <div className="text-white/70 text-xs sm:text-sm font-medium mb-1 sm:mb-2">
                         Monthly Payment
                       </div>
-                      <div className="text-3xl font-bold text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+                      <div className="text-lg sm:text-2xl font-bold text-white">
                         {formatCurrency(monthlyPayment)}
-                      </div>
-                    </div>
-
-                    {/* Summary Grid */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                        <div className="text-white/60 text-xs font-medium mb-1">
-                          Property Value
-                        </div>
-                        <div className="text-lg font-semibold text-white/95">
-                          {formatCurrency(propertyValue)}
-                        </div>
-                      </div>
-
-                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                        <div className="text-white/60 text-xs font-medium mb-1">
-                          Down Payment
-                        </div>
-                        <div className="text-lg font-semibold text-white/95">
-                          {formatCurrency(downPaymentAmount)}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                        <div className="text-white/60 text-xs font-medium mb-1">
-                          Finance Amount
-                        </div>
-                        <div className="text-lg font-semibold text-white/95">
-                          {formatCurrency(totalPayment)}
-                        </div>
-                      </div>
-
-                      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                        <div className="text-white/60 text-xs font-medium mb-1">
-                          Payment Schedule
-                        </div>
-                        <div className="text-lg font-semibold text-white/95">
-                          {months} months
-                        </div>
                       </div>
                     </div>
                   </div>
