@@ -6,8 +6,9 @@ interface EnhancedVisualBridgeProps {
   className?: string
 }
 
-export default function VisualBridge({ className = "" }: EnhancedVisualBridgeProps) {
-  // Construction-related words for the ticker
+export default function VisualBridge({
+  className = "",
+}: EnhancedVisualBridgeProps) {
   const tickerWords = [
     "SAFETY FIRST",
     "FAST CONSTRUCTION",
@@ -24,22 +25,62 @@ export default function VisualBridge({ className = "" }: EnhancedVisualBridgePro
     "TIMELY DELIVERY",
     "SUPERIOR MATERIALS",
     "CUTTING-EDGE SOLUTIONS",
-  ]
+  ];
+
+  const infinityPath =
+    "M12,20 C12,20 4,16 4,12 C4,8 8,4 12,4 C16,4 20,8 20,12 C20,16 16,20 12,20 C12,20 20,16 20,12 C20,8 16,4 12,4 C8,4 4,8 4,12 C4,16 12,20 12,20 Z";
 
   return (
     <div className={`relative z-30 -mt-20 mb-0 ${className}`}>
-      {/* Main sophisticated gradient transition */}
       <div className="h-40 bg-gradient-to-b from-transparent via-slate-900/90 to-slate-950/95 relative overflow-hidden">
-        {/* Geometric pattern overlay */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_25%,rgba(255,255,255,0.02)_50%,transparent_50%,transparent_75%,rgba(255,255,255,0.02)_75%)] bg-[length:20px_20px]"></div>
         </div>
 
-        {/* Central decorative element */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <svg
+            width="200"
+            height="100"
+            viewBox="0 0 24 24"
+            className="opacity-20"
+          >
+            <defs>
+              <linearGradient
+                id="infinityGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
+                <stop offset="50%" stopColor="rgba(255,255,255,0.6)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0.1)" />
+              </linearGradient>
+            </defs>
+            <motion.path
+              d={infinityPath}
+              stroke="url(#infinityGradient)"
+              strokeWidth="0.5"
+              fill="none"
+              strokeLinecap="round"
+              strokeDasharray="2 4"
+              initial={{ strokeDashoffset: 0 }}
+              animate={{ strokeDashoffset: -24 }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              style={{
+                filter: "drop-shadow(0 0 8px rgba(255,255,255,0.3))",
+              }}
+            />
+          </svg>
+        </div>
+
         <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2">
           <div className="max-w-7xl mx-auto px-6 lg:px-16">
             <div className="flex justify-center items-center">
-              {/* Left decorative line */}
               <motion.div
                 initial={{ width: 0, opacity: 0 }}
                 whileInView={{ width: "30%", opacity: 1 }}
@@ -48,7 +89,6 @@ export default function VisualBridge({ className = "" }: EnhancedVisualBridgePro
                 className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-white/30 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.3)]"
               ></motion.div>
 
-              {/* Central diamond element */}
               <motion.div
                 initial={{ scale: 0, rotate: 0 }}
                 whileInView={{ scale: 1, rotate: 45 }}
@@ -61,7 +101,6 @@ export default function VisualBridge({ className = "" }: EnhancedVisualBridgePro
                 </div>
               </motion.div>
 
-              {/* Right decorative line */}
               <motion.div
                 initial={{ width: 0, opacity: 0 }}
                 whileInView={{ width: "30%", opacity: 1 }}
@@ -73,7 +112,6 @@ export default function VisualBridge({ className = "" }: EnhancedVisualBridgePro
           </div>
         </div>
 
-        {/* Corner accent elements */}
         <div className="absolute top-4 left-8">
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
@@ -114,7 +152,6 @@ export default function VisualBridge({ className = "" }: EnhancedVisualBridgePro
           ></motion.div>
         </div>
 
-        {/* Floating particles effect */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(6)].map((_, i) => (
             <motion.div
@@ -137,23 +174,20 @@ export default function VisualBridge({ className = "" }: EnhancedVisualBridgePro
           ))}
         </div>
 
-        {/* Moving ticker at the bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-950/80 overflow-hidden border-t border-white/10">
-          {/* Ticker background with subtle pattern */}
           <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.02)_50%,transparent_100%)] bg-[length:40px_100%]"></div>
 
-          {/* Moving text container */}
           <div className="relative h-full flex items-center">
             <motion.div
-              animate={{ x: [1200, -2400] }}
+              animate={{ x: ["100vw", "-200%"] }}
               transition={{
-                duration: 40,
+                duration: 150,
                 repeat: Number.POSITIVE_INFINITY,
                 ease: "linear",
+                delay: 2,
               }}
               className="flex items-center whitespace-nowrap"
             >
-              {/* Duplicate the words array to create seamless loop */}
               {[...tickerWords, ...tickerWords].map((word, index) => (
                 <div key={index} className="flex items-center">
                   <span className="text-white/70 text-sm font-medium tracking-wider px-8 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
@@ -165,19 +199,16 @@ export default function VisualBridge({ className = "" }: EnhancedVisualBridgePro
             </motion.div>
           </div>
 
-          {/* Gradient fade edges */}
           <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-950/90 to-transparent pointer-events-none"></div>
           <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-950/90 to-transparent pointer-events-none"></div>
         </div>
 
-        {/* Bottom edge enhancement */}
         <div className="absolute bottom-8 left-0 right-0 h-8 bg-gradient-to-b from-slate-950/50 to-slate-950"></div>
       </div>
 
-      {/* Additional depth layer */}
       <div className="h-8 bg-gradient-to-b from-slate-950 to-slate-950/95 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-950/80"></div>
       </div>
     </div>
-  )
+  );
 }

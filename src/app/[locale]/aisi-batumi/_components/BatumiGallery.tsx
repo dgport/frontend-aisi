@@ -6,7 +6,6 @@ import Otis from "@/root/public/images/batumi/Otis.png";
 import Parking from "@/root/public/images/batumi/Parking.png";
 import Gym from "@/root/public/images/batumi/Gym.png";
 import Elevator from "@/root/public/images/batumi/Elevator.png";
-import { useMediaQuery } from "@/use-media-query";
 
 interface GalleryImage {
   src: string | any;
@@ -44,39 +43,34 @@ const galleryImages: GalleryImage[] = [
 ];
 
 export default function PropertyGallery(): JSX.Element {
-  const isMobile = useMediaQuery("(max-width: 639px)");
-  const isTablet = useMediaQuery("(min-width: 640px) and (max-width: 767px)");
-  const isLaptop = useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
-
-  const columns = isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4;
-
   return (
-    <div className="w-full px-4 pb-10">
-      <div
-        className={`grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${columns}`}
-      >
-        {galleryImages.map((image, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg overflow-hidden shadow-md border border-gray-100 transition-transform duration-300 hover:shadow-lg"
-          >
-            <div className="relative h-64">
-              <Image
-                src={image.src || "/placeholder.svg"}
-                alt={image.alt}
-                className="object-cover"
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              />
+    <div className="w-full py-16 ">
+      <div className="w-full">
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+          {galleryImages.map((image, index) => (
+            <div
+              key={index}
+              className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border border-slate-600/30 rounded-2xl overflow-hidden 
+              transition-all duration-300 hover:scale-[1.02] transform-gpu hover:shadow-2xl hover:shadow-slate-700/30 hover:border-slate-500/50"
+            >
+              <div className="relative h-64">
+                <Image
+                  src={image.src || "/placeholder.svg"}
+                  alt={image.alt}
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 33vw"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-white">
+                  {image.title}
+                </h3>
+                <p className="text-white/80">{image.description}</p>
+              </div>
             </div>
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                {image.title}
-              </h3>
-              <p className="text-gray-600">{image.description}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

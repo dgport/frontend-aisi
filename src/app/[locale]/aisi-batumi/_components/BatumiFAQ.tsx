@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { useState } from "react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 const accordionItems = [
   {
@@ -28,49 +29,82 @@ export default function BatumiFAQ() {
   };
 
   return (
-    <section className="w-full border border-gray-300 rounded-lg">
-      <div className="bg-white p-4 rounded-lg shadow-sm">
-        <h3 className="text-2xl font-semibold mb-6">Construction</h3>
+    <div className="bg-white relative overflow-hidden">
+       
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-slate-400/30 rounded-full animate-pulse"
+            style={{
+              left: `${10 + i * 10}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: "4s",
+            }}
+          />
+        ))}
+      </div>
 
-        <div className="space-y-4">
-          {accordionItems.map((item, index) => (
-            <div
-              key={index}
-              className="border border-gray-200 rounded-lg overflow-hidden"
-            >
-              <button
-                className="flex justify-between items-center cursor-pointer w-full p-4 text-left bg-gray-50 hover:bg-gray-100 transition-colors"
-                onClick={() => toggleAccordion(index)}
-              >
-                <span className="font-medium">{item.question}</span>
-                <svg
-                  className={`w-5 h-5 transition-transform ${
-                    openAccordion === index ? "transform rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </button>
-              <div
-                className={`transition-all duration-300 ease-in-out ${
-                  openAccordion === index ? "max-h-64 p-4" : "max-h-0"
-                } overflow-hidden`}
-              >
-                <p className="text-gray-700">{item.answer}</p>
+      <section className="relative z-10">
+        <div className=" ">
+          <div className="relative w-full p-3 px-4 sm:px-8 md:px-12 pb-8 sm:pb-16 pt-0 mx-auto overflow-hidden   rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.05)] border border-white/10">
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 backdrop-blur-sm"></div>
+            </div>
+            <div className="relative z-10 p-3 sm:p-6 pt-8 sm:pt-12">
+              <div className="flex flex-col items-center mb-6 sm:mb-10">
+                <div className="flex items-center mb-2 sm:mb-4">
+                  <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white mr-2 sm:mr-3" />
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-normal text-white tracking-wide">
+                    Construction
+                  </h3>
+                </div>
+                <div className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full w-24 sm:w-32"></div>
+              </div>
+              <div className="space-y-4 sm:space-y-6">
+                {accordionItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className="rounded-lg sm:rounded-xl bg-gradient-to-br from-slate-700/50 via-slate-600/40 to-slate-800/60 backdrop-blur-xl border border-white/20 shadow-lg overflow-hidden"
+                  >
+                    <button
+                      className="flex justify-between cursor-pointer items-center w-full p-4 sm:p-5 text-left hover:bg-white/5 transition-all duration-300 group"
+                      onClick={() => toggleAccordion(index)}
+                    >
+                      <span className="font-medium text-white/90 text-sm sm:text-base pr-4">
+                        {item.question}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 sm:w-5 sm:h-5 text-white/70 transition-transform duration-300 flex-shrink-0 ${
+                          openAccordion === index ? "transform rotate-180" : ""
+                        } group-hover:text-white/90`}
+                      />
+                    </button>
+
+                    <div
+                      className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                        openAccordion === index
+                          ? "max-h-96 opacity-100"
+                          : "max-h-0 opacity-0"
+                      }`}
+                    >
+                      <div className="px-4 sm:px-5 pb-4 sm:pb-5">
+                        <div className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full w-full mb-3 sm:mb-4"></div>
+                        <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10">
+                          <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                            {item.answer}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

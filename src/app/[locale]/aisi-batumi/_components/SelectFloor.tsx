@@ -17,6 +17,7 @@ import MobileSitePlan from "@/root/public/images/batumi/SelectBuilding.png";
 import { buildings } from "@/constants/coordinants/buildingFloorCoord";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useTranslations } from "next-intl";
+ 
 
 const ORIGINAL_IMAGE_WIDTH = 768;
 const MOBILE_IMAGE_WIDTH = 768;
@@ -126,80 +127,80 @@ export default function SelectFloor() {
   const renderRightPanel = () => {
     return (
       <div className="flex flex-col gap-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-          <Building className="mr-3 h-6 w-6 text-indigo-600" />
+        <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
+          <Building className="mr-3 h-6 w-6 text-white" />
           {t("selectBuilding")}
         </h2>
         <>
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
-              <Layers className="mr-2 h-5 w-5 text-indigo-600" />
+          <div className="space-y-6">
+            <h3 className="font-semibold text-lg text-white mb-4 flex items-center">
+              <Layers className="mr-2 h-5 w-5 text-white" />
               {t("aBlock")}
             </h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-br from-slate-800  via-slate-700  to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
                 <div className="flex items-center mb-2">
-                  <Layers className="h-5 w-5 mr-2 text-indigo-600" />
-                  <span className="text-sm text-gray-600">
+                  <Layers className="h-5 w-5 mr-2 text-white" />
+                  <span className="text-sm text-white/80">
                     {t("totalFloors")}
                   </span>
                 </div>
-                <div className="font-bold text-2xl text-gray-900">26</div>
+                <div className="font-bold text-2xl text-white">26</div>
               </div>
-              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
                 <div className="flex items-center mb-2">
-                  <Home className="h-5 w-5 mr-2 text-indigo-600" />
-                  <span className="text-sm text-gray-600">
+                  <Home className="h-5 w-5 mr-2 text-white" />
+                  <span className="text-sm text-white/80">
                     {t("totalUnits")}
                   </span>
                 </div>
-                <div className="font-bold text-2xl text-gray-900">475</div>
+                <div className="font-bold text-2xl text-white">475</div>
               </div>
-              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
                 <div className="flex items-center mb-2">
-                  <Calendar className="h-5 w-5 mr-2 text-indigo-600" />
-                  <span className="text-sm text-gray-600">
+                  <Calendar className="h-5 w-5 mr-2 text-white" />
+                  <span className="text-sm text-white/80">
                     {t("completion")}
                   </span>
                 </div>
-                <div className="font-bold text-2xl text-gray-900">2028</div>
+                <div className="font-bold text-2xl text-white">2028</div>
               </div>
             </div>
           </div>
         </>
         <>
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg text-gray-900 mb-4 flex items-center">
-              <Layers className="mr-2 h-5 w-5 text-indigo-600" />
+          <div className="space-y-6">
+            <h3 className="font-semibold text-lg text-white mb-4 flex items-center">
+              <Layers className="mr-2 h-5 w-5 text-white" />
               {t("bBlock")}
             </h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
                 <div className="flex items-center mb-2">
-                  <Layers className="h-5 w-5 mr-2 text-indigo-600" />
-                  <span className="text-sm text-gray-600">
+                  <Layers className="h-5 w-5 mr-2 text-white" />
+                  <span className="text-sm text-white/80">
                     {t("totalFloors")}
                   </span>
                 </div>
-                <div className="font-bold text-2xl text-gray-900">15</div>
+                <div className="font-bold text-2xl text-white">15</div>
               </div>
-              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
                 <div className="flex items-center mb-2">
-                  <Home className="h-5 w-5 mr-2 text-indigo-600" />
-                  <span className="text-sm text-gray-600">
+                  <Home className="h-5 w-5 mr-2 text-white" />
+                  <span className="text-sm text-white/80">
                     {t("totalUnits")}
                   </span>
                 </div>
-                <div className="font-bold text-2xl text-gray-900">98</div>
+                <div className="font-bold text-2xl text-white">98</div>
               </div>
-              <div className="bg-gray-50 border border-gray-200 p-4 rounded-lg">
+              <div className="bg-gradient-to-br from-slate-800 via-slate-700  to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
                 <div className="flex items-center mb-2">
-                  <Calendar className="h-5 w-5 mr-2 text-indigo-600" />
-                  <span className="text-sm text-gray-600">
+                  <Calendar className="h-5 w-5 mr-2 text-white" />
+                  <span className="text-sm text-white/80">
                     {t("completion")}
                   </span>
                 </div>
-                <div className="font-bold text-2xl text-gray-900">2030</div>
+                <div className="font-bold text-2xl text-white">2030</div>
               </div>
             </div>
           </div>
@@ -209,11 +210,11 @@ export default function SelectFloor() {
   };
 
   return (
-    <section className="min-h-screen bg-white">
+    <section className="  bg-white">
       <div className="container2">
         <div className="flex flex-col xl:flex-row gap-8">
           <div ref={containerRef} className="relative w-full xl:w-1/2">
-            <div className="relative w-full bg-gray-50 rounded-lg border border-gray-200 overflow-hidden shadow-lg">
+            <div className="relative w-full bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
               <Image
                 ref={imageRef}
                 src={getCurrentImage() || "/placeholder.svg"}
@@ -232,7 +233,7 @@ export default function SelectFloor() {
                 }}
               />
               {isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 shadow-lg flex flex-col items-center">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 flex flex-col items-center">
                   <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-2" />
                   <p className="text-gray-900">Loading...</p>
                 </div>
@@ -280,7 +281,7 @@ export default function SelectFloor() {
                   />
                 ))}
               {!selectedBuilding && hoveredBuilding && !isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-lg border border-gray-200 shadow-lg pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-lg border border-gray-200 pointer-events-none">
                   <h3 className="text-xl font-bold text-indigo-600">
                     {t("building")} {hoveredBuilding === "1" ? "A" : "B"}
                   </h3>
@@ -288,13 +289,13 @@ export default function SelectFloor() {
               )}
 
               {selectedBuilding && hoveredFloor && !isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl md:text-8xl opacity-70 pointer-events-none z-20 drop-shadow-lg">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl md:text-8xl opacity-70 pointer-events-none z-20">
                   {hoveredFloor}
                 </div>
               )}
               {selectedBuilding && !isLoading && (
                 <button
-                  className="absolute cursor-pointer top-4 left-4 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-lg border border-gray-200 shadow-md hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
+                  className="absolute cursor-pointer top-4 left-4 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
                   onClick={() => {
                     setIsLoading(true);
                     setTimeout(() => {
@@ -311,7 +312,7 @@ export default function SelectFloor() {
             </div>
           </div>
           <div className="w-full xl:w-1/2">
-            <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 h-full">
+            <div className=" bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
               {renderRightPanel()}
             </div>
           </div>

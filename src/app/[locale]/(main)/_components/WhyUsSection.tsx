@@ -44,7 +44,6 @@ export default function WhyChooseUs() {
 
     return (
       <div ref={ref} className="flex flex-col items-center text-center group">
-        {/* Simplified icon container with lighter animations */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -55,8 +54,6 @@ export default function WhyChooseUs() {
             {icon}
           </div>
         </motion.div>
-
-        {/* Counter with lighter animation */}
         <motion.h3
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
@@ -65,8 +62,6 @@ export default function WhyChooseUs() {
         >
           {count}+
         </motion.h3>
-
-        {/* Label with lighter animation */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
@@ -81,7 +76,6 @@ export default function WhyChooseUs() {
 
   return (
     <section className="relative py-12 md:py-16 overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 z-0">
         <Image
           src={test || "/placeholder.svg"}
@@ -91,11 +85,9 @@ export default function WhyChooseUs() {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-slate-900/85 to-slate-950/90"></div>
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/10"></div>
       </div>
-
       <div className="relative z-10 container mx-auto px-4 md:px-8">
-        {/* Header with lighter animations */}
         <div className="flex flex-col items-center text-center mb-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -116,7 +108,6 @@ export default function WhyChooseUs() {
               <h2 className="text-xl md:text-3xl font-normal tracking-widest text-white uppercase leading-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                 {t("whyChoose")}
               </h2>
-
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: "7rem" }}
@@ -127,8 +118,6 @@ export default function WhyChooseUs() {
             </div>
           </motion.div>
         </div>
-
-        {/* Stats container with lighter animation */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -137,7 +126,6 @@ export default function WhyChooseUs() {
           className="max-w-5xl mx-auto"
         >
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/40 via-slate-700/30 to-slate-900/50 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_4px_16px_rgba(255,255,255,0.05)] p-6 md:p-8">
-            {/* Stats grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative">
               <div className="flex justify-center">
                 <Counter
@@ -146,8 +134,6 @@ export default function WhyChooseUs() {
                   icon={<Home size={24} className="mx-auto" />}
                 />
               </div>
-
-              {/* Simplified separators */}
               <div
                 className="hidden md:block absolute h-16 w-[1px] bg-gradient-to-b from-transparent via-white/30 to-transparent"
                 style={{
@@ -198,8 +184,6 @@ export default function WhyChooseUs() {
                   icon={<Clock size={24} className="mx-auto" />}
                 />
               </div>
-
-              {/* Mobile separator */}
               <div
                 className="block md:hidden absolute w-full h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"
                 style={{ top: "50%", left: 0 }}

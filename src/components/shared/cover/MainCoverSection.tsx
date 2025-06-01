@@ -49,7 +49,6 @@ export default function CoverSection({
     <motion.div
       className={`${height} relative h-[700px] w-full overflow-hidden px-6 lg:px-16`}
     >
-      {/* Lighter overlay with reduced opacity */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-slate-900/70 z-10"></div>
       <div className="absolute inset-0 bg-black/5 z-10"></div>
 
@@ -188,8 +187,6 @@ export default function CoverSection({
                 className="max-w-lg lg:ml-auto mt-8 lg:mt-0"
               >
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700/30 via-slate-600/20 to-slate-800/40 backdrop-blur-xs border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.3),0_4px_16px_rgba(255,255,255,0.08)] p-6">
-                  {/* Decorative corner elements */}
-
                   {secondaryTitle && (
                     <motion.h2
                       initial={{ opacity: 0 }}
