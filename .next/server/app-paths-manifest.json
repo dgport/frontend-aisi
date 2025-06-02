@@ -1,15 +1,8 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/[locale]/icon.png/route": "app/[locale]/icon.png/route.js",
-  "/[locale]/opengraph-image.png/route": "app/[locale]/opengraph-image.png/route.js",
+  "/[locale]/(main)/page": "app/[locale]/(main)/page.js",
   "/[locale]/aisi-batumi/[...id]/page": "app/[locale]/aisi-batumi/[...id]/page.js",
   "/[locale]/aisi-batumi/page": "app/[locale]/aisi-batumi/page.js",
-  "/[locale]/aisi-goderdzi/[...id]/page": "app/[locale]/aisi-goderdzi/[...id]/page.js",
-  "/[locale]/contact/page": "app/[locale]/contact/page.js",
   "/[locale]/aisi-goderdzi/page": "app/[locale]/aisi-goderdzi/page.js",
-  "/[locale]/signin/page": "app/[locale]/signin/page.js",
-  "/[locale]/(main)/page": "app/[locale]/(main)/page.js",
-  "/[locale]/admin/building/[buildingID]/[floorID]/page": "app/[locale]/admin/building/[buildingID]/[floorID]/page.js",
-  "/[locale]/admin/page": "app/[locale]/admin/page.js",
-  "/[locale]/admin/building/[buildingID]/page": "app/[locale]/admin/building/[buildingID]/page.js"
+  "/[locale]/icon.png/route": "app/[locale]/icon.png/route.js",
+  "/_not-found/page": "app/_not-found/page.js"
 }

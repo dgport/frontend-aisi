@@ -1,1 +1,19 @@
-{"pages":{},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":false}
+{
+  "app": {
+    "[project]/src/app/[locale]/(main)/page": [
+      "static/media/gyBhhwUxId8gMGYQMKR3pzfaWI_RnOIImpna6VEdtaiL-s.p.7099bf94.woff2"
+    ],
+    "[project]/src/app/[locale]/aisi-batumi/[...id]/page": [
+      "static/media/gyBhhwUxId8gMGYQMKR3pzfaWI_RnOIImpna6VEdtaiL-s.p.7099bf94.woff2"
+    ],
+    "[project]/src/app/[locale]/aisi-batumi/page": [
+      "static/media/gyBhhwUxId8gMGYQMKR3pzfaWI_RnOIImpna6VEdtaiL-s.p.7099bf94.woff2"
+    ],
+    "[project]/src/app/[locale]/aisi-goderdzi/page": [
+      "static/media/gyBhhwUxId8gMGYQMKR3pzfaWI_RnOIImpna6VEdtaiL-s.p.7099bf94.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

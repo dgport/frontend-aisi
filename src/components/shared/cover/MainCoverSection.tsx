@@ -230,6 +230,7 @@ export default function CoverSection({
             )}
           </div>
         </div>
+        
       </div>
     </motion.div>
   );

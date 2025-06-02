@@ -29,8 +29,7 @@ export default function BatumiFAQ() {
   };
 
   return (
-    <div className="bg-white relative overflow-hidden">
-       
+    <div className="bg-white  py-10 md:py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(8)].map((_, i) => (
           <div

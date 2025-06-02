@@ -210,11 +210,11 @@ export default function SelectFloor() {
   };
 
   return (
-    <section className="  bg-white">
+    <section className="px-4 md:px-8 lg:px-16  bg-white">
       <div className="container2">
         <div className="flex flex-col xl:flex-row gap-8">
-          <div ref={containerRef} className="relative w-full xl:w-1/2">
-            <div className="relative w-full bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
+          <div ref={containerRef} className="relative w-full xl:w-1/2 ">
+            <div className="relative w-full bg-gray-50 rounded-lg border-3 border-slate-500 overflow-hidden">
               <Image
                 ref={imageRef}
                 src={getCurrentImage() || "/placeholder.svg"}
