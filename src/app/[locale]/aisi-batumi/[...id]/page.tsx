@@ -76,7 +76,7 @@ export default function FloorPlanPage() {
   }, [floorPlans, floorPlanId]);
 
   const block = useMemo(() => {
-    return floorPlanId === "3" ? "b_block" : "a_block";
+    return floorPlanId === "2" ? "b_block" : "a_block";
   }, [floorPlanId]);
 
   const originalDimensions = useMemo(

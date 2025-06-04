@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 
+// Using a placeholder background image URL since we can't import local files
+ import background from "@/root/public/images/2929101.jpg"
 const accordionItems = [
   {
     question: "What amenities are included with each floor?",
@@ -29,12 +31,22 @@ export default function BatumiFAQ() {
   };
 
   return (
-    <div className="bg-white  py-10 md:py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden">
+    <div 
+      className="bg-white py-10 md:py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+  
+      
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-slate-400/30 rounded-full animate-pulse"
+            className="absolute w-1 h-1 bg-white/30 rounded-full animate-pulse"
             style={{
               left: `${10 + i * 10}%`,
               top: `${20 + (i % 3) * 25}%`,

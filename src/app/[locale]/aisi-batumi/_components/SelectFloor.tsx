@@ -145,7 +145,7 @@ export default function SelectFloor() {
                     {t("totalFloors")}
                   </span>
                 </div>
-                <div className="font-bold text-2xl text-white">26</div>
+                <div className="font-bold text-2xl text-white">27</div>
               </div>
               <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
                 <div className="flex items-center mb-2">

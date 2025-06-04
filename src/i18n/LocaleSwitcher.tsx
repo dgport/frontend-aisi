@@ -10,20 +10,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { English, Georgian, Russian } from "@/components/svg";
+import { English, Georgian } from "@/components/svg";
 
-type Locale = "en" | "ka" | "ru";
+type Locale = "en" | "ka";
 
 const LanguageFlags = {
   en: () => <English className="h-6 w-6" />,
   ka: () => <Georgian className="h-6 w-6" />,
-  ru: () => <Russian className="h-6 w-6" />,
 };
 
 const languageNames: Record<Locale, string> = {
   en: "English",
   ka: "ქართული",
-  ru: "Русский",
 };
 
 interface LocaleSwitcherProps {

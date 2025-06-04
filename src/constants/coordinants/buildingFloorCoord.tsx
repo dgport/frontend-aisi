@@ -19,6 +19,17 @@ export const buildings = [
       {
         id: "2",
         coords: [
+          { x: 288, y: 658 },
+          { x: 556, y: 675 },
+          { x: 596, y: 667 },
+          { x: 595, y: 687 },
+          { x: 556, y: 698 },
+          { x: 289, y: 675 },
+        ],
+      },
+      {
+        id: "3",
+        coords: [
           { x: 288, y: 641 },
           { x: 556, y: 658 },
           { x: 596, y: 650 },
@@ -28,7 +39,7 @@ export const buildings = [
         ],
       },
       {
-        id: "3",
+        id: "4",
         coords: [
           { x: 287, y: 640 },
           { x: 287, y: 626 },
@@ -39,7 +50,7 @@ export const buildings = [
         ],
       },
       {
-        id: "4",
+        id: "5",
         coords: [
           { x: 289, y: 625 },
           { x: 288, y: 609 },
@@ -50,7 +61,7 @@ export const buildings = [
         ],
       },
       {
-        id: "5",
+        id: "6",
         coords: [
           { x: 290, y: 609 },
           { x: 290, y: 592 },
@@ -61,7 +72,7 @@ export const buildings = [
         ],
       },
       {
-        id: "6",
+        id: "7",
         coords: [
           { x: 290, y: 591 },
           { x: 290, y: 576 },
@@ -72,7 +83,7 @@ export const buildings = [
         ],
       },
       {
-        id: "7",
+        id: "8",
         coords: [
           { x: 289, y: 574 },
           { x: 288, y: 559 },
@@ -83,7 +94,7 @@ export const buildings = [
         ],
       },
       {
-        id: "8",
+        id: "9",
         coords: [
           { x: 290, y: 557 },
           { x: 289, y: 542 },
@@ -94,7 +105,7 @@ export const buildings = [
         ],
       },
       {
-        id: "9",
+        id: "10",
         coords: [
           { x: 289, y: 540 },
           { x: 290, y: 523 },
@@ -105,7 +116,7 @@ export const buildings = [
         ],
       },
       {
-        id: "10",
+        id: "11",
         coords: [
           { x: 290, y: 522 },
           { x: 290, y: 507 },
@@ -116,7 +127,7 @@ export const buildings = [
         ],
       },
       {
-        id: "11",
+        id: "12",
         coords: [
           { x: 291, y: 506 },
           { x: 291, y: 489 },
@@ -127,7 +138,7 @@ export const buildings = [
         ],
       },
       {
-        id: "12",
+        id: "13",
         coords: [
           { x: 290, y: 489 },
           { x: 290, y: 473 },
@@ -138,7 +149,7 @@ export const buildings = [
         ],
       },
       {
-        id: "13",
+        id: "14",
         coords: [
           { x: 291, y: 472 },
           { x: 291, y: 457 },
@@ -149,7 +160,7 @@ export const buildings = [
         ],
       },
       {
-        id: "14",
+        id: "15",
         coords: [
           { x: 291, y: 456 },
           { x: 291, y: 439 },
@@ -159,9 +170,9 @@ export const buildings = [
           { x: 558, y: 400 },
         ],
       },
-      // CORRECTED FLOORS 15-23
+      // CORRECTED FLOORS 16-24
       {
-        id: "15",
+        id: "16",
         coords: [
           { x: 291, y: 437 },
           { x: 291, y: 421 },
@@ -172,7 +183,7 @@ export const buildings = [
         ],
       },
       {
-        id: "16",
+        id: "17",
         coords: [
           { x: 291, y: 419 },
           { x: 291, y: 403 },
@@ -183,7 +194,7 @@ export const buildings = [
         ],
       },
       {
-        id: "17",
+        id: "18",
         coords: [
           { x: 291, y: 401 },
           { x: 291, y: 385 },
@@ -194,7 +205,7 @@ export const buildings = [
         ],
       },
       {
-        id: "18",
+        id: "19",
         coords: [
           { x: 291, y: 383 },
           { x: 291, y: 367 },
@@ -205,7 +216,7 @@ export const buildings = [
         ],
       },
       {
-        id: "19",
+        id: "20",
         coords: [
           { x: 291, y: 365 },
           { x: 291, y: 349 },
@@ -216,7 +227,7 @@ export const buildings = [
         ],
       },
       {
-        id: "20",
+        id: "21",
         coords: [
           { x: 291, y: 347 },
           { x: 291, y: 331 },
@@ -227,7 +238,7 @@ export const buildings = [
         ],
       },
       {
-        id: "21",
+        id: "22",
         coords: [
           { x: 291, y: 329 },
           { x: 291, y: 313 },
@@ -238,7 +249,7 @@ export const buildings = [
         ],
       },
       {
-        id: "22",
+        id: "23",
         coords: [
           { x: 291, y: 311 },
           { x: 291, y: 295 },
@@ -249,7 +260,7 @@ export const buildings = [
         ],
       },
       {
-        id: "23",
+        id: "24",
         coords: [
           { x: 291, y: 293 },
           { x: 291, y: 277 },
@@ -260,7 +271,7 @@ export const buildings = [
         ],
       },
       {
-        id: "24",
+        id: "25",
         coords: [
           { x: 289, y: 289 },
           { x: 290, y: 279 },
@@ -271,7 +282,7 @@ export const buildings = [
         ],
       },
       {
-        id: "25",
+        id: "26",
         coords: [
           { x: 289, y: 268 },
           { x: 290, y: 279 },
@@ -281,7 +292,7 @@ export const buildings = [
         ],
       },
       {
-        id: "26",
+        id: "27",
         coords: [
           { x: 289, y: 268 },
           { x: 287, y: 253 },

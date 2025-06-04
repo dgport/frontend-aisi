@@ -43,10 +43,6 @@ export default function ProjectsCarousel() {
       location: t("adjaraBatumi"),
       image: img3,
       address: "/#",
-      status: {
-        soldOut: true,
-        finished: true,
-      },
     },
   ];
 
@@ -135,24 +131,8 @@ export default function ProjectsCarousel() {
                             alt={project.title}
                             fill
                             priority
-                            className={`object-cover transition-all duration-1000 ease-out group-hover:scale-105 ${
-                              project.status?.soldOut ||
-                              project.status?.finished
-                                ? "blur-[1px] grayscale-[20%]"
-                                : ""
-                            }`}
+                            className={`object-cover transition-all duration-1000 ease-out group-hover:scale-105`}
                           />
-                          {(project.status?.soldOut ||
-                            project.status?.finished) && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-black/60 ">
-                              {project.status.finished && (
-                                <div className="bg-gradient-to-r from-emerald-900/95 to-emerald-800/95  text-white font-semibold py-4 px-10 rounded-2xl text-2xl transform -rotate-6 shadow-[0_12px_40px_rgba(16,185,129,0.4),0_4px_16px_rgba(0,0,0,0.6)] border-2 border-emerald-500/40 hover:shadow-[0_16px_50px_rgba(16,185,129,0.6)] transition-all duration-300">
-                                  {t("finished")}
-                                </div>
-                              )}
-                            </div>
-                          )}
-
                           <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
                             <div className="relative">
                               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent rounded-2xl -m-4 p-4"></div>
