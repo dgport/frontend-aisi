@@ -13,7 +13,7 @@ export default function Cover() {
       secondaryDescription="AISI Batumi in Mountain Adjara AISI Batumi in Mountain Adjara AISI Batumi in Mountain Adjara"
       tags={[]}
       slideInterval={7000}
-      height="lg:min-h-[30vh]"
+      height="lg:min-h-[100vh]"
     />
   );
 }

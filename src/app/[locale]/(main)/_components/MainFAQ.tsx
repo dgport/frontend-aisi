@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown, HelpCircle } from "lucide-react";
-
+import background from "@/root/public/images/bg-body.jpg";
 interface FAQItem {
   questionKey: string;
   answerKey: string;
@@ -33,7 +33,10 @@ export default function MainFAQ() {
   };
 
   return (
-    <div className="bg-white relative overflow-hidden">
+    <section
+      style={{ backgroundImage: `url(${background.src})` }}
+      className="bg-white relative overflow-hidden"
+    >
       <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <div
           className="absolute inset-0"
@@ -117,6 +120,6 @@ export default function MainFAQ() {
           </div>
         </div>
       </section>
-    </div>
+    </section>
   );
 }

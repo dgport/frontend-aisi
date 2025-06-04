@@ -9,9 +9,7 @@ export default function page() {
     <>
       <ClientWrapper>
         <Cover />
-        <section className=" my-10 flex flex-col gap-5 bg-cover bg-center  ">
-          <SelectFloor />
-        </section>
+        <SelectFloor />
         <BatumiGallery />
         <BatumiFAQ />
       </ClientWrapper>

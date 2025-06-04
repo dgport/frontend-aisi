@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
-
-// Using a placeholder background image URL since we can't import local files
- import background from "@/root/public/images/2929101.jpg"
+import background from "@/root/public/images/bg-body.jpg";
 const accordionItems = [
   {
     question: "What amenities are included with each floor?",
@@ -31,17 +29,10 @@ export default function BatumiFAQ() {
   };
 
   return (
-    <div 
+    <section
       className="bg-white py-10 md:py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden"
-      style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
+      style={{ backgroundImage: `url(${background.src})` }}
     >
-  
-      
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(8)].map((_, i) => (
           <div
@@ -116,6 +107,6 @@ export default function BatumiFAQ() {
           </div>
         </div>
       </section>
-    </div>
+    </section>
   );
 }

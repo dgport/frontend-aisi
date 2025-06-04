@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Clock } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import img from "@/root/public/images/binary.jpg";
+import background from "@/root/public/images/bg-body.jpg";
 
 export default function PaymentCalculator() {
   const [propertyValue, setPropertyValue] = useState(100000);
@@ -45,23 +46,13 @@ export default function PaymentCalculator() {
   };
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Background Decorations */}
+    <div
+      style={{ backgroundImage: `url(${background.src})` }}
+      className="min-h-screen bg-white relative overflow-hidden"
+    >
       <div className="absolute inset-0 pointer-events-none">
         {/* Subtle Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 opacity-50"></div>
-        {/* Decorative Lines */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: "40px 40px",
-          }}
-        ></div>
-        {/* Animated Particles */}
+
         {[...Array(10)].map((_, i) => (
           <div
             key={`bg-particle-${i}`}

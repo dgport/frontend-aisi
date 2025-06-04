@@ -17,7 +17,7 @@ import MobileSitePlan from "@/root/public/images/batumi/SelectBuilding.png";
 import { buildings } from "@/constants/coordinants/buildingFloorCoord";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useTranslations } from "next-intl";
- 
+import background from "@/root/public/images/bg-body.jpg";
 
 const ORIGINAL_IMAGE_WIDTH = 768;
 const MOBILE_IMAGE_WIDTH = 768;
@@ -210,11 +210,14 @@ export default function SelectFloor() {
   };
 
   return (
-    <section className="px-4 md:px-8 lg:px-16  bg-white">
-      <div className="container2">
+    <section
+      style={{ backgroundImage: `url(${background.src})` }}
+      className="px-4 md:px-8 lg:px-16 py-10  min-h-screen relative"
+    >
+      <div className="container2 relative z-10">
         <div className="flex flex-col xl:flex-row gap-8">
           <div ref={containerRef} className="relative w-full xl:w-1/2 ">
-            <div className="relative w-full bg-gray-50 rounded-lg border-3 border-slate-500 overflow-hidden">
+            <div className="relative w-full bg-gray-50/90 backdrop-blur-sm rounded-lg border-3 border-slate-500 overflow-hidden">
               <Image
                 ref={imageRef}
                 src={getCurrentImage() || "/placeholder.svg"}
@@ -312,7 +315,7 @@ export default function SelectFloor() {
             </div>
           </div>
           <div className="w-full xl:w-1/2">
-            <div className=" bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
+            <div className=" bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
               {renderRightPanel()}
             </div>
           </div>
