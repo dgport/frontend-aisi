@@ -4,7 +4,6 @@ import Cover from "./_components/Cover";
 import MainFAQ from "./_components/MainFAQ";
 import ProjectsSection from "./_components/ProjectsSection";
 import WhyChooseUs from "./_components/WhyUsSection";
-import ClientWrapper from "@/components/shared/clientwrapper/ClientWrapper";
 import VisualBridge from "@/components/shared/visualBridge/VisualBridge";
 
 export const metadata: Metadata = {
@@ -43,13 +42,13 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <ClientWrapper>
+    <>
       <Cover />
       <VisualBridge />
       <ProjectsSection />
       <PaymentCalculator />
       <WhyChooseUs />
       <MainFAQ />
-    </ClientWrapper>
+    </>
   );
 }

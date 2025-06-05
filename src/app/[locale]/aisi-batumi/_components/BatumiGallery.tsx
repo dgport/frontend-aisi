@@ -5,7 +5,7 @@ import Otis from "@/root/public/images/batumi/Otis.png";
 import Parking from "@/root/public/images/batumi/Parking.png";
 import Gym from "@/root/public/images/batumi/Gym.png";
 import Elevator from "@/root/public/images/batumi/Elevator.png";
- 
+
 interface GalleryImage {
   src: string | any;
   alt: string;
@@ -44,7 +44,8 @@ const galleryImages: GalleryImage[] = [
 export default function PropertyGallery(): JSX.Element {
   return (
     <div className="relative w-full">
-      <div className="md:block hidden absolute top-0 w-full -mt-2 z-10">
+      {/* Simplified top wave */}
+      <div className="hidden md:block absolute top-0 w-full z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 90"
@@ -57,56 +58,59 @@ export default function PropertyGallery(): JSX.Element {
           />
         </svg>
       </div>
-      <div className="w-full px-4 md:px-8 lg:px-16  py-16 md:py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+      <div className="w-full px-4 md:px-8 lg:px-16 py-16 md:py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative">
+        <div className="container mx-auto">
+          <div className="grid gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
             {galleryImages.map((image, index) => (
               <div
                 key={index}
-                className="group relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden hover:border-white/30 transition-all duration-500 hover:scale-[1.05] hover:-translate-y-2 transform-gpu shadow-2xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
-                  boxShadow:
-                    "0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-                }}
+                className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-white/30 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Simplified hover glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="relative h-56 overflow-hidden rounded-t-3xl">
+                {/* Image container */}
+                <div className="relative h-48 md:h-56 overflow-hidden rounded-t-2xl">
                   <Image
                     src={image.src || "/placeholder.svg"}
                     alt={image.alt}
-                    className="object-cover transition-all duration-700 group-hover:scale-125 group-hover:rotate-2"
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 25vw, 25vw"
+                    priority={index < 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+                  {/* Simplified overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                 </div>
 
-                <div className="p-6 relative">
-                  <div className="absolute -top-8 left-6 w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Content area */}
+                <div className="p-4 md:p-6 relative">
+                  {/* Accent line */}
+                  <div className="absolute -top-2 left-4 md:left-6 w-12 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  <h3 className="font-bold text-xl text-white mb-3 group-hover:text-blue-100 transition-colors duration-300">
+                  <h3 className="font-bold text-lg md:text-xl text-white mb-2 md:mb-3 group-hover:text-blue-100 transition-colors duration-300">
                     {image.title}
                   </h3>
                   <p className="text-sm text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
                     {image.description}
                   </p>
+
+                  {/* Bottom accent line */}
                   <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 group-hover:w-full transition-all duration-500 ease-out" />
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl animate-pulse" />
-        <div
-          className="absolute bottom-20 right-10 w-40 h-40 bg-purple-500/5 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
+
+        {/* Simplified background decorations */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-500/3 rounded-full blur-2xl" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-purple-500/3 rounded-full blur-3xl" />
       </div>
-      <div className="md:block hidden absolute bottom-0 w-full -mb-2 z-10">
+
+      {/* Simplified bottom wave */}
+      <div className="hidden md:block absolute bottom-0 w-full z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 100"

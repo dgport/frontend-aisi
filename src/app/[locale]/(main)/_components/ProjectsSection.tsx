@@ -39,10 +39,10 @@ export default function ProjectsCarousel() {
     },
     {
       id: 3,
-      title: t("aisiAngisa"),
+      title: t("aisiStatus"),
       location: t("adjaraBatumi"),
       image: img3,
-      address: "/#",
+      address: "/aisi-status",
     },
   ];
 

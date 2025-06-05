@@ -7,28 +7,27 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import background from "@/root/public/images/bg-body.jpg";
-import Image1 from "@/root/public/images/goderdzi/GoderdziGreen.jpg";
-import Image2 from "@/root/public/images/goderdzi/GoderdziNature.jpg";
-import Image3 from "@/root/public/images/goderdzi/GoderdziPool.jpg";
+import Image1 from "@/root/public/images/status/Status1.png";
+import Image2 from "@/root/public/images/status/Status2.png";
+import Image3 from "@/root/public/images/status/Status3.png";
+import Image4 from "@/root/public/images/status/Status4.png";
 
 const propertyImages = [
   { src: Image1, alt: "Goderdzi Green Views" },
-  { src: Image2, alt: "Goderdzi Nature Surroundings" },
+  { src: Image4, alt: "Goderdzi Nature Surroundings" },
   { src: Image3, alt: "Goderdzi Pool Area" },
-  { src: Image1, alt: "Goderdzi Exterior" },
-  { src: Image2, alt: "Goderdzi Interior" },
+  { src: Image2, alt: "Goderdzi Exterior" },
 ];
 
-export default function GoderdziGallery() {
+export default function StatusGallery() {
   return (
     <div className="relative w-full">
-      {/* Simplified top wave */}
+      {/* Simplified top wave - only on desktop */}
       <div className="hidden md:block absolute top-0 w-full z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 90"
           className="w-full h-auto"
-          preserveAspectRatio="none"
         >
           <defs>
             <pattern
@@ -60,8 +59,8 @@ export default function GoderdziGallery() {
             Property Gallery
           </h3>
 
-          {/* Fixed carousel with proper configuration */}
-          <Carousel
+          {/* Simplified carousel without extra padding issues */}
+          <Carousel 
             className="w-full"
             opts={{
               align: "start",
@@ -85,7 +84,7 @@ export default function GoderdziGallery() {
                         alt={image.alt}
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1280px) 33vw, 33vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                         priority={index < 2}
                       />
                       {/* Simplified overlay */}
@@ -113,7 +112,6 @@ export default function GoderdziGallery() {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 100"
           className="w-full h-auto"
-          preserveAspectRatio="none"
         >
           <defs>
             <pattern
