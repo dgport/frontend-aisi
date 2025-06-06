@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import { NextIntlClientProvider } from "next-intl";
@@ -8,12 +9,24 @@ import QueryProvider from "@/reactQuery/queryProvider";
 import { AuthProvider } from "@/auth/AuthProvider";
 import Footer from "@/components/footer/Footer";
 
-
-
-const georgian = Geist({
-  variable: "--font-georgian-thin",
+const geist = Geist({
   subsets: ["latin"],
-  weight: "100",
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const geo1 = localFont({
+  src: "../../fonts/geo1.otf",
+  variable: "--font-geo1",
+  display: "swap",
+  weight: "400",
+});
+
+const geo2 = localFont({
+  src: "../../fonts/geo2.ttf",
+  variable: "--font-geo2",
+  display: "swap",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +45,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`  ${georgian.variable} antialiased`}>
+      <body className={`${geist.variable} ${geo1.variable} ${geo2.variable}`}>
         <AuthProvider>
           <QueryProvider>
             <NextIntlClientProvider messages={messages}>

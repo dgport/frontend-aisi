@@ -17,7 +17,7 @@ export default function Cover() {
       secondaryDescription={t("coverDesc")}
       tags={[{ text: t("modern") }, { text: t("exclu") }]}
       slideInterval={7000}
-      height="lg:h-[700px]"
+      height="h-[700px]"
     />
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import DesktopImage from "@/root/public/images/status/Status2.png";
-import MobileImage from "@/root/public/images/goderdzi/FloorSelectMobile.jpg";
+ 
 import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
@@ -11,7 +11,7 @@ import { Building, Layers, Home, Car, Calendar } from "lucide-react";
 import {
   desktopAreas,
   mobileAreas,
-} from "@/constants/coordinants/goderdziFloorCoord";
+} from "@/constants/coordinants/statusFloorCoord";
 import background from "@/root/public/images/bg-body.jpg";
 
 const ORIGINAL_IMAGE_WIDTH = 1920;
@@ -64,7 +64,7 @@ export default function SelectFloor() {
     router.push(`/aisi-goderdzi/${buildingId}/${floorPlanId}/${floorId}`);
   };
 
-  const currentImage = isMobile ? MobileImage : DesktopImage;
+  const currentImage = DesktopImage;
   const currentAreas = isMobile ? mobileAreas : desktopAreas;
 
   return (
@@ -79,7 +79,7 @@ export default function SelectFloor() {
           </h1>
         </div>
         <div className="flex flex-col xl:flex-row gap-8">
-          <div ref={containerRef} className="relative w-full xl:w-1/2">
+          <div ref={containerRef} className="relative w-full xl:w-2/3">
             <div className="relative w-full bg-gray-50 rounded-lg border-3 border-slate-500 overflow-hidden">
               <Image
                 ref={imageRef}
@@ -115,7 +115,7 @@ export default function SelectFloor() {
               )}
             </div>
           </div>
-          <div className="w-full xl:w-1/2">
+          <div className="w-full xl:w-1/3">
             <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
               <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
                 <Building className="mr-3 h-6 w-6 text-white" />

@@ -143,3 +143,11 @@
 .rmiz-btn-unzoom {
   z-index: 10001 !important;
 }
+.font-geo1 {
+  font-family: var(--font-geo1), Arial, sans-serif;
+}
+
+
+.font-geo2 {
+  font-family: var(--font-geo2), Arial, sans-serif;
+}

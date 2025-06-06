@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { StaticImageData } from "next/image";
+import type { StaticImageData } from "next/image";
 
 interface Tag {
   text: string;
@@ -18,7 +18,6 @@ interface CoverSectionProps {
   secondaryDescription?: string;
   tags?: Tag[];
   slideInterval?: number;
-  overlayOpacity?: number;
   height: string;
 }
 
@@ -47,11 +46,10 @@ export default function CoverSection({
 
   return (
     <motion.div
-      className={`${height} relative   w-full overflow-hidden px-6 lg:px-16`}
+      className={`${height} relative w-full overflow-hidden px-6 lg:px-16`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-slate-800/60 to-slate-900/70 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-br bg-slate-900/70 z-10"></div>
       <div className="absolute inset-0 bg-black/5 z-10"></div>
-
       {images.length > 0 && (
         <div className="absolute inset-0">
           {images.map((image, index) => (
@@ -92,19 +90,18 @@ export default function CoverSection({
               >
                 {title && (
                   <div className="mb-4 relative">
-                    <div className="pr-28">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: "7rem" }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="h-[2px] bg-gradient-to-r from-white/40 via-white/70 to-white/40 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.4)] mb-4"
-                      />
-                    </div>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "7rem" }}
+                      transition={{ duration: 0.6, delay: 0.4 }}
+                      className="h-[2px] bg-white/60 rounded-full mb-4"
+                    />
+
                     <motion.h1
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.8, delay: 0.6 }}
-                      className="text-transparent h-12 bg-gradient-to-r from-white/95 via-white/100 to-white/95 bg-clip-text text-3xl lg:text-4xl font-normal tracking-wider drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                      className="text-white font-geo2 text-4xl lg:text-5xl font-normal tracking-wider pt-2"
                     >
                       {title.split(" ").map((word, i) => (
                         <motion.span
@@ -118,14 +115,12 @@ export default function CoverSection({
                       ))}
                     </motion.h1>
 
-                    <div className="pr-28">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: "7rem" }}
-                        transition={{ duration: 0.6, delay: 0.8 }}
-                        className="h-[2px] bg-gradient-to-r from-white/40 via-white/70 to-white/40 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.4)] mt-4 ml-auto"
-                      />
-                    </div>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: "7rem" }}
+                      transition={{ duration: 0.6, delay: 0.8 }}
+                      className="h-[2px] bg-white/60 rounded-full mt-4 ml-auto"
+                    />
                   </div>
                 )}
 
@@ -134,7 +129,7 @@ export default function CoverSection({
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.9 }}
-                    className="text-white/98 text-sm lg:text-base xl:text-lg mt-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+                    className="text-white/90 font-geo2 text-base lg:text-2xl   mt-2"
                   >
                     {subtitle}
                   </motion.p>
@@ -145,37 +140,10 @@ export default function CoverSection({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1 }}
-                    className="text-white/98 text-base lg:text-lg xl:text-lg mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+                    className="text-white/90 font-geo2 text-base lg:text-2xl mt-4"
                   >
                     {description}
                   </motion.p>
-                )}
-
-                {tags && tags.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1.2 }}
-                    className="lg:flex flex-wrap mt-6 gap-3 hidden"
-                  >
-                    {tags.map((tag, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
-                        whileHover={{
-                          scale: 1.05,
-                          backgroundColor: "rgba(255, 255, 255, 0.25)",
-                        }}
-                        className="relative overflow-hidden rounded-lg bg-gradient-to-br from-slate-700/40 via-slate-600/30 to-slate-800/50 backdrop-blur-xl border border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.3),0_2px_8px_rgba(255,255,255,0.08)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.3),0_4px_12px_rgba(255,255,255,0.12)] hover:border-white/30 transition-all duration-500 px-4 py-1.5"
-                      >
-                        <span className="text-white text-sm lg:text-sm font-medium tracking-wider drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-                          {tag.text}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </motion.div>
                 )}
               </motion.div>
             )}
@@ -184,15 +152,15 @@ export default function CoverSection({
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="max-w-lg lg:ml-auto mt-8 lg:mt-0"
+                className="max-w-lg lg:ml-auto md:pt-8 lg:mt-0"
               >
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700/30 via-slate-600/20 to-slate-800/40 backdrop-blur-xs border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.3),0_4px_16px_rgba(255,255,255,0.08)] p-6">
+                <div className="rounded-2xl bg-white/10 border border-white/20 p-6">
                   {secondaryTitle && (
                     <motion.h2
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: 0.6 }}
-                      className="text-xl lg:text-2xl text-center lg:text-start xl:text-4xl font-normal text-white mb-3 lg:mb-5 drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+                      className="text-xl lg:text-2xl text-center lg:text-start xl:text-4xl font-normal font-geo2 text-white mb-3 lg:mb-5"
                     >
                       {secondaryTitle}
                     </motion.h2>
@@ -203,13 +171,12 @@ export default function CoverSection({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: 0.8 }}
-                      className="text-white/98 mb-3 lg:mb-4 text-center lg:text-start text-sm lg:text-base drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]"
+                      className="text-white/90 mb-3 font-geo2 lg:mb-4 text-center lg:text-start text-base lg:text-xl tracking-wide"
                     >
                       {secondaryDescription}
                     </motion.p>
                   )}
                 </div>
-
                 {images.length > 1 && (
                   <div className="flex mt-6 mb-10 gap-2 justify-center lg:justify-start">
                     {images.map((_, index) => (
@@ -218,7 +185,7 @@ export default function CoverSection({
                         onClick={() => setCurrentImageIndex(index)}
                         className={`h-2 rounded-full transition-all duration-500 ${
                           currentImageIndex === index
-                            ? "bg-white w-8 shadow-[0_0_10px_rgba(255,255,255,0.6)]"
+                            ? "bg-white w-8"
                             : "bg-white/50 w-2 hover:bg-white/70"
                         }`}
                         aria-label={`Show image ${index + 1}`}
