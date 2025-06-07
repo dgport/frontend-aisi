@@ -1,21 +1,18 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import DesktopImage from "@/root/public/images/status/Status2.png";
- 
+import DesktopImage from "@/root/public/images/status/StatusLarge.png";
+
 import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useRouter } from "next/navigation";
 import { Building, Layers, Home, Car, Calendar } from "lucide-react";
-import {
-  desktopAreas,
-  mobileAreas,
-} from "@/constants/coordinants/statusFloorCoord";
+import { desktopAreas } from "@/constants/coordinants/statusFloorCoord";
 import background from "@/root/public/images/bg-body.jpg";
 
-const ORIGINAL_IMAGE_WIDTH = 1920;
-const MOBILE_IMAGE_WIDTH = 1457;
+const ORIGINAL_IMAGE_WIDTH = 1505;
+const MOBILE_IMAGE_WIDTH = 1505;
 
 export default function SelectFloor() {
   const [hoveredApartment, setHoveredApartment] = useState<number | null>(null);
@@ -65,7 +62,7 @@ export default function SelectFloor() {
   };
 
   const currentImage = DesktopImage;
-  const currentAreas = isMobile ? mobileAreas : desktopAreas;
+  const currentAreas = isMobile ? desktopAreas : desktopAreas;
 
   return (
     <section

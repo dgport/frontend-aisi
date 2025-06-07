@@ -5,6 +5,7 @@ import MainFAQ from "./_components/MainFAQ";
 import ProjectsSection from "./_components/ProjectsSection";
 import WhyChooseUs from "./_components/WhyUsSection";
 import VisualBridge from "@/components/shared/visualBridge/VisualBridge";
+import Gallery from "./_components/Gallery";
 
 export const metadata: Metadata = {
   title: "AISI Group",
@@ -46,6 +47,7 @@ export default function page() {
       <Cover />
       <VisualBridge />
       <ProjectsSection />
+      <Gallery />
       <PaymentCalculator />
       <WhyChooseUs />
       <MainFAQ />

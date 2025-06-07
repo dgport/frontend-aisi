@@ -48,31 +48,11 @@ export default function PaymentCalculator() {
   return (
     <div
       style={{ backgroundImage: `url(${background.src})` }}
-      className="min-h-screen bg-white relative overflow-hidden"
+      className="  bg-white relative overflow-hidden"
     >
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Subtle Gradient Overlay */}
-
-        {[...Array(10)].map((_, i) => (
-          <div
-            key={`bg-particle-${i}`}
-            className="absolute w-1.5 h-1.5 bg-blue-300/30 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
-
-        <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-blue-200/50 rounded-tl-lg"></div>
-        <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-purple-200/50 rounded-br-lg"></div>
-      </div>
-
-      <div className="relative z-10 px-4 py-16 sm:px-8 md:px-20 md:py-20">
+      <div className="relative z-10 px-4 py-16 sm:px-8 md:px-10 md:py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="relative w-full p-3 px-4 sm:px-8 md:px-12 pb-8 sm:pb-16 pt-0 mx-auto overflow-hidden rounded-2xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.05)] border border-white/10">
+          <div className="relative w-full p-3 px-4 sm:px-8 md:px-12 pt-0 mx-auto overflow-hidden rounded-2xl  shadow-2xl border border-slate-900">
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{

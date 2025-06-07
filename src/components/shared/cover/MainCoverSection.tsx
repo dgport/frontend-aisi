@@ -48,7 +48,7 @@ export default function CoverSection({
     <motion.div
       className={`${height} relative w-full overflow-hidden px-6 lg:px-16`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br bg-slate-900/70 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-br bg-slate-900/50 z-10"></div>
       <div className="absolute inset-0 bg-black/5 z-10"></div>
       {images.length > 0 && (
         <div className="absolute inset-0">

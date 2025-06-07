@@ -111,36 +111,7 @@ export default function VisualBridge({
             </div>
           </div>
         </div>
-
-        <div className="absolute top-4 left-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            className="w-3 h-3 border-t-2 border-l-2 border-white/40 rounded-tl-lg"
-          ></motion.div>
-        </div>
-
-        <div className="absolute top-4 right-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            className="w-3 h-3 border-t-2 border-r-2 border-white/40 rounded-tr-lg"
-          ></motion.div>
-        </div>
-
-        <div className="absolute bottom-4 left-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 1.0 }}
-            className="w-3 h-3 border-b-2 border-l-2 border-white/40 rounded-bl-lg"
-          ></motion.div>
-        </div>
+         
 
         <div className="absolute bottom-4 right-8">
           <motion.div

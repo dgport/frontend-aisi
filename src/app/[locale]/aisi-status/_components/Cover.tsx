@@ -5,7 +5,7 @@ import Cover1 from "@/root/public/images/status/Status1.png"
 export default function Cover() {
   return (
     <CoverSection
-      images={[Cover1 ]}
+      images={[Cover1]}
       title="Goderdzi Residence"
       subtitle="Premium Real Estate Developer"
       description="Transforming spaces into exceptional living experiences since 2010"
@@ -13,7 +13,7 @@ export default function Cover() {
       secondaryDescription="Goderdzi Residence in Mountain Adjara Goderdzi Residence in Mountain Adjara Goderdzi Residence in Mountain Adjara"
       tags={[]}
       slideInterval={7000}
-      height="h-[700px] lg:h-[700px]"
+      height="h-[700px]"
     />
   );
 }

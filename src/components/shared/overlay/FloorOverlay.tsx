@@ -34,6 +34,7 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
   scaleFactor,
 }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const isHovered = hoveredApartment === flatId;
 
   useEffect(() => {
@@ -47,33 +48,58 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = ({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  useEffect(() => {
+    const hintInterval = setInterval(() => {
+      setShowHint(true);
+      setTimeout(() => setShowHint(false), 1000);
+    }, 1500);
+
+    return () => clearInterval(hintInterval);
+  }, []);
+
   const getBackgroundColor = () => {
     if (isMobile) {
-      return isHovered
-        ? "bg-indigo-500/70 border-2 border-white shadow-xl"
-        : "bg-indigo-300/40 border border-indigo-200";
+      if (isHovered) {
+        return "bg-blue-500/70 border-2 border-white shadow-xl";
+      } else if (showHint) {
+        return "bg-blue-300/50 border border-blue-200 animate-pulse";
+      } else {
+        return "bg-blue-200/20 border border-blue-100/50";
+      }
     } else {
-      return isHovered
-        ? "bg-indigo-400/60 border-2 border-white shadow-lg"
-        : "";
+      if (isHovered) {
+        return "bg-blue-400/60 border-2 border-white shadow-lg";
+      } else if (showHint) {
+        return "bg-blue-300/40 border border-blue-200 animate-pulse";
+      } else {
+        return "bg-blue-100/15 border border-blue-50/30 hover:bg-blue-200/25";
+      }
     }
   };
 
   return (
-    <div
-      key={flatId}
-      style={{
-        clipPath: getClipPathPolygon(coords, scaleFactor),
-      }}
-      className={`absolute top-0 left-0 w-full h-full transition-all duration-300 cursor-pointer ${getBackgroundColor()} hover:shadow-xl`}
-      onMouseEnter={() => !isMobile && setHoveredApartment(flatId)}
-      onMouseLeave={() => !isMobile && setHoveredApartment(null)}
-      onClick={() => {
-        if (isMobile) {
-          setHoveredApartment(isHovered ? null : flatId);
-        }
-        handleFloorClick(flatId, flatNumber);
-      }}
-    />
+    <>
+      <div
+        style={{
+          clipPath: getClipPathPolygon(coords, scaleFactor),
+        }}
+        className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/10 to-blue-100/10 border border-blue-50/20"
+      />
+      <div
+        key={flatId}
+        style={{
+          clipPath: getClipPathPolygon(coords, scaleFactor),
+        }}
+        className={`absolute top-0 left-0 w-full h-full transition-all duration-300 cursor-pointer ${getBackgroundColor()} hover:shadow-xl`}
+        onMouseEnter={() => !isMobile && setHoveredApartment(flatId)}
+        onMouseLeave={() => !isMobile && setHoveredApartment(null)}
+        onClick={() => {
+          if (isMobile) {
+            setHoveredApartment(isHovered ? null : flatId);
+          }
+          handleFloorClick(flatId, flatNumber);
+        }}
+      />
+    </>
   );
 };
