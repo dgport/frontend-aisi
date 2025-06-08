@@ -18,6 +18,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import overlay from "@/root/public/images/low-angle-view-modern-ceiling.jpg";
 
+
 export default function ProjectsCarousel() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const t = useTranslations("main");
@@ -47,7 +48,7 @@ export default function ProjectsCarousel() {
   ];
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
       <section className="w-full py-20 relative pt-20 overflow-hidden border-y border-white">
         <div className="absolute inset-0">
           <Image
@@ -57,9 +58,9 @@ export default function ProjectsCarousel() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-tb from-black"></div>
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-slate-900/85 to-slate-950/90"></div>
-          <div className="absolute inset-0 bg-black/5"></div>
+          <div className="absolute inset-0 bg-gradient-to-tb from-slate-900/90 via-blue-950/80 to-slate-900/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-blue-900/60 to-slate-950/90"></div>
+          <div className="absolute inset-0 bg-blue-950/30"></div>
         </div>
 
         <div className="flex flex-col w-full items-center relative z-20">
@@ -159,8 +160,8 @@ export default function ProjectsCarousel() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="absolute lg:hidden left-2 md:left-4 top-1/2 bg-white/95 hover:bg-white shadow-[0_12px_40px_rgba(0,0,0,0.3),0_4px_16px_rgba(255,255,255,0.1)] border-2 border-white/30 hover:border-white/50 h-12 w-12 md:h-14 md:w-14 transition-all duration-300 hover:shadow-[0_16px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl rounded-2xl hover:scale-110" />
-              <CarouselNext className="absolute right-2 lg:hidden md:right-4 top-1/2 bg-white/95 hover:bg-white shadow-[0_12px_40px_rgba(0,0,0,0.3),0_4px_16px_rgba(255,255,255,0.1)] border-2 border-white/30 hover:border-white/50 h-12 w-12 md:h-14 md:w-14 transition-all duration-300 hover:shadow-[0_16px_50px_rgba(0,0,0,0.4)] backdrop-blur-xl rounded-2xl hover:scale-110" />
+              <CarouselPrevious className="absolute lg:hidden left-2 md:left-4 top-1/2 bg-blue-900/70 hover:bg-blue-800/80 text-white shadow-[0_12px_40px_rgba(30,58,138,0.4)] border-2 border-blue-700/40 hover:border-blue-600/60 h-12 w-12 md:h-14 md:w-14 transition-all duration-300 hover:shadow-[0_16px_50px_rgba(30,58,138,0.5)] backdrop-blur-xl rounded-full hover:scale-110" />
+              <CarouselNext className="absolute right-2 lg:hidden md:right-4 top-1/2 bg-blue-900/70 hover:bg-blue-800/80 text-white shadow-[0_12px_40px_rgba(30,58,138,0.4)] border-2 border-blue-700/40 hover:border-blue-600/60 h-12 w-12 md:h-14 md:w-14 transition-all duration-300 hover:shadow-[0_16px_50px_rgba(30,58,138,0.5)] backdrop-blur-xl rounded-full hover:scale-110" />
             </Carousel>
           </motion.div>
         </div>

@@ -46,10 +46,8 @@ export default function CoverSection({
 
   return (
     <motion.div
-      className={`${height} relative w-full overflow-hidden px-6 lg:px-16`}
+      className={`${height} relative w-full overflow-hidden px-6 lg:px-16 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br bg-slate-900/50 z-10"></div>
-      <div className="absolute inset-0 bg-black/5 z-10"></div>
       {images.length > 0 && (
         <div className="absolute inset-0">
           {images.map((image, index) => (
@@ -73,11 +71,13 @@ export default function CoverSection({
                 fill
                 priority
               />
+              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/10 via-blue-950/10 to-slate-900/10"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 via-slate-800/20 to-blue-950/20"></div>
+              <div className="absolute inset-0 bg-blue-950/30"></div>
             </motion.div>
           ))}
         </div>
       )}
-
       <div className="relative z-20 h-full w-full max-w-7xl mx-auto">
         <div className="flex flex-col h-full justify-center">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-16 items-end md:items-center h-full pb-2">
