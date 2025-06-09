@@ -5,8 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
-import background from "@/root/public/images/bg-body.jpg";
+import Image from "next/image"; 
 import Image1 from "@/root/public/images/status/Status1.png";
 import Image2 from "@/root/public/images/status/Status2.png";
 import Image3 from "@/root/public/images/status/Status3.png";

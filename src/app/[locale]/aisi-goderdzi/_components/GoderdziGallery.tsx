@@ -6,7 +6,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import background from "@/root/public/images/bg-body.jpg";
 import Image1 from "@/root/public/images/goderdzi/GoderdziGreen.jpg";
 import Image2 from "@/root/public/images/goderdzi/GoderdziNature.jpg";
 import Image3 from "@/root/public/images/goderdzi/GoderdziPool.jpg";
