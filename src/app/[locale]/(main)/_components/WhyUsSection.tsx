@@ -59,7 +59,7 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="text-2xl md:text-3xl font-bold text-white mb-1 drop-shadow-[0_4px_12px_rgba(30,58,138,0.8)] group-hover:scale-105 transition-transform duration-200"
+          className="text-3xl md:text-4xl font-bold font-geo2 text-white mb-1 drop-shadow-[0_4px_12px_rgba(30,58,138,0.8)] group-hover:scale-105 transition-transform duration-200"
         >
           {count}+
         </motion.h3>
@@ -67,7 +67,7 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="text-blue-100/70 text-sm md:text-base font-medium tracking-wide drop-shadow-[0_2px_8px_rgba(30,58,138,0.6)]"
+          className="text-blue-100/70 text-lg md:text-xl font-medium font-geo2 tracking-wide drop-shadow-[0_2px_8px_rgba(30,58,138,0.6)]"
         >
           {label}
         </motion.p>
@@ -107,7 +107,7 @@ export default function WhyChooseUs() {
                 className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full mr-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
               ></motion.div>
 
-              <h2 className="text-xl md:text-3xl font-normal tracking-widest text-white uppercase leading-tight drop-shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+              <h2 className="text-2xl md:text-4xl font-normal font-geo2 tracking-widest text-white uppercase leading-tight drop-shadow-[0_0_20px_rgba(59,130,246,0.2)]">
                 {t("whyChoose")}
               </h2>
               <motion.div

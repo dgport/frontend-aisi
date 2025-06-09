@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Calculator, DollarSign, Percent, Clock } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+ 
 
 export default function PaymentCalculator() {
   const [propertyValue, setPropertyValue] = useState(100000);
@@ -45,7 +46,7 @@ export default function PaymentCalculator() {
   };
 
   return (
-    <div className="relative w-full overflow-hidden bg-white">
+    <div className="relative w-full overflow-hidden   bg-cover  bg-[url('@/root/public/images/bg-body.jpg')]">
       <section className="w-full px-6 md:px-16 relative py-10 md:py-5  overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center mb-10">

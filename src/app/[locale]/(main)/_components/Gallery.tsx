@@ -7,6 +7,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import img from "@/root/public/images/494312578_1192631112877893_6739643093763846871_n.jpg";
 import { WaveShape } from "@/components/shared/waveShape/WaveShape";
+import background from "@/root/public/images/bg2.png";
+import { useTranslations } from "next-intl";
 
 const images = [
   {
@@ -33,6 +35,7 @@ const images = [
 ];
 
 export default function Gallery() {
+  const t = useTranslations("main");
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
@@ -46,12 +49,12 @@ export default function Gallery() {
   return (
     <div className="relative w-full overflow-hidden  bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
       <WaveShape position="top" className="block" />
-      <section className="w-full relative py-10 sm:py-8 md:py-20 overflow-hidden ">
+      <section className="w-full relative py-10 sm:py-8 md:py-32 overflow-hidden bg-none md:bg-cover md:bg-[url('@/root/public/images/bg2.png')]">
         <div className="flex flex-col w-full items-center relative z-20">
           <div className="block lg:hidden w-full px-2 sm:px-4">
             <div className="text-center mb-6 sm:mb-8">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
-                Place Where Your Dreams Come True
+              <h2 className="text-2xl font-geo2  font-medium z-50 text-white mb-2">
+                {t("yourPlace")}
               </h2>
             </div>
 
@@ -129,10 +132,10 @@ export default function Gallery() {
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="absolute top-0 left-0 w-[380px] lg:w-[450px] z-10 group"
+                className="absolute top-[60px] xl:top-0 left-0 w-[280px] md:w-[320px] lg:w-[450px] xl:w-[450px] z-10 group"
               >
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
-                  <div className="relative h-[380px] lg:h-[420px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
+                  <div className="relative h-[280px] md:h-[320px] lg:h-[420px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>
                     <Image
@@ -141,14 +144,14 @@ export default function Gallery() {
                       fill
                       className="object-cover transition-all duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 lg:p-6 z-20">
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/35 to-transparent rounded-2xl -m-4 p-4"></div>
                         <div className="relative z-10">
-                          <h3 className="text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
+                          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
                             {images[0].title}
                           </h3>
-                          <p className="text-blue-100/70 text-base">
+                          <p className="text-blue-100/70 text-sm md:text-sm lg:text-base">
                             {images[0].description}
                           </p>
                         </div>
@@ -162,10 +165,10 @@ export default function Gallery() {
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="absolute top-0 right-0 w-[380px] lg:w-[450px] z-10 group"
+                className="absolute top-[60px] xl:top-0 right-0 w-[280px] md:w-[320px] lg:w-[450px] xl:w-[450px] z-10 group"
               >
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
-                  <div className="relative h-[380px] lg:h-[420px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
+                  <div className="relative h-[280px] md:h-[320px] lg:h-[420px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>
                     <Image
@@ -174,14 +177,14 @@ export default function Gallery() {
                       fill
                       className="object-cover transition-all duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 lg:p-6 z-20">
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/35 to-transparent rounded-2xl -m-4 p-4"></div>
                         <div className="relative z-10">
-                          <h3 className="text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
+                          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
                             {images[1].title}
                           </h3>
-                          <p className="text-blue-100/70 text-base">
+                          <p className="text-blue-100/70 text-sm md:text-sm lg:text-base">
                             {images[1].description}
                           </p>
                         </div>
@@ -196,10 +199,14 @@ export default function Gallery() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="absolute top-[80px] left-1/2 transform -translate-x-1/2 z-20 text-center"
+                className="absolute -top-[50px]  left-1/2 transform -translate-x-1/2 z-20 text-center"
               >
-                <h2 className="text-2xl lg:text-3xl font-bold text-white">
-                  Dreams Come True
+                <h2 className="font-geo2 text-2xl md:text-3xl lg:text-4xl xl:leading-[4rem] font-medium text-white">
+                  <span>{t("place1")}</span>
+                  <span className="hidden 2xl:inline">
+                    <br />
+                  </span>
+                  <span>{t("place2")}</span>
                 </h2>
               </motion.div>
 
@@ -208,10 +215,10 @@ export default function Gallery() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="absolute top-[200px] left-1/2 transform -translate-x-1/2 w-[320px] lg:w-[380px] z-15 group"
+                className="absolute top-[260px] xl:top-[200px] left-1/2 transform -translate-x-1/2 w-[240px] md:w-[280px] lg:w-[380px] z-15 group"
               >
                 <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
-                  <div className="relative h-[320px] lg:h-[360px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
+                  <div className="relative h-[240px] md:h-[280px] lg:h-[360px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>
                     <Image
@@ -220,14 +227,14 @@ export default function Gallery() {
                       fill
                       className="object-cover transition-all duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
+                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 lg:p-5 z-20">
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/35 to-transparent rounded-2xl -m-4 p-4"></div>
                         <div className="relative z-10">
-                          <h3 className="text-xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
+                          <h3 className="text-base md:text-lg lg:text-xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
                             {images[2].title}
                           </h3>
-                          <p className="text-blue-100/70 text-sm">
+                          <p className="text-blue-100/70 text-xs md:text-sm lg:text-sm">
                             {images[2].description}
                           </p>
                         </div>
