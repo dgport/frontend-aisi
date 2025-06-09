@@ -5,6 +5,7 @@
   "/[locale]/aisi-goderdzi/[...id]/page": "app/[locale]/aisi-goderdzi/[...id]/page.js",
   "/[locale]/aisi-goderdzi/page": "app/[locale]/aisi-goderdzi/page.js",
   "/[locale]/aisi-status/page": "app/[locale]/aisi-status/page.js",
+  "/[locale]/contact/page": "app/[locale]/contact/page.js",
   "/[locale]/icon.jpg/route": "app/[locale]/icon.jpg/route.js",
   "/_not-found/page": "app/_not-found/page.js"
 }

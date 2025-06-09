@@ -75,6 +75,21 @@
  
   "sold": "გაყიდულია",
   "res": "დაჯავშნილია",
-  "area": "მ2"
+  "area": "მ2",
+   "safetyFirst": "უსაფრთხოება უპირველეს ყოვლისა",
+    "fastConstruction": "სწრაფი მშენებლობა",
+    "premiumQuality": "პრემიუმ ხარისხი",
+    "innovativeDesign": "ინოვაციური დიზაინი",
+    "sustainableBuilding": "მდგრადი მშენებლობა",
+    "expertCraftsmanship": "ექსპერტული შესრულება",
+    "modernArchitecture": "თანამედროვე არქიტექტურა",
+    "luxuryLiving": "ლუქს საცხოვრებელი",
+    "reliableConstruction": "საიმედო მშენებლობა",
+    "advancedTechnology": "შესანიშნავი ტექნოლოგია",
+    "ecoFriendly": "ეკოლოგიურად სუფთა",
+    "professionalTeam": "პროფესიონალების გუნდი",
+    "timelyDelivery": "დროული ჩაბარება",
+    "superiorMaterials": "უმაღლესი მასალები",
+    "cuttingEdgeSolutions": "თანამედროვე გადაწყვეტები"
     
 }

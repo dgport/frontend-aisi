@@ -29,6 +29,11 @@
       "static/media/geo1-s.p.75d1b942.otf",
       "static/media/geo2-s.p.04e2476a.ttf",
       "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2"
+    ],
+    "[project]/src/app/[locale]/contact/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/geo2-s.p.04e2476a.ttf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2"
     ]
   },
   "appUsingSizeAdjust": true,

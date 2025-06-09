@@ -1,30 +1,32 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl";
 
 interface EnhancedVisualBridgeProps {
-  className?: string
+  className?: string;
 }
 
 export default function VisualBridge({
   className = "",
 }: EnhancedVisualBridgeProps) {
+  const t = useTranslations("main");
   const tickerWords = [
-    "SAFETY FIRST",
-    "FAST CONSTRUCTION",
-    "PREMIUM QUALITY",
-    "INNOVATIVE DESIGN",
-    "SUSTAINABLE BUILDING",
-    "EXPERT CRAFTSMANSHIP",
-    "MODERN ARCHITECTURE",
-    "LUXURY LIVING",
-    "RELIABLE CONSTRUCTION",
-    "ADVANCED TECHNOLOGY",
-    "ECO-FRIENDLY",
-    "PROFESSIONAL TEAM",
-    "TIMELY DELIVERY",
-    "SUPERIOR MATERIALS",
-    "CUTTING-EDGE SOLUTIONS",
+    t("safetyFirst"),
+    t("fastConstruction"),
+    t("premiumQuality"),
+    t("innovativeDesign"),
+    t("sustainableBuilding"),
+    t("expertCraftsmanship"),
+    t("modernArchitecture"),
+    t("luxuryLiving"),
+    t("reliableConstruction"),
+    t("advancedTechnology"),
+    t("ecoFriendly"),
+    t("professionalTeam"),
+    t("timelyDelivery"),
+    t("superiorMaterials"),
+    t("cuttingEdgeSolutions"),
   ];
 
   const infinityPath =
@@ -111,7 +113,6 @@ export default function VisualBridge({
             </div>
           </div>
         </div>
-         
 
         <div className="absolute bottom-4 right-8">
           <motion.div
@@ -161,10 +162,10 @@ export default function VisualBridge({
             >
               {[...tickerWords, ...tickerWords].map((word, index) => (
                 <div key={index} className="flex items-center">
-                  <span className="text-white/70 text-sm font-medium tracking-wider px-8 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                  <span className="text-white/70 text-geo2 text-sm font-medium tracking-wider px-8 ">
                     {word}
                   </span>
-                  <div className="w-2 h-2 bg-white/30 rounded-full mx-4 shadow-[0_0_6px_rgba(255,255,255,0.3)]"></div>
+                  <div className="w-2 h-2 bg-white/30 rounded-full mx-4  "></div>
                 </div>
               ))}
             </motion.div>

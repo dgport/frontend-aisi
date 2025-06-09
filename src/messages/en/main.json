@@ -73,6 +73,21 @@
   "available": "Available",
   "reserved": "Reserved",
   "sold": "Sold",
-  "area": "M2"
+  "area": "M2",
+  "safetyFirst": "SAFETY FIRST",
+    "fastConstruction": "FAST CONSTRUCTION",
+    "premiumQuality": "PREMIUM QUALITY",
+    "innovativeDesign": "INNOVATIVE DESIGN",
+    "sustainableBuilding": "SUSTAINABLE BUILDING",
+    "expertCraftsmanship": "EXPERT CRAFTSMANSHIP",
+    "modernArchitecture": "MODERN ARCHITECTURE",
+    "luxuryLiving": "LUXURY LIVING",
+    "reliableConstruction": "RELIABLE CONSTRUCTION",
+    "advancedTechnology": "ADVANCED TECHNOLOGY",
+    "ecoFriendly": "ECO-FRIENDLY",
+    "professionalTeam": "PROFESSIONAL TEAM",
+    "timelyDelivery": "TIMELY DELIVERY",
+    "superiorMaterials": "SUPERIOR MATERIALS",
+    "cuttingEdgeSolutions": "CUTTING-EDGE SOLUTIONS"
     
 }

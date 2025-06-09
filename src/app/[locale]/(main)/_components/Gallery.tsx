@@ -6,6 +6,7 @@ import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import img from "@/root/public/images/494312578_1192631112877893_6739643093763846871_n.jpg";
+import { WaveShape } from "@/components/shared/waveShape/WaveShape";
 
 const images = [
   {
@@ -44,7 +45,8 @@ export default function Gallery() {
 
   return (
     <div className="relative w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
-      <section className="w-full relative py-6 sm:py-8 md:py-10 overflow-hidden border-y border-blue-800/30">
+      <WaveShape position="top" className="hidden md:block" />
+      <section className="w-full relative py-6 sm:py-8 md:py-20 overflow-hidden ">
         <div className="flex flex-col w-full items-center relative z-20">
           <div className="block lg:hidden w-full px-2 sm:px-4">
             <div className="text-center mb-6 sm:mb-8">
@@ -121,13 +123,7 @@ export default function Gallery() {
           </div>
 
           <div className="hidden lg:block container px-4 md:px-8 xl:px-16">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-                Place Where Your Dreams Come True
-              </h2>
-            </div>
-
-            <div className="relative h-[650px] mt-20">
+            <div className="relative h-[660px] mt-8">
               <motion.div
                 initial={{ opacity: 0, x: -50, y: 50 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
@@ -161,7 +157,6 @@ export default function Gallery() {
                   </div>
                 </div>
               </motion.div>
-
               <motion.div
                 initial={{ opacity: 0, x: 50, y: 50 }}
                 whileInView={{ opacity: 1, x: 0, y: 0 }}
@@ -197,6 +192,18 @@ export default function Gallery() {
               </motion.div>
 
               <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="absolute top-[80px] left-1/2 transform -translate-x-1/2 z-20 text-center"
+              >
+                <h2 className="text-2xl lg:text-3xl font-bold text-white">
+                  Dreams Come True
+                </h2>
+              </motion.div>
+
+              <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -229,14 +236,11 @@ export default function Gallery() {
                   </div>
                 </div>
               </motion.div>
-
-              <div className="absolute top-1/4 left-1/3 w-4 h-4 bg-white/20 rounded-full blur-sm animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.3)]"></div>
-              <div className="absolute top-3/4 right-1/4 w-6 h-6 bg-slate-600/20 rounded-full blur-md animate-pulse delay-1000"></div>
-              <div className="absolute top-1/2 left-1/4 w-3 h-3 bg-white/30 rounded-full blur-sm animate-pulse delay-500 shadow-[0_0_8px_rgba(255,255,255,0.2)]"></div>
             </div>
           </div>
         </div>
       </section>
+      <WaveShape position="bottom" className="hidden md:block" />
     </div>
   );
 }

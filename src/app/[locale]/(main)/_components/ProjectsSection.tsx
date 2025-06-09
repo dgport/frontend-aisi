@@ -17,7 +17,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import overlay from "@/root/public/images/low-angle-view-modern-ceiling.jpg";
-
+import { WaveShape } from "@/components/shared/waveShape/WaveShape";
 
 export default function ProjectsCarousel() {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -167,18 +167,7 @@ export default function ProjectsCarousel() {
         </div>
       </section>
 
-      <div className="hidden md:block absolute bottom-0 w-full z-10">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 100"
-          className="w-full h-auto"
-        >
-          <path
-            fill="white"
-            d="M0,20L40,32C80,45,160,70,240,70C320,70,400,45,480,45C560,45,640,70,720,77C800,85,880,75,960,70C1040,65,1120,70,1200,70C1280,70,1360,65,1400,62L1440,60L1440,100L1400,100C1360,100,1280,100,1200,100C1120,100,1040,100,960,100C880,100,800,100,720,100C640,100,560,100,480,100C400,100,320,100,240,100C160,100,80,100,40,100L0,100Z"
-          />
-        </svg>
-      </div>
+      <WaveShape position="bottom" className="hidden md:block" />
     </div>
   );
 }

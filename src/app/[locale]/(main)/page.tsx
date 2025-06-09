@@ -47,8 +47,9 @@ export default function page() {
       <Cover />
       <VisualBridge />
       <ProjectsSection />
-      <Gallery />
       <PaymentCalculator />
+      <Gallery />
+
       <WhyChooseUs />
       <MainFAQ />
     </>

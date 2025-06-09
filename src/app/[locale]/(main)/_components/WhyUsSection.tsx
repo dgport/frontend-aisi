@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Home, Building2, SmilePlus, Clock } from "lucide-react";
 import test from "@/root/public/images/main/low-angle-shot-modern-glass-city-buildings.jpg";
 import { useTranslations } from "next-intl";
+ 
 
 interface WhyUsProps {
   value: string;
@@ -48,9 +49,9 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="relative mb-3 p-3 rounded-xl bg-gradient-to-br from-slate-800/50 via-slate-700/40 to-slate-900/60 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_4px_16px_rgba(255,255,255,0.05)] group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.4),0_6px_20px_rgba(255,255,255,0.1)] group-hover:border-white/25 transition-all duration-300"
+          className="relative mb-3 p-3 rounded-xl bg-gradient-to-br from-blue-900/30 via-slate-800/10 to-blue-950/20  border border-blue-700/30 shadow-lg shadow-blue-900/30 group-hover:shadow-xl group-hover:shadow-blue-900/50 group-hover:border-blue-700/40 transition-all duration-300"
         >
-          <div className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] group-hover:scale-105 transition-transform duration-200">
+          <div className="text-white drop-shadow-[0_0_8px_rgba(59,130,246,0.3)] group-hover:scale-105 transition-transform duration-200">
             {icon}
           </div>
         </motion.div>
@@ -58,7 +59,7 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="text-2xl md:text-3xl font-bold text-white mb-1 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-200"
+          className="text-2xl md:text-3xl font-bold text-white mb-1 drop-shadow-[0_4px_12px_rgba(30,58,138,0.8)] group-hover:scale-105 transition-transform duration-200"
         >
           {count}+
         </motion.h3>
@@ -66,7 +67,7 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="text-white/90 text-sm md:text-base font-medium tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
+          className="text-blue-100/70 text-sm md:text-base font-medium tracking-wide drop-shadow-[0_2px_8px_rgba(30,58,138,0.6)]"
         >
           {label}
         </motion.p>
@@ -75,7 +76,7 @@ export default function WhyChooseUs() {
   };
 
   return (
-    <section className="relative py-12 md:py-16 overflow-hidden">
+    <section className="relative mt-16 md:mt-0 py-12 md:py-16 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
       <div className="absolute inset-0 z-0">
         <Image
           src={test || "/placeholder.svg"}
@@ -84,9 +85,10 @@ export default function WhyChooseUs() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-slate-900/85 to-slate-950/90"></div>
-        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-blue-950/85 to-slate-950/90"></div>
+        <div className="absolute inset-0 bg-blue-950/0"></div>
       </div>
+
       <div className="relative z-10 container mx-auto px-4 md:px-8">
         <div className="flex flex-col items-center text-center mb-8">
           <motion.div
@@ -102,10 +104,10 @@ export default function WhyChooseUs() {
                 whileInView={{ width: "7rem" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="h-[2px] bg-gradient-to-r from-white/30 via-white/60 to-white/30 rounded-full mr-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+                className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full mr-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
               ></motion.div>
 
-              <h2 className="text-xl md:text-3xl font-normal tracking-widest text-white uppercase leading-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+              <h2 className="text-xl md:text-3xl font-normal tracking-widest text-white uppercase leading-tight drop-shadow-[0_0_20px_rgba(59,130,246,0.2)]">
                 {t("whyChoose")}
               </h2>
               <motion.div
@@ -113,7 +115,7 @@ export default function WhyChooseUs() {
                 whileInView={{ width: "7rem" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="h-[2px] bg-gradient-to-r from-white/30 via-white/60 to-white/30 rounded-full ml-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+                className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full ml-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
               ></motion.div>
             </div>
           </motion.div>
@@ -125,7 +127,7 @@ export default function WhyChooseUs() {
           transition={{ duration: 0.4, delay: 0.1 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/40 via-slate-700/30 to-slate-900/50 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_4px_16px_rgba(255,255,255,0.05)] p-6 md:p-8">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-xl border border-blue-700/30 shadow-2xl shadow-blue-900/50 p-6 md:p-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative">
               <div className="flex justify-center">
                 <Counter
