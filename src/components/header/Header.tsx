@@ -66,7 +66,7 @@ export default function Header() {
   if (!isMounted) {
     return (
       <header
-        className={`absolute w-full flex flex-col items-center z-50 px-6 lg:px-16 pt-4 ${headerBgClass}`}
+        className={`absolute w-full  flex flex-col items-center z-50 px-6 lg:px-16 pt-4 ${headerBgClass}`}
       >
         <div className="w-full h-16 lg:h-24 flex items-center justify-between relative">
           <div>
@@ -131,7 +131,6 @@ export default function Header() {
                     transition={{ duration: 0.3 }}
                     className="absolute top-20 left-4 right-4 z-50 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-xl rounded-lg shadow-2xl border border-white/10 overflow-hidden"
                   >
-                    {/* Background Pattern - Same as Footer */}
                     <div className="absolute inset-0 opacity-5">
                       <div
                         className="absolute inset-0"
@@ -142,7 +141,6 @@ export default function Header() {
                       ></div>
                     </div>
 
-                    {/* Top Accent Line */}
                     <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
 
                     <div className="relative z-10 p-4 space-y-1">
@@ -161,7 +159,7 @@ export default function Header() {
                                 }`}
                                 aria-expanded={isProjectsOpen}
                               >
-                                <span className="text-white text-sm font-medium">
+                                <span className="text-white font-geo2 text-lg font-medium tracking-widest">
                                   {item.name}
                                 </span>
                                 <ChevronRight
@@ -196,7 +194,7 @@ export default function Header() {
                                               : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
                                           }`}
                                         >
-                                          <span className="text-sm">
+                                          <span className="text-xl font-geo2 tracking-widest">
                                             {subItem.name}
                                           </span>
                                         </Link>
@@ -216,7 +214,7 @@ export default function Header() {
                                   : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
                               }`}
                             >
-                              <span className="text-sm font-medium">
+                              <span className="text-xl font-medium font-geo2 tracking-widest">
                                 {item.name}
                               </span>
                             </Link>
@@ -224,7 +222,6 @@ export default function Header() {
                         </div>
                       ))}
 
-                      {/* Language Switcher */}
                       <div className="pt-3 mt-3 border-t border-white/10">
                         <div className="bg-white/5 rounded-lg p-3 border border-white/10">
                           <LocaleSwitcher />
@@ -232,7 +229,6 @@ export default function Header() {
                       </div>
                     </div>
 
-                    {/* Bottom Accent Line */}
                     <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
                   </motion.div>
                 </>
@@ -243,12 +239,12 @@ export default function Header() {
           <div className="flex items-center space-x-4 lg:space-x-8">
             <nav className="space-x-4 lg:space-x-6 xl:space-x-10">
               {navItems.map((item) => (
-                <span key={item.name} className="relative inline-block">
+                <span key={item.name} className="relative  inline-block">
                   {item.subItems ? (
                     <div className="relative inline-block">
                       <button
                         onClick={() => setIsProjectsOpen(!isProjectsOpen)}
-                        className={`text-white text-base lg:text-lg hover:text-gray-300 group inline-flex items-center pb-1 cursor-pointer ${
+                        className={`text-white font-geo2 text-lg lg:text-xl tracking-widest hover:text-gray-300 group inline-flex items-center pb-1 cursor-pointer ${
                           isActive(item.href) ? "font-medium" : ""
                         }`}
                         aria-expanded={isProjectsOpen}
@@ -279,7 +275,6 @@ export default function Header() {
                             transition={{ duration: 0.2 }}
                             className="absolute left-0 mt-2 w-48 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-lg rounded-lg py-2 shadow-xl z-10 border border-white/20"
                           >
-                            {/* Background Pattern */}
                             <div className="absolute inset-0 opacity-5 rounded-lg">
                               <div
                                 className="absolute inset-0"
@@ -295,7 +290,7 @@ export default function Header() {
                                 <div key={subItem.name} className="mx-2 my-1">
                                   <Link
                                     href={`/${locale}${subItem.href}`}
-                                    className={`block px-3 py-2 rounded-md text-sm transition-all duration-200 ${
+                                    className={`block px-3 py-2 rounded-md text-xl font-geo2 tracking-widest transition-all duration-200 ${
                                       isSubItemActive(subItem.href)
                                         ? "bg-indigo-500/20 text-indigo-200 border border-indigo-400/30"
                                         : "text-gray-400 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/20"
@@ -314,7 +309,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={`/${locale}${item.href}`}
-                      className={`text-white text-base lg:text-lg hover:text-gray-300 group inline-block pb-1 ${
+                      className={`text-white font-geo2 text-lg lg:text-xl tracking-widest hover:text-gray-300 group inline-block pb-1 ${
                         isActive(item.href) ? "font-medium" : ""
                       }`}
                     >

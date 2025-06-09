@@ -1,1 +1,17 @@
-{"pages":{},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":false}
+{
+  "app": {
+    "[project]/src/app/[locale]/(main)/page": [
+      "static/media/geo2-s.p.04e2476a.ttf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/geo1-s.p.75d1b942.otf"
+    ],
+    "[project]/src/app/[locale]/contact/page": [
+      "static/media/geo2-s.p.04e2476a.ttf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/geo1-s.p.75d1b942.otf"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

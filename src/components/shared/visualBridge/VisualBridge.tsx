@@ -162,7 +162,7 @@ export default function VisualBridge({
             >
               {[...tickerWords, ...tickerWords].map((word, index) => (
                 <div key={index} className="flex items-center">
-                  <span className="text-white/70 text-geo2 text-sm font-medium tracking-wider px-8 ">
+                  <span className="text-white/70 font-geo2 text-lg  font-medium tracking-wider px-8 ">
                     {word}
                   </span>
                   <div className="w-2 h-2 bg-white/30 rounded-full mx-4  "></div>
