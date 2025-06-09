@@ -4,11 +4,10 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
 import img from "@/root/public/images/494312578_1192631112877893_6739643093763846871_n.jpg";
 import { WaveShape } from "@/components/shared/waveShape/WaveShape";
-import background from "@/root/public/images/bg2.png";
 import { useTranslations } from "next-intl";
+import background from "@/root/public/images/bg2.png";
 
 const images = [
   {
@@ -49,7 +48,10 @@ export default function Gallery() {
   return (
     <div className="relative w-full overflow-hidden  bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
       <WaveShape position="top" className="block" />
-      <section className="w-full relative py-10 sm:py-8 md:py-32 overflow-hidden bg-none md:bg-cover md:bg-[url('@/root/public/images/bg2.png')]">
+      <section
+        style={{ backgroundImage: `url(${background})` }}
+        className="w-full relative py-10 sm:py-8 md:py-32 overflow-hidden bg-none md:bg-cover"
+      >
         <div className="flex flex-col w-full items-center relative z-20">
           <div className="block lg:hidden w-full px-2 sm:px-4">
             <div className="text-center mb-6 sm:mb-8">
