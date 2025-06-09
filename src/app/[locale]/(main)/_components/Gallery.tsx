@@ -63,7 +63,7 @@ export default function Gallery() {
                 >
                   {images.map((image) => (
                     <div key={image.id} className="w-full flex-shrink-0">
-                      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-lg shadow-blue-900/50 mx-1 sm:mx-2">
+                      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 mx-1 sm:mx-2">
                         <div className="relative h-[280px] xs:h-[320px] sm:h-[380px] md:h-[400px] rounded-xl sm:rounded-2xl overflow-hidden w-full m-1 sm:m-2 border border-blue-700/20">
                           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                           <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>
@@ -131,7 +131,7 @@ export default function Gallery() {
                 transition={{ duration: 0.8 }}
                 className="absolute top-0 left-0 w-[380px] lg:w-[450px] z-10 group"
               >
-                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-lg shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
                   <div className="relative h-[380px] lg:h-[420px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>
@@ -164,7 +164,7 @@ export default function Gallery() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="absolute top-0 right-0 w-[380px] lg:w-[450px] z-10 group"
               >
-                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-lg shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
                   <div className="relative h-[380px] lg:h-[420px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>
@@ -210,7 +210,7 @@ export default function Gallery() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="absolute top-[200px] left-1/2 transform -translate-x-1/2 w-[320px] lg:w-[380px] z-15 group"
               >
-                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-lg shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 hover:border-blue-600/40 hover:shadow-blue-800/60 transition-all duration-700 ease-out hover:scale-[1.05] hover:-translate-y-4 transform-gpu">
                   <div className="relative h-[320px] lg:h-[360px] rounded-2xl overflow-hidden w-full m-2 border border-blue-700/20">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>

@@ -113,7 +113,7 @@ export default function SelectFloor() {
             </div>
           </div>
           <div className="w-full xl:w-1/3">
-            <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
+            <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
               <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
                 <Building className="mr-3 h-6 w-6 text-white" />
                 Building Overview
