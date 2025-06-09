@@ -49,7 +49,7 @@ export default function ProjectsCarousel() {
 
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
-      <section className="w-full py-20 relative pt-20 overflow-hidden border-y border-white">
+      <section className="w-full py-10 md:py-20 relative pt-20 overflow-hidden border-y border-white">
         <div className="absolute inset-0">
           <Image
             src={overlay || "/placeholder.svg"}
@@ -167,7 +167,7 @@ export default function ProjectsCarousel() {
         </div>
       </section>
 
-      <WaveShape position="bottom" className="hidden md:block" />
+      <WaveShape position="bottom" className=" block" />
     </div>
   );
 }

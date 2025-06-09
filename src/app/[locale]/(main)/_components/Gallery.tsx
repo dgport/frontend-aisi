@@ -44,9 +44,9 @@ export default function Gallery() {
   };
 
   return (
-    <div className="relative w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
-      <WaveShape position="top" className="hidden md:block" />
-      <section className="w-full relative py-6 sm:py-8 md:py-20 overflow-hidden ">
+    <div className="relative w-full overflow-hidden  bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+      <WaveShape position="top" className="block" />
+      <section className="w-full relative py-10 sm:py-8 md:py-20 overflow-hidden ">
         <div className="flex flex-col w-full items-center relative z-20">
           <div className="block lg:hidden w-full px-2 sm:px-4">
             <div className="text-center mb-6 sm:mb-8">

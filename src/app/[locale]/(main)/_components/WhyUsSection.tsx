@@ -76,7 +76,7 @@ export default function WhyChooseUs() {
   };
 
   return (
-    <section className="relative mt-16 md:mt-0 py-12 md:py-16 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
+    <section className="relative  mt-20 md:mt-0 py-12 md:py-16 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
       <div className="absolute inset-0 z-0">
         <Image
           src={test || "/placeholder.svg"}

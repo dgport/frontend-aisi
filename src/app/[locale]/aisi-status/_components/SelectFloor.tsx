@@ -55,8 +55,8 @@ export default function SelectFloor() {
   const router = useRouter();
 
   const handleFloorClick = (floorId: number) => {
-    const buildingId = 1;
-    const floorPlanId = 1;
+    const buildingId = 3;
+    const floorPlanId = 6;
 
     router.push(`/aisi-goderdzi/${buildingId}/${floorPlanId}/${floorId}`);
   };

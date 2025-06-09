@@ -43,6 +43,7 @@ export default function Header() {
       subItems: [
         { name: t("aisiBatumi"), href: "/aisi-batumi" },
         { name: t("aisiGoderdzi"), href: "/aisi-goderdzi" },
+        { name: t("aisiStatus"), href: "/aisi-status" },
       ],
     },
     { name: t("contact"), href: "/contact" },
