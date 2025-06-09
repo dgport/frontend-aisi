@@ -315,7 +315,7 @@ export default function SelectFloor() {
             </div>
           </div>
           <div className="w-full xl:w-1/2">
-            <div className=" bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
+            <div className=" bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
               {renderRightPanel()}
             </div>
           </div>
