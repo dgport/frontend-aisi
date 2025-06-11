@@ -13,18 +13,18 @@ import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useRouter } from "next/navigation";
-import { Building, Layers, Home, Car, Calendar, Loader2 } from "lucide-react";
+import { Building, Layers, Home, Car, Calendar } from "lucide-react";
 import {
   desktopAreas,
   mobileAreas,
 } from "@/constants/coordinants/goderdziFloorCoord";
 import background from "@/root/public/images/bg-body.jpg";
 import { useFloorStore } from "@/zustand/floorStore";
+import Loader from "@/components/shared/loader/Loader";
 
 const ORIGINAL_IMAGE_WIDTH = 1920;
 const MOBILE_IMAGE_WIDTH = 1457;
 
- 
 const MemoizedFloorOverlay = React.memo(
   FloorOverlay,
   (prevProps, nextProps) => {
@@ -105,7 +105,7 @@ export default function GoderdziSelectFloor() {
       setScaleFactor(currentImageWidth / baseWidth);
     }
   }, [isMobile]);
- 
+
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     const debouncedUpdate = () => {
@@ -160,7 +160,7 @@ export default function GoderdziSelectFloor() {
   const stableSetHoveredApartment = useCallback((id: number | null) => {
     setHoveredApartment(id);
   }, []);
- 
+
   const currentImage = useMemo(
     () => (isMobile ? MobileImage : DesktopImage),
     [isMobile]
@@ -184,14 +184,7 @@ export default function GoderdziSelectFloor() {
         <div className="flex flex-col xl:flex-row gap-8">
           <div ref={containerRef} className="relative w-full xl:w-2/3">
             <div className="relative w-full bg-gray-50 rounded-lg border-3 border-slate-500 overflow-hidden">
-              {isLoading && (
-                <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm">
-                  <div className="bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 flex flex-col items-center">
-                    <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-2" />
-                    <p className="text-gray-900">Loading floor plan...</p>
-                  </div>
-                </div>
-              )}
+              {isLoading && <Loader />}
 
               <Image
                 ref={imageRef}

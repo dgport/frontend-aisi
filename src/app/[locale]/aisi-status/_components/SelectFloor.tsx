@@ -12,15 +12,15 @@ import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useRouter } from "next/navigation";
-import { Building, Layers, Home, Car, Calendar, Loader2 } from "lucide-react";
+import { Building, Layers, Home, Car, Calendar } from "lucide-react";
 import { desktopAreas } from "@/constants/coordinants/statusFloorCoord";
 import background from "@/root/public/images/bg-body.jpg";
 import { useFloorStore } from "@/zustand/floorStore";
+import Loader from "@/components/shared/loader/Loader";
 
 const ORIGINAL_IMAGE_WIDTH = 1505;
 const MOBILE_IMAGE_WIDTH = 1505;
 
-// Memoized FloorOverlay component
 const MemoizedFloorOverlay = React.memo(
   FloorOverlay,
   (prevProps, nextProps) => {
@@ -34,7 +34,6 @@ const MemoizedFloorOverlay = React.memo(
 );
 MemoizedFloorOverlay.displayName = "MemoizedFloorOverlay";
 
-// Memoized building stats component
 const BuildingStats = React.memo(() => (
   <div className="space-y-4">
     <div className="grid grid-cols-2 gap-4">
@@ -90,10 +89,8 @@ export default function StatusSelectFloor() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
 
-  // Zustand store actions
   const { setBuildingContext, setCurrentFloor } = useFloorStore();
 
-  // Stable scale factor update function
   const updateScaleFactor = useCallback(() => {
     if (imageRef.current) {
       const currentImageWidth = imageRef.current.clientWidth;
@@ -128,7 +125,6 @@ export default function StatusSelectFloor() {
     };
   }, [updateScaleFactor]);
 
- 
   const handleFloorClick = useCallback(
     (floorId: number) => {
       const buildingId = 3;
@@ -140,7 +136,7 @@ export default function StatusSelectFloor() {
       setCurrentFloor(floorId);
 
       setTimeout(() => {
-        router.push(`/aisi-status/${buildingId}/${floorPlanId}/${floorId}`);
+        router.push(`/aisi-status/${buildingId}/${floorPlanId}`);
       }, 300);
     },
     [router, setBuildingContext, setCurrentFloor]
@@ -159,7 +155,6 @@ export default function StatusSelectFloor() {
     setHoveredApartment(id);
   }, []);
 
-  
   const currentAreas = useMemo(() => desktopAreas, []);
 
   return (
@@ -176,14 +171,7 @@ export default function StatusSelectFloor() {
         <div className="flex flex-col xl:flex-row gap-8">
           <div ref={containerRef} className="relative w-full xl:w-2/3">
             <div className="relative w-full bg-gray-50 rounded-lg border-3 border-slate-500 overflow-hidden">
-              {isLoading && (
-                <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-900/80 backdrop-blur-sm">
-                  <div className="bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 flex flex-col items-center">
-                    <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-2" />
-                    <p className="text-gray-900">Loading floor plan...</p>
-                  </div>
-                </div>
-              )}
+              {isLoading && <Loader />}
 
               <Image
                 ref={imageRef}

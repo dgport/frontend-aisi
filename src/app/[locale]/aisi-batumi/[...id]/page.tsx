@@ -17,10 +17,11 @@ import {
   BATUMI_MAX_SIZE,
   BATUMI_ORIGINAL_DIMENSIONS,
 } from "@/constants/batumiFloorSizes";
-import { LoadingSpinner } from "@/components/shared/extra/Loader";
+ 
 import { FloorPlanImage } from "@/components/shared/extra/FloorPlanImage";
 import { PhotoGallery } from "@/components/shared/extra/PhotoGallery";
 import { ArrowLeft } from "lucide-react";
+import Loader from "@/components/shared/loader/Loader";
 
 interface ParamIds {
   buildingId: string;
@@ -192,7 +193,7 @@ export default function FloorPlanPage() {
   }, []);
 
   if (floorPlansLoading && !floorPlans.length) {
-    return <LoadingSpinner />;
+    return <Loader />;
   }
 
   return (

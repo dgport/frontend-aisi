@@ -4,14 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { useRouter } from "next/navigation";
-import {
-  Building,
-  Layers,
-  Home,
-  Calendar,
-  Loader2,
-  ArrowLeft,
-} from "lucide-react";
+import { Building, Layers, Home, Calendar, ArrowLeft } from "lucide-react";
 import SitePlanImage from "@/root/public/images/batumi/SelectBuilding.png";
 import MobileSitePlan from "@/root/public/images/batumi/SelectBuilding.png";
 import { buildings } from "@/constants/coordinants/buildingFloorCoord";
@@ -19,7 +12,7 @@ import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useTranslations } from "next-intl";
 import background from "@/root/public/images/bg-body.jpg";
 import { useFloorStore } from "@/zustand/floorStore";
- 
+import Loader from "@/components/shared/loader/Loader";
 
 const ORIGINAL_IMAGE_WIDTH = 768;
 const MOBILE_IMAGE_WIDTH = 768;
@@ -271,12 +264,7 @@ export default function SelectFloor() {
                 priority
                 onLoad={handleImageLoad}
               />
-              {isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 flex flex-col items-center z-30">
-                  <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-2" />
-                  <p className="text-gray-900">Loading...</p>
-                </div>
-              )}
+              {isLoading && <Loader />}
               {/* Only show building overlays when not loading and no building selected */}
               {!selectedBuilding &&
                 !isLoading &&
