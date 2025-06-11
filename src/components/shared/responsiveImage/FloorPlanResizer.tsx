@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect, type ReactNode } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  type ReactNode,
+} from "react";
 import Image from "next/image";
 
 interface ImageDimensions {
@@ -34,6 +40,8 @@ interface ImageResizerProps {
   priority?: boolean;
   children?: ReactNode | RenderFunction;
   onImagePositionChange?: (position: ImagePosition) => void;
+  onLoad?: () => void;
+  onError?: () => void;
 }
 
 export function ImageResizer({
@@ -45,6 +53,8 @@ export function ImageResizer({
   priority = false,
   children,
   onImagePositionChange,
+  onLoad,
+  onError,
 }: ImageResizerProps) {
   const [imagePosition, setImagePosition] = useState<ImagePosition>({
     top: 0,
@@ -58,7 +68,7 @@ export function ImageResizer({
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const overlayContainerRef = useRef<HTMLDivElement>(null);
 
-  const calculateOptimalDimensions = () => {
+  const calculateOptimalDimensions = useCallback(() => {
     if (!containerRef.current || !imageContainerRef.current)
       return { width: 0, height: 0 };
 
@@ -92,9 +102,9 @@ export function ImageResizer({
     height = Math.min(height, maxHeight);
 
     return { width, height };
-  };
+  }, [isMobile, maxDimensions]);
 
-  const updateImageMetrics = () => {
+  const updateImageMetrics = useCallback(() => {
     if (imageRef.current && containerRef.current && imageContainerRef.current) {
       const { width, height } = calculateOptimalDimensions();
       imageContainerRef.current.style.width = `${width}px`;
@@ -118,7 +128,20 @@ export function ImageResizer({
         onImagePositionChange(newPosition);
       }
     }
-  };
+  }, [calculateOptimalDimensions, onImagePositionChange]);
+
+  const handleImageLoad = useCallback(() => {
+    updateImageMetrics();
+    if (onLoad) {
+      onLoad();
+    }
+  }, [updateImageMetrics, onLoad]);
+
+  const handleImageError = useCallback(() => {
+    if (onError) {
+      onError();
+    }
+  }, [onError]);
 
   useEffect(() => {
     const timer = setTimeout(updateImageMetrics, 100);
@@ -157,12 +180,12 @@ export function ImageResizer({
       window.removeEventListener("resize", updateImageMetrics);
       resizeObserver.disconnect();
     };
-  }, [isMobile]);
+  }, [isMobile, updateImageMetrics]);
 
   useEffect(() => {
     const timer = setTimeout(updateImageMetrics, 100);
     return () => clearTimeout(timer);
-  }, [imageSrc]);
+  }, [imageSrc, updateImageMetrics]);
 
   const baseWidth = isMobile
     ? originalDimensions.mobile.width
@@ -200,7 +223,8 @@ export function ImageResizer({
             alt={altText}
             fill
             priority={priority}
-            onLoad={updateImageMetrics}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
             className="md:rounded-lg"
           />
 

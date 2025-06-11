@@ -1,238 +1,252 @@
 "use client";
 
-import React, { type JSX, useRef, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Mousewheel } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import { useFloorStore } from "@/zustand/floorStore";
+import "swiper/css";
+import "swiper/css/free-mode";
 
 interface FloorSelectorProps {
-  currentFloor: number;
-  floorRangeStart: number;
-  floorRangeEnd: number;
+  floorRangeStart: number | undefined;
+  floorRangeEnd: number | undefined;
   buildingId: string;
   floorPlanId: string;
-  route: string;
   disabled?: boolean;
 }
 
-export function FloorSelector({
-  currentFloor,
-  floorRangeStart,
-  floorRangeEnd,
-  buildingId,
-  floorPlanId,
-  route,
-  disabled = false,
-}: FloorSelectorProps): JSX.Element | null {
-  const router = useRouter();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [selectedFloor, setSelectedFloor] = useState(currentFloor);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
+export const FloorSelector = React.memo(
+  ({
+    floorRangeStart,
+    floorRangeEnd,
+    buildingId,
+    floorPlanId,
+    disabled = false,
+  }: FloorSelectorProps) => {
+    const swiperRef = useRef<SwiperType | null>(null);
+    const [centerFloor, setCenterFloor] = useState(1);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const isInitializedRef = useRef(false);
+    const lastNavigatedFloorRef = useRef(1);
+    const isNavigatingRef = useRef(false);
 
-  const availableFloors: number[] = React.useMemo(() => {
-    if (
-      typeof floorRangeStart !== "number" ||
-      typeof floorRangeEnd !== "number"
-    ) {
-      return [];
-    }
+    // Zustand store
+    const {
+      currentFloor,
+      isTransitioning,
+      setCurrentFloor,
+      setBuildingContext,
+    } = useFloorStore();
 
-    return Array.from(
-      { length: floorRangeEnd - floorRangeStart + 1 },
-      (_, i) => floorRangeStart + i
+    const [swiperStyle, setSwiperStyle] = useState({
+      height: "60px",
+      cursor: disabled ? "default" : "grab",
+      opacity: disabled || isTransitioning ? 0.7 : 1,
+    });
+
+    const availableFloors = React.useMemo(() => {
+      if (
+        typeof floorRangeStart !== "number" ||
+        typeof floorRangeEnd !== "number" ||
+        floorRangeStart > floorRangeEnd
+      ) {
+        return [];
+      }
+      return Array.from(
+        { length: floorRangeEnd - floorRangeStart + 1 },
+        (_, i) => floorRangeStart + i
+      );
+    }, [floorRangeStart, floorRangeEnd]);
+
+    // Set building context when component mounts or building/plan changes
+    useEffect(() => {
+      if (buildingId && floorPlanId) {
+        setBuildingContext(buildingId, floorPlanId);
+      }
+    }, [buildingId, floorPlanId, setBuildingContext]);
+
+    const findCenterFloor = useCallback(() => {
+      if (!swiperRef.current || availableFloors.length === 0)
+        return currentFloor;
+
+      const swiper = swiperRef.current;
+      const activeIndex = Math.round(
+        swiper.progress * (availableFloors.length - 1)
+      );
+      const clampedIndex = Math.max(
+        0,
+        Math.min(activeIndex, availableFloors.length - 1)
+      );
+
+      return availableFloors[clampedIndex];
+    }, [availableFloors, currentFloor]);
+
+    const handleSlideChange = useCallback(() => {
+      if (!swiperRef.current || disabled || isNavigatingRef.current) return;
+
+      const newCenterFloor = findCenterFloor();
+      if (newCenterFloor === undefined) return;
+
+      setCenterFloor(newCenterFloor);
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      if (
+        newCenterFloor !== currentFloor &&
+        newCenterFloor !== lastNavigatedFloorRef.current
+      ) {
+        timeoutRef.current = setTimeout(() => {
+          isNavigatingRef.current = true;
+          lastNavigatedFloorRef.current = newCenterFloor;
+          setCurrentFloor(newCenterFloor);
+        }, 500);
+      }
+    }, [findCenterFloor, currentFloor, setCurrentFloor, disabled]);
+
+    const scrollToFloor = useCallback(
+      (floor: number, animate = true) => {
+        if (!swiperRef.current || availableFloors.length === 0) return;
+
+        const floorIndex = availableFloors.indexOf(floor);
+        if (floorIndex === -1) return;
+
+        const progress = floorIndex / (availableFloors.length - 1);
+        const validProgress = isNaN(progress) ? 0 : progress;
+
+        swiperRef.current.setProgress(validProgress, animate ? 500 : 0);
+      },
+      [availableFloors]
     );
-  }, [floorRangeStart, floorRangeEnd]);
 
-  const handleFloorSelect = (): void => {
-    if (buildingId && floorPlanId && selectedFloor !== currentFloor) {
-      router.replace(`/${route}/${buildingId}/${floorPlanId}/${selectedFloor}`);
+    // Initialize swiper position based on current floor from store
+    useEffect(() => {
+      if (
+        swiperRef.current &&
+        availableFloors.length > 0 &&
+        !isInitializedRef.current
+      ) {
+        const timer = setTimeout(() => {
+          scrollToFloor(currentFloor, false);
+          setCenterFloor(currentFloor);
+          isInitializedRef.current = true;
+          lastNavigatedFloorRef.current = currentFloor;
+        }, 100);
+
+        return () => clearTimeout(timer);
+      }
+
+      // Update swiper when floor changes from external source (not from swiper interaction)
+      if (
+        isInitializedRef.current &&
+        currentFloor !== lastNavigatedFloorRef.current &&
+        !isNavigatingRef.current
+      ) {
+        scrollToFloor(currentFloor, true);
+        setCenterFloor(currentFloor);
+        lastNavigatedFloorRef.current = currentFloor;
+      }
+
+      // Reset navigation flag when floor matches
+      if (currentFloor === lastNavigatedFloorRef.current) {
+        isNavigatingRef.current = false;
+      }
+    }, [currentFloor, scrollToFloor, availableFloors]);
+
+    useEffect(() => {
+      setSwiperStyle({
+        height: "60px",
+        cursor: disabled ? "default" : "grab",
+        opacity: disabled || isTransitioning ? 0.7 : 1,
+      });
+    }, [disabled, isTransitioning]);
+
+    useEffect(() => {
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
+    }, []);
+
+    if (availableFloors.length === 0) {
+      return null;
     }
-  };
 
-  const scrollToFloor = (floor: number) => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    setIsScrolling(true);
-    const floorElement = container.querySelector(
-      `[data-floor="${floor}"]`
-    ) as HTMLElement;
-    if (floorElement) {
-      const containerWidth = container.offsetWidth;
-      const elementWidth = floorElement.offsetWidth;
-      const elementLeft = floorElement.offsetLeft;
-
-      const scrollPosition =
-        elementLeft - containerWidth / 2 + elementWidth / 2;
-      container.scrollTo({ left: scrollPosition, behavior: "smooth" });
-
-      setTimeout(() => setIsScrolling(false), 300);
-    }
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0));
-    setScrollLeft(scrollContainerRef.current?.scrollLeft || 0);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - (scrollContainerRef.current?.offsetLeft || 0);
-    const walk = (x - startX) * 1.2;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true);
-    setStartX(
-      e.touches[0].pageX - (scrollContainerRef.current?.offsetLeft || 0)
-    );
-    setScrollLeft(scrollContainerRef.current?.scrollLeft || 0);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
-    const x =
-      e.touches[0].pageX - (scrollContainerRef.current?.offsetLeft || 0);
-    const walk = (x - startX) * 1.2;
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-    }
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-  };
-
-  const scrollCarousel = (direction: "left" | "right") => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const scrollAmount = 80;
-    const newScrollLeft =
-      direction === "left"
-        ? container.scrollLeft - scrollAmount
-        : container.scrollLeft + scrollAmount;
-
-    container.scrollTo({ left: newScrollLeft, behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToFloor(currentFloor);
-  }, [currentFloor]);
-
-  if (availableFloors.length <= 1) {
-    return null;
-  }
-
-  return (
-    <div className="flex items-center gap-4 w-full md:w-auto justify-center p-2 md:p-2 bg-white md:rounded-2xl my-1 border-t border-gray-200/50 shadow-lg shadow-gray-900/5">
-      <div className="flex items-center gap-2 ">
-        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-        <span className="text-sm font-semibold text-gray-700 tracking-wide">
-          Floor
-        </span>
-      </div>
-
-      <div className="flex items-center gap-5">
-        <button
-          onClick={() => scrollCarousel("left")}
-          className="group relative p-2 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 hover:from-blue-50 hover:to-purple-50 border border-gray-200/50 transition-all duration-300 hover:shadow-md hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-          disabled={disabled}
+    return (
+      <div
+        style={{
+          width: "300px",
+          height: "60px",
+          margin: "0 auto",
+          pointerEvents: disabled ? "none" : "auto",
+        }}
+      >
+        <Swiper
+          modules={[FreeMode, Mousewheel]}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
+            if (!isInitializedRef.current) {
+              setCenterFloor(currentFloor);
+            }
+          }}
+          onSlideChange={handleSlideChange}
+          onProgress={handleSlideChange}
+          spaceBetween={10}
+          slidesPerView={5}
+          centeredSlides={true}
+          freeMode={{
+            enabled: true,
+            momentum: true,
+            momentumRatio: 0.5,
+            momentumVelocityRatio: 0.5,
+          }}
+          mousewheel={{
+            enabled: true,
+            sensitivity: 1,
+          }}
+          grabCursor={!disabled}
+          allowTouchMove={!disabled}
+          style={swiperStyle}
         >
-          <ChevronLeft className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </button>
-        <div className="relative">
-          <div
-            ref={scrollContainerRef}
-            className={`flex gap-2 overflow-x-auto w-40 py-2 px-1 transition-all duration-300 ${
-              isDragging ? "cursor-grabbing" : "cursor-grab"
-            } ${isScrolling ? "pointer-events-none" : ""}`}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            style={{
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
-          >
-            {availableFloors.map((floor, index) => (
-              <button
-                key={floor}
-                data-floor={floor}
-                onClick={() => setSelectedFloor(floor)}
-                disabled={disabled}
-                className={`
-                  group relative min-w-[36px] h-10 rounded-xl transition-all duration-300 flex-shrink-0
-                  flex items-center justify-center font-semibold text-sm transform hover:scale-110 active:scale-95
-                  ${
-                    selectedFloor === floor
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-500/25 scale-110"
-                      : currentFloor === floor
-                      ? "bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-2 border-blue-200 shadow-md"
-                      : "bg-white/70 text-gray-600 border border-gray-200/50 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-gray-300 hover:shadow-md"
-                  }
-                  ${
-                    disabled
-                      ? "opacity-50 cursor-not-allowed"
-                      : "cursor-pointer"
-                  }
-                `}
+          {availableFloors.map((floor) => (
+            <SwiperSlide key={floor}>
+              <div
                 style={{
-                  animationDelay: `${index * 50}ms`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "60px",
+                  fontSize: floor === centerFloor ? "24px" : "16px",
+                  fontWeight: floor === centerFloor ? "bold" : "normal",
+                  color: "white",
+                  transition: "all 0.3s ease",
+                  userSelect: "none",
+                  transform: floor === centerFloor ? "scale(1.3)" : "scale(1)",
+                  zIndex: floor === centerFloor ? 10 : 1,
+                  position: "relative",
                 }}
               >
-                <span className="relative z-10">{floor}</span>
-                {selectedFloor === floor && (
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-400 to-purple-400 opacity-20 animate-pulse"></div>
-                )}
-                {currentFloor === floor && selectedFloor !== floor && (
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full border-2 border-white shadow-sm"></div>
-                )}
-              </button>
-            ))}
-          </div>
-          <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-white/80 to-transparent pointer-events-none rounded-l-xl"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-white/80 to-transparent pointer-events-none rounded-r-xl"></div>
-        </div>
-        <button
-          onClick={() => scrollCarousel("right")}
-          className="group relative p-2 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 hover:from-blue-50 hover:to-purple-50 border border-gray-200/50 transition-all duration-300 hover:shadow-md hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-          disabled={disabled}
-        >
-          <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-blue-600 transition-colors duration-300" />
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </button>
+                {floor}
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
-      {selectedFloor !== currentFloor && (
-        <div className="animate-in slide-in-from-right-2 duration-300">
-          <button
-            onClick={handleFloorSelect}
-            disabled={disabled}
-            className="group relative px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-xl text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25 hover:scale-105 active:scale-95 disabled:opacity-50 flex items-center gap-2 overflow-hidden cursor-pointer"
-          >
-            <span className="relative z-10">Go</span>
-            <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-0.5 transition-transform duration-300" />
-            <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-            <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
+    );
+  },
+  (prevProps, nextProps) => {
+    // Only re-render if these specific props change
+    return (
+      prevProps.floorRangeStart === nextProps.floorRangeStart &&
+      prevProps.floorRangeEnd === nextProps.floorRangeEnd &&
+      prevProps.buildingId === nextProps.buildingId &&
+      prevProps.floorPlanId === nextProps.floorPlanId &&
+      prevProps.disabled === nextProps.disabled
+    );
+  }
+);
+
+FloorSelector.displayName = "FloorSelector";

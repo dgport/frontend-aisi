@@ -18,6 +18,8 @@ import { buildings } from "@/constants/coordinants/buildingFloorCoord";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useTranslations } from "next-intl";
 import background from "@/root/public/images/bg-body.jpg";
+import { useFloorStore } from "@/zustand/floorStore";
+ 
 
 const ORIGINAL_IMAGE_WIDTH = 768;
 const MOBILE_IMAGE_WIDTH = 768;
@@ -31,10 +33,15 @@ export default function SelectFloor() {
   const [hoveredFloor, setHoveredFloor] = useState<string | null>(null);
   const [scaleFactor, setScaleFactor] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
+
+  // Zustand store actions
+  const { setBuildingContext, resetFloorState, setCurrentFloor } =
+    useFloorStore();
 
   useEffect(() => {
     const updateScaleFactor = () => {
@@ -89,23 +96,59 @@ export default function SelectFloor() {
     buildingIndex: string
   ) => {
     setIsLoading(true);
+    setImageLoaded(false);
 
-    setTimeout(() => {
-      setSelectedBuilding(buildingId);
-      setHoveredFloor(null);
-      setSelectedFloorplan(floorPlan);
-      setBuildingId(buildingIndex);
-      setIsLoading(false);
-    }, 200);
+    // Set the building data immediately but keep loading state
+    setSelectedBuilding(buildingId);
+    setHoveredFloor(null);
+    setSelectedFloorplan(floorPlan);
+    setBuildingId(buildingIndex);
+
+    // Set building context in Zustand store
+    setBuildingContext(buildingIndex, floorPlan);
   };
 
   const handleFloorClick = (floorId: string) => {
     if (buildingId) {
       setIsLoading(true);
+
+      // Set the floor in Zustand store
+      setCurrentFloor(parseInt(floorId));
+
       setTimeout(() => {
-        router.push(`/aisi-batumi/${buildingId}/${floorPlan}/${floorId}`);
+        // Navigate to floor page without floor ID in URL
+        router.push(`/aisi-batumi/${buildingId}/${floorPlan}`);
       }, 300);
     }
+  };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    // Small delay to ensure smooth transition
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
+
+    // Update scale factor after image loads
+    if (imageRef.current) {
+      const baseWidth = isMobile ? MOBILE_IMAGE_WIDTH : ORIGINAL_IMAGE_WIDTH;
+      setScaleFactor(imageRef.current.clientWidth / baseWidth);
+    }
+  };
+
+  const handleBackClick = () => {
+    setIsLoading(true);
+    setImageLoaded(false);
+
+    // Reset Zustand store state
+    resetFloorState();
+
+    setTimeout(() => {
+      setSelectedBuilding(null);
+      setHoveredFloor(null);
+      setSelectedFloorplan(null);
+      setBuildingId(null);
+    }, 100);
   };
 
   const getCurrentImage = () => {
@@ -226,23 +269,18 @@ export default function SelectFloor() {
                   isLoading ? "opacity-60" : ""
                 }`}
                 priority
-                onLoad={() => {
-                  if (imageRef.current) {
-                    const baseWidth = isMobile
-                      ? MOBILE_IMAGE_WIDTH
-                      : ORIGINAL_IMAGE_WIDTH;
-                    setScaleFactor(imageRef.current.clientWidth / baseWidth);
-                  }
-                }}
+                onLoad={handleImageLoad}
               />
               {isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 flex flex-col items-center">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm p-6 rounded-lg border border-gray-200 flex flex-col items-center z-30">
                   <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-2" />
                   <p className="text-gray-900">Loading...</p>
                 </div>
               )}
+              {/* Only show building overlays when not loading and no building selected */}
               {!selectedBuilding &&
                 !isLoading &&
+                imageLoaded &&
                 buildings.map((building) => (
                   <FloorOverlay
                     key={building.id}
@@ -265,8 +303,10 @@ export default function SelectFloor() {
                     scaleFactor={scaleFactor}
                   />
                 ))}
+              {/* Only show floor overlays when not loading and building is selected and image is loaded */}
               {selectedBuilding &&
                 !isLoading &&
+                imageLoaded &&
                 getCurrentFloors().map((floor) => (
                   <FloorOverlay
                     key={floor.id}
@@ -283,30 +323,29 @@ export default function SelectFloor() {
                     scaleFactor={scaleFactor}
                   />
                 ))}
-              {!selectedBuilding && hoveredBuilding && !isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-lg border border-gray-200 pointer-events-none">
-                  <h3 className="text-xl font-bold text-indigo-600">
-                    {t("building")} {hoveredBuilding === "1" ? "A" : "B"}
-                  </h3>
-                </div>
-              )}
+              {!selectedBuilding &&
+                hoveredBuilding &&
+                !isLoading &&
+                imageLoaded && (
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/95 backdrop-blur-sm px-6 py-3 rounded-lg border border-gray-200 pointer-events-none">
+                    <h3 className="text-xl font-bold text-indigo-600">
+                      {t("building")} {hoveredBuilding === "1" ? "A" : "B"}
+                    </h3>
+                  </div>
+                )}
 
-              {selectedBuilding && hoveredFloor && !isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl md:text-8xl opacity-70 pointer-events-none z-20">
-                  {hoveredFloor}
-                </div>
-              )}
-              {selectedBuilding && !isLoading && (
+              {selectedBuilding &&
+                hoveredFloor &&
+                !isLoading &&
+                imageLoaded && (
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl md:text-8xl opacity-70 pointer-events-none z-20">
+                    {hoveredFloor}
+                  </div>
+                )}
+              {selectedBuilding && !isLoading && imageLoaded && (
                 <button
                   className="absolute cursor-pointer top-4 left-4 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all duration-200 flex items-center gap-2"
-                  onClick={() => {
-                    setIsLoading(true);
-                    setTimeout(() => {
-                      setSelectedBuilding(null);
-                      setHoveredFloor(null);
-                      setIsLoading(false);
-                    }, 500);
-                  }}
+                  onClick={handleBackClick}
                 >
                   <ArrowLeft size={16} />
                   {t("back")}
