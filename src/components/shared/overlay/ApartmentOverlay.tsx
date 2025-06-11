@@ -18,7 +18,7 @@ interface ApartmentAreaProps {
   onApartmentClick?: (flatId: number, flatNumber: number) => void;
   scaleFactorX?: number;
   scaleFactorY?: number;
-  animationDelay?: number; // New prop for staggered animations
+  animationDelay?: number;
 }
 
 const getClipPathPolygon = (
@@ -69,14 +69,13 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
   const t = useTranslations("main");
   const [isVisible, setIsVisible] = useState(false);
 
-  // Trigger animation on mount with delay
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, animationDelay);
 
     return () => clearTimeout(timer);
-  }, [animationDelay, flatId]); // Re-trigger when flatId changes (floor switch)
+  }, [animationDelay, flatId]);
 
   const getStatusStyles = () => {
     const isHovered = hoveredApartment === flatId;
@@ -140,7 +139,6 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
       ${isHovered ? "shadow-lg scale-105" : ""}
     `;
 
-    // Animation classes
     if (isVisible) {
       classes += ` animate-apartment-appear`;
     } else {
@@ -202,7 +200,6 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
         }
       `}</style>
 
-      {/* Main apartment overlay */}
       <div
         style={{
           position: "absolute",
@@ -221,7 +218,6 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
         onClick={() => onApartmentClick(flatId, flatNumber)}
       />
 
-      {/* Apartment number badge */}
       <div
         style={{
           position: "absolute",
@@ -250,11 +246,9 @@ export const ApartmentOverlay: FC<ApartmentAreaProps> = ({
             flex items-center gap-1 transition-all duration-300
           `}
         >
-          <span>{getStatusIcon()}</span>
+          <span className="md:block hidden ">{getStatusIcon()}</span>
         </div>
       </div>
-
-      {/* Hover tooltip */}
       {isHovered && (
         <div
           style={{

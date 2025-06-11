@@ -128,7 +128,7 @@ export default function StatusSelectFloor() {
     };
   }, [updateScaleFactor]);
 
-  // Stable floor click handler
+ 
   const handleFloorClick = useCallback(
     (floorId: number) => {
       const buildingId = 3;
@@ -136,18 +136,16 @@ export default function StatusSelectFloor() {
 
       setIsLoading(true);
 
-      // Set building context and floor in Zustand store
       setBuildingContext(buildingId.toString(), floorPlanId.toString());
       setCurrentFloor(floorId);
 
       setTimeout(() => {
-        router.push(`/aisi-goderdzi/${buildingId}/${floorPlanId}/${floorId}`);
+        router.push(`/aisi-status/${buildingId}/${floorPlanId}/${floorId}`);
       }, 300);
     },
     [router, setBuildingContext, setCurrentFloor]
   );
 
-  // Stable image load handler
   const handleImageLoad = useCallback(() => {
     setImageLoaded(true);
     updateScaleFactor();
@@ -157,12 +155,11 @@ export default function StatusSelectFloor() {
     }, 100);
   }, [updateScaleFactor]);
 
-  // Stable hover handlers
   const stableSetHoveredApartment = useCallback((id: number | null) => {
     setHoveredApartment(id);
   }, []);
 
-  // Memoized current areas
+  
   const currentAreas = useMemo(() => desktopAreas, []);
 
   return (

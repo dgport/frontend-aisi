@@ -37,13 +37,11 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = React.memo(
     const [showHint, setShowHint] = useState(false);
     const isHovered = hoveredApartment === flatId;
 
-    // Memoize the clip path to prevent recalculation
     const clipPath = useMemo(
       () => getClipPathPolygon(coords, scaleFactor),
       [coords, scaleFactor]
     );
 
-    // Optimize mobile detection - only run once
     useEffect(() => {
       const checkMobile = () => {
         setIsMobile(window.innerWidth <= 768 || "ontouchstart" in window);
@@ -51,7 +49,6 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = React.memo(
 
       checkMobile();
 
-      // Use a debounced resize handler
       let timeoutId: NodeJS.Timeout;
       const debouncedResize = () => {
         clearTimeout(timeoutId);
@@ -65,15 +62,14 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = React.memo(
       };
     }, []);
 
-    // Optimize hint animation - only run when component mounts
     useEffect(() => {
       const hintInterval = setInterval(() => {
         setShowHint(true);
-        setTimeout(() => setShowHint(false), 1000);
-      }, 2500);
+        setTimeout(() => setShowHint(false), 1200);
+      }, 4000);
 
       return () => clearInterval(hintInterval);
-    }, []); // Empty dependency array
+    }, []);
 
     const handleMouseEnter = useCallback(() => {
       if (!isMobile) setHoveredApartment(flatId);
@@ -98,62 +94,77 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = React.memo(
     ]);
 
     const getOverlayClasses = useMemo(() => {
-      let classes = `absolute top-0 left-0 w-full h-full transition-all duration-300 cursor-pointer`;
+      let classes = `absolute top-0 left-0 w-full h-full transition-all duration-300 ease-in-out cursor-pointer`;
 
       if (isMobile) {
         if (isHovered) {
-          classes += ` bg-blue-500/70 border-2 border-white shadow-xl`;
+          classes += ` bg-blue-600/85 border-2 border-white shadow-2xl shadow-blue-500/50`;
         } else if (showHint) {
-          classes += ` border-2 border-blue-400 animate-pulse-border`;
+          classes += ` bg-blue-400/30 border-2 border-white animate-pulse-glow`;
         } else {
-          classes += ` bg-blue-200/20 border border-blue-100/50`;
+          classes += ` bg-blue-300/25 border border-white/70 hover:bg-blue-500/70 hover:border-white hover:border-2 hover:shadow-lg`;
         }
       } else {
         if (isHovered) {
-          classes += ` bg-blue-400/60 border-2 border-white shadow-lg`;
+          classes += ` bg-blue-500/80 border-2 border-white shadow-xl shadow-blue-400/40`;
         } else if (showHint) {
-          classes += ` border-2 border-blue-400 animate-pulse-border`;
+          classes += ` bg-blue-400/25 border-2 border-white animate-pulse-glow`;
         } else {
-          classes += ` bg-blue-100/15 border border-blue-50/30 hover:bg-blue-200/25`;
+          classes += ` bg-blue-200/20 border border-white/60 hover:bg-blue-500/75 hover:border-white hover:border-2 hover:shadow-lg hover:shadow-blue-300/30`;
         }
       }
       return classes;
     }, [isMobile, isHovered, showHint]);
 
+    const getBaseClasses = useMemo(() => {
+      return `absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-100/15 to-slate-200/15 border border-white/40`;
+    }, []);
+
     return (
       <>
         <style jsx>{`
-          @keyframes pulse-border {
+          @keyframes pulse-glow {
             0% {
-              border-color: rgba(96, 165, 250, 0.4);
+              border-color: rgba(255, 255, 255, 0.6);
+              box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
             }
             50% {
-              border-color: rgba(96, 165, 250, 1);
+              border-color: rgba(255, 255, 255, 1);
+              box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
             }
             100% {
-              border-color: rgba(96, 165, 250, 0.4);
+              border-color: rgba(255, 255, 255, 0.6);
+              box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
             }
           }
-          .animate-pulse-border {
-            animation: pulse-border 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          .animate-pulse-glow {
+            animation: pulse-glow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
           }
         `}</style>
+
+        <div style={{ clipPath }} className={getBaseClasses} />
         <div
           style={{ clipPath }}
-          className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/10 to-blue-100/10 border border-blue-50/20"
-        />
-        <div
-          style={{ clipPath }}
-          className={`${getOverlayClasses} hover:shadow-xl`}
+          className={getOverlayClasses}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onClick={handleClick}
         />
+
+        {isHovered && (
+          <div
+            style={{ clipPath }}
+            className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none"
+          >
+            <div className="bg-white/95 text-blue-900 font-semibold text-sm px-2 py-1 rounded shadow-lg border border-blue-200">
+              #{flatNumber}
+            </div>
+          </div>
+        )}
       </>
     );
   },
   (prevProps, nextProps) => {
-    // Custom comparison function for better memoization
     return (
       prevProps.flatId === nextProps.flatId &&
       prevProps.flatNumber === nextProps.flatNumber &&

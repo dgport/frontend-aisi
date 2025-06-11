@@ -24,7 +24,7 @@ import { useFloorStore } from "@/zustand/floorStore";
 const ORIGINAL_IMAGE_WIDTH = 1920;
 const MOBILE_IMAGE_WIDTH = 1457;
 
-// Memoized FloorOverlay component
+ 
 const MemoizedFloorOverlay = React.memo(
   FloorOverlay,
   (prevProps, nextProps) => {
@@ -105,8 +105,7 @@ export default function GoderdziSelectFloor() {
       setScaleFactor(currentImageWidth / baseWidth);
     }
   }, [isMobile]);
-
-  // Optimized resize observer setup
+ 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     const debouncedUpdate = () => {
@@ -132,7 +131,6 @@ export default function GoderdziSelectFloor() {
     };
   }, [updateScaleFactor]);
 
-  // Stable floor click handler
   const handleFloorClick = useCallback(
     (floorId: number) => {
       const buildingId = 1;
@@ -140,18 +138,16 @@ export default function GoderdziSelectFloor() {
 
       setIsLoading(true);
 
-      // Set building context and floor in Zustand store
       setBuildingContext(buildingId.toString(), floorPlanId.toString());
       setCurrentFloor(floorId);
 
       setTimeout(() => {
-        router.push(`/aisi-goderdzi/${buildingId}/${floorPlanId}/${floorId}`);
+        router.push(`/aisi-goderdzi/${buildingId}/${floorPlanId}`);
       }, 300);
     },
     [router, setBuildingContext, setCurrentFloor]
   );
 
-  // Stable image load handler
   const handleImageLoad = useCallback(() => {
     setImageLoaded(true);
     updateScaleFactor();
@@ -161,12 +157,10 @@ export default function GoderdziSelectFloor() {
     }, 100);
   }, [updateScaleFactor]);
 
-  // Stable hover handlers
   const stableSetHoveredApartment = useCallback((id: number | null) => {
     setHoveredApartment(id);
   }, []);
-
-  // Memoized current image and areas
+ 
   const currentImage = useMemo(
     () => (isMobile ? MobileImage : DesktopImage),
     [isMobile]

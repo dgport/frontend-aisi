@@ -15,7 +15,7 @@ export const STATUS_MAX_SIZE = {
     height: 670,
   },
   mobile: {
-    width: 192,
+    width: 1920,
     height: 3800,
   },
 };
