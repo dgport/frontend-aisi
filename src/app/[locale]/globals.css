@@ -151,3 +151,15 @@
 .font-geo2 {
   font-family: var(--font-geo2), Arial, sans-serif;
 }
+@media (min-width: 1024px) {
+
+
+  .PhotoView__Photo {
+
+
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+}

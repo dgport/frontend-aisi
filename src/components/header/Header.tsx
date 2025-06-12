@@ -35,6 +35,26 @@ export default function Header() {
     setIsAdmin(pathname.includes("/admin"));
   }, [pathname]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobile && isMenuOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+    }
+
+    // Clean up on unmount
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
+    };
+  }, [isMobile, isMenuOpen]);
+
   const navItems = [
     { name: t("main"), href: "/" },
     {
@@ -62,6 +82,11 @@ export default function Header() {
   };
 
   const headerBgClass = isAdmin ? "bg-slate-900" : "bg-transparent";
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    setIsProjectsOpen(false);
+  };
 
   if (!isMounted) {
     return (
@@ -106,7 +131,7 @@ export default function Header() {
           <>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative z-60 text-white p-2 rounded-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
+              className="relative z-[60] text-white p-2 rounded-lg backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
               aria-expanded={isMenuOpen}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
@@ -122,14 +147,14 @@ export default function Header() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={closeMenu}
                   />
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute top-20 left-4 right-4 z-50 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-xl rounded-lg shadow-2xl border border-white/10 overflow-hidden"
+                    className="fixed top-20 left-4 right-4 bottom-4 z-50 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 backdrop-blur-xl rounded-lg shadow-2xl border border-white/10 overflow-hidden flex flex-col"
                   >
                     <div className="absolute inset-0 opacity-5">
                       <div
@@ -141,95 +166,94 @@ export default function Header() {
                       ></div>
                     </div>
 
-                    <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
+                    <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent  " />
 
-                    <div className="relative z-10 p-4 space-y-1">
-                      {navItems.map((item) => (
-                        <div key={item.name}>
-                          {item.subItems ? (
-                            <div className="space-y-1">
-                              <button
-                                onClick={() =>
-                                  setIsProjectsOpen(!isProjectsOpen)
-                                }
-                                className={`w-full flex items-center justify-between p-3 rounded-lg transition-all duration-200 ${
+                    <div className="relative z-10   overflow-y-auto p-4">
+                      <div className="space-y-1">
+                        {navItems.map((item) => (
+                          <div key={item.name}>
+                            {item.subItems ? (
+                              <div className="space-y-1">
+                                <button
+                                  onClick={() =>
+                                    setIsProjectsOpen(!isProjectsOpen)
+                                  }
+                                  className={`w-full flex items-center justify-between p-3 rounded-lg transition-all duration-200 ${
+                                    isActive(item.href)
+                                      ? "bg-white/10 border border-indigo-400/30"
+                                      : "bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/20"
+                                  }`}
+                                  aria-expanded={isProjectsOpen}
+                                >
+                                  <span className="text-white font-geo2 text-lg font-medium tracking-widest">
+                                    {item.name}
+                                  </span>
+                                  <ChevronRight
+                                    size={16}
+                                    className={`text-indigo-400 transition-transform duration-200 ${
+                                      isProjectsOpen ? "rotate-90" : ""
+                                    }`}
+                                  />
+                                </button>
+
+                                <AnimatePresence>
+                                  {isProjectsOpen && (
+                                    <motion.div
+                                      initial={{ opacity: 0, height: 0 }}
+                                      animate={{ opacity: 1, height: "auto" }}
+                                      exit={{ opacity: 0, height: 0 }}
+                                      transition={{ duration: 0.2 }}
+                                      className="overflow-hidden"
+                                    >
+                                      <div className="pl-4 space-y-1">
+                                        {item.subItems.map((subItem) => (
+                                          <Link
+                                            key={subItem.name}
+                                            href={`/${locale}${subItem.href}`}
+                                            onClick={closeMenu}
+                                            className={`block p-3 rounded-lg transition-all duration-200 ${
+                                              isSubItemActive(subItem.href)
+                                                ? "bg-indigo-500/20 border border-indigo-400/40 text-indigo-200"
+                                                : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
+                                            }`}
+                                          >
+                                            <span className="text-xl font-geo2 tracking-widest">
+                                              {subItem.name}
+                                            </span>
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            ) : (
+                              <Link
+                                href={`/${locale}${item.href}`}
+                                onClick={closeMenu}
+                                className={`block p-3 rounded-lg transition-all duration-200 ${
                                   isActive(item.href)
-                                    ? "bg-white/10 border border-indigo-400/30"
-                                    : "bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/20"
+                                    ? "bg-white/10 border border-indigo-400/30 text-white"
+                                    : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
                                 }`}
-                                aria-expanded={isProjectsOpen}
                               >
-                                <span className="text-white font-geo2 text-lg font-medium tracking-widest">
+                                <span className="text-xl font-medium font-geo2 tracking-widest">
                                   {item.name}
                                 </span>
-                                <ChevronRight
-                                  size={16}
-                                  className={`text-indigo-400 transition-transform duration-200 ${
-                                    isProjectsOpen ? "rotate-90" : ""
-                                  }`}
-                                />
-                              </button>
-
-                              <AnimatePresence>
-                                {isProjectsOpen && (
-                                  <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: "auto" }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="overflow-hidden"
-                                  >
-                                    <div className="pl-4 space-y-1">
-                                      {item.subItems.map((subItem) => (
-                                        <Link
-                                          key={subItem.name}
-                                          href={`/${locale}${subItem.href}`}
-                                          onClick={() => {
-                                            setIsMenuOpen(false);
-                                            setIsProjectsOpen(false);
-                                          }}
-                                          className={`block p-3 rounded-lg transition-all duration-200 ${
-                                            isSubItemActive(subItem.href)
-                                              ? "bg-indigo-500/20 border border-indigo-400/40 text-indigo-200"
-                                              : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
-                                          }`}
-                                        >
-                                          <span className="text-xl font-geo2 tracking-widest">
-                                            {subItem.name}
-                                          </span>
-                                        </Link>
-                                      ))}
-                                    </div>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-                            </div>
-                          ) : (
-                            <Link
-                              href={`/${locale}${item.href}`}
-                              onClick={() => setIsMenuOpen(false)}
-                              className={`block p-3 rounded-lg transition-all duration-200 ${
-                                isActive(item.href)
-                                  ? "bg-white/10 border border-indigo-400/30 text-white"
-                                  : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
-                              }`}
-                            >
-                              <span className="text-xl font-medium font-geo2 tracking-widest">
-                                {item.name}
-                              </span>
-                            </Link>
-                          )}
-                        </div>
-                      ))}
-
-                      <div className="pt-3 mt-3 border-t border-white/10">
-                        <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-                          <LocaleSwitcher />
-                        </div>
+                              </Link>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
 
-                    <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
+                    <div className="flex-shrink-0 p-4 border-t border-white/10">
+                      <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                        <LocaleSwitcher />
+                      </div>
+                    </div>
+
+                    <div className="h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent flex-shrink-0" />
                   </motion.div>
                 </>
               )}

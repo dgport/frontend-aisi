@@ -1,7 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useTranslations } from "next-intl";
+import { motion } from "framer-motion";
 
 interface EnhancedVisualBridgeProps {
   className?: string;
@@ -10,74 +9,11 @@ interface EnhancedVisualBridgeProps {
 export default function VisualBridge({
   className = "",
 }: EnhancedVisualBridgeProps) {
-  const t = useTranslations("main");
-  const tickerWords = [
-    t("safetyFirst"),
-    t("fastConstruction"),
-    t("premiumQuality"),
-    t("innovativeDesign"),
-    t("sustainableBuilding"),
-    t("expertCraftsmanship"),
-    t("modernArchitecture"),
-    t("luxuryLiving"),
-    t("reliableConstruction"),
-    t("advancedTechnology"),
-    t("ecoFriendly"),
-    t("professionalTeam"),
-    t("timelyDelivery"),
-    t("superiorMaterials"),
-    t("cuttingEdgeSolutions"),
-  ];
-
-  const infinityPath =
-    "M12,20 C12,20 4,16 4,12 C4,8 8,4 12,4 C16,4 20,8 20,12 C20,16 16,20 12,20 C12,20 20,16 20,12 C20,8 16,4 12,4 C8,4 4,8 4,12 C4,16 12,20 12,20 Z";
-
   return (
     <div className={`relative z-30 -mt-20 mb-0 ${className}`}>
-      <div className="h-40 bg-gradient-to-b from-transparent via-slate-900/90 to-slate-950/95 relative overflow-hidden">
+      <div className="h-24 bg-gradient-to-b from-transparent via-slate-900/90 to-slate-950/95 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_25%,rgba(255,255,255,0.02)_50%,transparent_50%,transparent_75%,rgba(255,255,255,0.02)_75%)] bg-[length:20px_20px]"></div>
-        </div>
-
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <svg
-            width="200"
-            height="100"
-            viewBox="0 0 24 24"
-            className="opacity-20"
-          >
-            <defs>
-              <linearGradient
-                id="infinityGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop offset="0%" stopColor="rgba(255,255,255,0.1)" />
-                <stop offset="50%" stopColor="rgba(255,255,255,0.6)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,0.1)" />
-              </linearGradient>
-            </defs>
-            <motion.path
-              d={infinityPath}
-              stroke="url(#infinityGradient)"
-              strokeWidth="0.5"
-              fill="none"
-              strokeLinecap="round"
-              strokeDasharray="2 4"
-              initial={{ strokeDashoffset: 0 }}
-              animate={{ strokeDashoffset: -24 }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              style={{
-                filter: "drop-shadow(0 0 8px rgba(255,255,255,0.3))",
-              }}
-            />
-          </svg>
         </div>
 
         <div className="absolute inset-x-0 top-1/2 transform -translate-y-1/2">
@@ -114,7 +50,7 @@ export default function VisualBridge({
           </div>
         </div>
 
-        <div className="absolute bottom-4 right-8">
+        <div className="absolute bottom-2 right-4">
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -125,7 +61,7 @@ export default function VisualBridge({
         </div>
 
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -139,46 +75,17 @@ export default function VisualBridge({
               }}
               className="absolute w-1 h-1 bg-white/30 rounded-full"
               style={{
-                left: `${20 + i * 12}%`,
-                top: `${60 + (i % 2) * 20}%`,
+                left: `${25 + i * 15}%`,
+                top: `${50 + (i % 2) * 20}%`,
               }}
             ></motion.div>
           ))}
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-950/80 overflow-hidden border-t border-white/10">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.02)_50%,transparent_100%)] bg-[length:40px_100%]"></div>
-
-          <div className="relative h-full flex items-center">
-            <motion.div
-              animate={{ x: ["100vw", "-200%"] }}
-              transition={{
-                duration: 150,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "linear",
-                delay: 2,
-              }}
-              className="flex items-center whitespace-nowrap"
-            >
-              {[...tickerWords, ...tickerWords].map((word, index) => (
-                <div key={index} className="flex items-center">
-                  <span className="text-white/70 font-geo2 text-lg  font-medium tracking-wider px-8 ">
-                    {word}
-                  </span>
-                  <div className="w-2 h-2 bg-white/30 rounded-full mx-4  "></div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-950/90 to-transparent pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-950/90 to-transparent pointer-events-none"></div>
-        </div>
-
-        <div className="absolute bottom-8 left-0 right-0 h-8 bg-gradient-to-b from-slate-950/50 to-slate-950"></div>
+        <div className="absolute bottom-4 left-0 right-0 h-4 bg-gradient-to-b from-slate-950/50 to-slate-950"></div>
       </div>
 
-      <div className="h-8 bg-gradient-to-b from-slate-950 to-slate-950/95 relative">
+      <div className="h-4 bg-gradient-to-b from-slate-950 to-slate-950/95 relative">
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-950/80"></div>
       </div>
     </div>

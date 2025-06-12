@@ -106,11 +106,11 @@ export const FloorOverlay: React.FC<ApartmentAreaProps> = React.memo(
         }
       } else {
         if (isHovered) {
-          classes += ` bg-blue-500/80 border-2 border-white shadow-xl shadow-blue-400/40`;
+          classes += ` bg-blue-700/90 border-2 border-white shadow-xl shadow-blue-500/50`;
         } else if (showHint) {
           classes += ` bg-blue-400/25 border-2 border-white animate-pulse-glow`;
         } else {
-          classes += ` bg-blue-200/20 border border-white/60 hover:bg-blue-500/75 hover:border-white hover:border-2 hover:shadow-lg hover:shadow-blue-300/30`;
+          classes += ` bg-blue-200/20 border border-white/60 hover:bg-blue-700/90 hover:border-white hover:border-2 hover:shadow-xl hover:shadow-blue-500/50`;
         }
       }
       return classes;

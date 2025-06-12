@@ -166,7 +166,6 @@ export default function ProjectsCarousel() {
           </motion.div>
         </div>
       </section>
-
       <WaveShape position="bottom" className=" block" />
     </div>
   );
