@@ -35,7 +35,6 @@ export default function Header() {
     setIsAdmin(pathname.includes("/admin"));
   }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobile && isMenuOpen) {
       document.body.style.overflow = "hidden";
