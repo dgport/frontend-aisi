@@ -32,7 +32,7 @@ export default function SelectFloor() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
 
-  // Zustand store actions
+ 
   const { setBuildingContext, resetFloorState, setCurrentFloor } =
     useFloorStore();
 
@@ -90,26 +90,19 @@ export default function SelectFloor() {
   ) => {
     setIsLoading(true);
     setImageLoaded(false);
-
-    // Set the building data immediately but keep loading state
     setSelectedBuilding(buildingId);
     setHoveredFloor(null);
     setSelectedFloorplan(floorPlan);
     setBuildingId(buildingIndex);
-
-    // Set building context in Zustand store
     setBuildingContext(buildingIndex, floorPlan);
   };
 
   const handleFloorClick = (floorId: string) => {
     if (buildingId) {
       setIsLoading(true);
-
-      // Set the floor in Zustand store
       setCurrentFloor(parseInt(floorId));
 
       setTimeout(() => {
-        // Navigate to floor page without floor ID in URL
         router.push(`/aisi-batumi/${buildingId}/${floorPlan}`);
       }, 300);
     }
@@ -117,12 +110,9 @@ export default function SelectFloor() {
 
   const handleImageLoad = () => {
     setImageLoaded(true);
-    // Small delay to ensure smooth transition
     setTimeout(() => {
       setIsLoading(false);
     }, 100);
-
-    // Update scale factor after image loads
     if (imageRef.current) {
       const baseWidth = isMobile ? MOBILE_IMAGE_WIDTH : ORIGINAL_IMAGE_WIDTH;
       setScaleFactor(imageRef.current.clientWidth / baseWidth);
@@ -132,10 +122,7 @@ export default function SelectFloor() {
   const handleBackClick = () => {
     setIsLoading(true);
     setImageLoaded(false);
-
-    // Reset Zustand store state
     resetFloorState();
-
     setTimeout(() => {
       setSelectedBuilding(null);
       setHoveredFloor(null);
@@ -161,86 +148,130 @@ export default function SelectFloor() {
   };
 
   const renderRightPanel = () => {
+    const isBlockASelected = selectedBuilding === "1";
+    const isBlockBSelected = selectedBuilding === "2";
+    const hasSelection = selectedBuilding !== null;
+
     return (
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-3">
         <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
           <Building className="mr-3 h-6 w-6 text-white" />
           {t("selectBuilding")}
         </h2>
-        <>
-          <div className="space-y-6">
+        <div
+          className={`space-y-6 transition-all duration-700 ease-out ${
+            hasSelection && !isBlockASelected
+              ? "opacity-30 scale-95 blur-[1px] pointer-events-none"
+              : "opacity-100 scale-100 blur-0"
+          }`}
+        >
+          <div className="flex items-center justify-between">
             <h3 className="font-semibold text-lg text-white mb-4 flex items-center">
               <Layers className="mr-2 h-5 w-5 text-white" />
               {t("aBlock")}
             </h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-slate-800  via-slate-700  to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-                <div className="flex items-center mb-2">
-                  <Layers className="h-5 w-5 mr-2 text-white" />
-                  <span className="text-sm text-white/80">
-                    {t("totalFloors")}
-                  </span>
-                </div>
-                <div className="font-bold text-2xl text-white">27</div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div
+              className={`bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 p-4 rounded-2xl transition-all duration-300 transform-gpu ${
+                hasSelection && !isBlockASelected
+                  ? "border-white/5"
+                  : "border-white/10 hover:border-white/25 hover:scale-[1.02]"
+              }`}
+            >
+              <div className="flex items-center mb-2">
+                <Layers className="h-5 w-5 mr-2 text-white" />
+                <span className="text-sm text-white/80">
+                  {t("totalFloors")}
+                </span>
               </div>
-              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-                <div className="flex items-center mb-2">
-                  <Home className="h-5 w-5 mr-2 text-white" />
-                  <span className="text-sm text-white/80">
-                    {t("totalUnits")}
-                  </span>
-                </div>
-                <div className="font-bold text-2xl text-white">475</div>
+              <div className="font-bold text-2xl text-white">27</div>
+            </div>
+            <div
+              className={`bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 p-4 rounded-2xl transition-all duration-300 transform-gpu ${
+                hasSelection && !isBlockASelected
+                  ? "border-white/5"
+                  : "border-white/10 hover:border-white/25 hover:scale-[1.02]"
+              }`}
+            >
+              <div className="flex items-center mb-2">
+                <Home className="h-5 w-5 mr-2 text-white" />
+                <span className="text-sm text-white/80">{t("totalUnits")}</span>
               </div>
-              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-                <div className="flex items-center mb-2">
-                  <Calendar className="h-5 w-5 mr-2 text-white" />
-                  <span className="text-sm text-white/80">
-                    {t("completion")}
-                  </span>
-                </div>
-                <div className="font-bold text-2xl text-white">2028</div>
+              <div className="font-bold text-2xl text-white">475</div>
+            </div>
+            <div
+              className={`bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 p-4 rounded-2xl transition-all duration-300 transform-gpu ${
+                hasSelection && !isBlockASelected
+                  ? "border-white/5"
+                  : "border-white/10 hover:border-white/25 hover:scale-[1.02]"
+              }`}
+            >
+              <div className="flex items-center mb-2">
+                <Calendar className="h-5 w-5 mr-2 text-white" />
+                <span className="text-sm text-white/80">{t("completion")}</span>
               </div>
+              <div className="font-bold text-2xl text-white">2028</div>
             </div>
           </div>
-        </>
-        <>
-          <div className="space-y-6">
+        </div>
+        <div
+          className={`space-y-6 transition-all duration-700 ease-out ${
+            hasSelection && !isBlockBSelected
+              ? "opacity-30 scale-95 blur-[1px] pointer-events-none"
+              : "opacity-100 scale-100 blur-0"
+          }`}
+        >
+          <div className="flex items-center justify-between">
             <h3 className="font-semibold text-lg text-white mb-4 flex items-center">
               <Layers className="mr-2 h-5 w-5 text-white" />
               {t("bBlock")}
             </h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-                <div className="flex items-center mb-2">
-                  <Layers className="h-5 w-5 mr-2 text-white" />
-                  <span className="text-sm text-white/80">
-                    {t("totalFloors")}
-                  </span>
-                </div>
-                <div className="font-bold text-2xl text-white">15</div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div
+              className={`bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 p-4 rounded-2xl transition-all duration-300 transform-gpu ${
+                hasSelection && !isBlockBSelected
+                  ? "border-white/5"
+                  : "border-white/10 hover:border-white/25 hover:scale-[1.02]"
+              }`}
+            >
+              <div className="flex items-center mb-2">
+                <Layers className="h-5 w-5 mr-2 text-white" />
+                <span className="text-sm text-white/80">
+                  {t("totalFloors")}
+                </span>
               </div>
-              <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-                <div className="flex items-center mb-2">
-                  <Home className="h-5 w-5 mr-2 text-white" />
-                  <span className="text-sm text-white/80">
-                    {t("totalUnits")}
-                  </span>
-                </div>
-                <div className="font-bold text-2xl text-white">98</div>
+              <div className="font-bold text-2xl text-white">15</div>
+            </div>
+            <div
+              className={`bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 p-4 rounded-2xl transition-all duration-300 transform-gpu ${
+                hasSelection && !isBlockBSelected
+                  ? "border-white/5"
+                  : "border-white/10 hover:border-white/25 hover:scale-[1.02]"
+              }`}
+            >
+              <div className="flex items-center mb-2">
+                <Home className="h-5 w-5 mr-2 text-white" />
+                <span className="text-sm text-white/80">{t("totalUnits")}</span>
               </div>
-              <div className="bg-gradient-to-br from-slate-800 via-slate-700  to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-                <div className="flex items-center mb-2">
-                  <Calendar className="h-5 w-5 mr-2 text-white" />
-                  <span className="text-sm text-white/80">
-                    {t("completion")}
-                  </span>
-                </div>
-                <div className="font-bold text-2xl text-white">2030</div>
+              <div className="font-bold text-2xl text-white">98</div>
+            </div>
+            <div
+              className={`bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 p-4 rounded-2xl transition-all duration-300 transform-gpu ${
+                hasSelection && !isBlockBSelected
+                  ? "border-white/5"
+                  : "border-white/10 hover:border-white/25 hover:scale-[1.02]"
+              }`}
+            >
+              <div className="flex items-center mb-2">
+                <Calendar className="h-5 w-5 mr-2 text-white" />
+                <span className="text-sm text-white/80">{t("completion")}</span>
               </div>
+              <div className="font-bold text-2xl text-white">2030</div>
             </div>
           </div>
-        </>
+        </div>
       </div>
     );
   };
@@ -265,7 +296,6 @@ export default function SelectFloor() {
                 onLoad={handleImageLoad}
               />
               {isLoading && <Loader />}
-              {/* Only show building overlays when not loading and no building selected */}
               {!selectedBuilding &&
                 !isLoading &&
                 imageLoaded &&
@@ -291,7 +321,6 @@ export default function SelectFloor() {
                     scaleFactor={scaleFactor}
                   />
                 ))}
-              {/* Only show floor overlays when not loading and building is selected and image is loaded */}
               {selectedBuilding &&
                 !isLoading &&
                 imageLoaded &&

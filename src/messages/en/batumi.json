@@ -1,6 +1,11 @@
 {      
+    
+    "aisiBatumi": "AISI Batumi",
+    "transferSpaces": "Transforming spaces into exceptional living experiences since 2010",
+    "aisiAdjara": "AISI Batumi in adjara",
+    "batumiDesc": "AISI Batumi is located on the territory of the New Boulevard, close to the sea, at the first turn of Angisi Street at N28. The complex includes blocks A and B, which are designed to ensure a comfortable and modern lifestyle.",
     "back": "Back to site plan",
-     "building": "Building",
+    "building": "Building",
     "selectBuilding": "Select Building",
     "totalBuildings": "Total Buildings",
     "totalUnits": "Total Units",
@@ -12,6 +17,9 @@
     "buildingInfo": "Building information",
     "aBlock": "A Block",
     "bBlock": "B Block",
-    "totalFloors": "Total Floors"
+    "totalFloors": "Total Floors",
+    "elevator": "Top-quality Otis elevators",
+    "parking": "Indoor and outdoor parking",
+    "sport": "Gym, pool and lounge bar"
 
 }

@@ -1,49 +1,69 @@
 "use client"
 
-import React from "react"
-import { PhotoProvider, PhotoView } from "react-photo-view"
-import "react-photo-view/dist/react-photo-view.css"
+import { useTranslations } from "next-intl";
+import React from "react";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 interface ApartmentImage {
-  src: string
-  apartmentNumber: number
-  apartmentId: number
-  area?: number
-  status?: string
+  src: string;
+  apartmentNumber: number;
+  apartmentId: number;
+  area?: number;
+  status?: string;
 }
 
 interface PhotoGalleryProps {
-  images: ApartmentImage[]
-  isOpen: boolean
-  onClose: () => void
+  images: ApartmentImage[];
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onClose }) => {
+export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
+  images,
+  isOpen,
+  onClose,
+}) => {
+  const t = useTranslations("main");
+
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
-        onClose()
+        onClose();
       }
-    }
+    };
 
-    document.addEventListener("keydown", handleKeyDown)
-    return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [isOpen, onClose])
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
-  if (!isOpen || images.length === 0) return null
+  if (!isOpen || images.length === 0) return null;
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "available":
-        return "bg-emerald-500 text-white shadow-emerald-500/30"
+        return "bg-emerald-500 text-white shadow-emerald-500/30";
       case "reserved":
-        return "bg-amber-500 text-white shadow-amber-500/30"
+        return "bg-amber-500 text-white shadow-amber-500/30";
       case "sold":
-        return "bg-red-500 text-white shadow-red-500/30"
+        return "bg-red-500 text-white shadow-red-500/30";
       default:
-        return "bg-slate-500 text-white shadow-slate-500/30"
+        return "bg-slate-500 text-white shadow-slate-500/30";
     }
-  }
+  };
+
+  const getTranslatedStatus = (status: string) => {
+    switch (status.toLowerCase()) {
+      case "available":
+        return t("available");
+      case "reserved":
+        return t("reserved");
+      case "sold":
+        return t("sold");
+      default:
+        return status;
+    }
+  };
 
   return (
     <PhotoProvider
@@ -63,9 +83,8 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
       }
       brokenElement={
-        <div className="text-white text-sm">Failed to load image</div>
+        <div className="text-white text-sm">{t("failedToLoadImage")}</div>
       }
-      // Add custom styles for spacing
       className="photo-gallery-container"
       overlayRender={({ index }) => {
         const currentImage = images[index];
@@ -86,7 +105,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                 <h3 className="text-lg font-bold text-gray-800">
-                  Apartment #{currentImage.apartmentNumber}
+                  {t("apartment")} #{currentImage.apartmentNumber}
                 </h3>
               </div>
 
@@ -108,7 +127,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Area</p>
+                    <p className="text-sm text-gray-500">{t("area")}</p>
                     <p className="font-semibold text-gray-800">
                       {currentImage.area} m²
                     </p>
@@ -134,14 +153,13 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-gray-500 mb-1">Status</p>
+                    <p className="text-sm text-gray-500 mb-1">{t("status")}</p>
                     <span
                       className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium shadow-lg ${getStatusColor(
                         currentImage.status!
                       )}`}
                     >
-                      {currentImage.status!.charAt(0).toUpperCase() +
-                        currentImage.status!.slice(1)}
+                      {getTranslatedStatus(currentImage.status!)}
                     </span>
                   </div>
                 </div>
@@ -173,10 +191,11 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
                       ? "border-white"
                       : "border-transparent opacity-60 hover:opacity-80"
                   }`}
+                  aria-label={`${t("thumbnail")} ${idx + 1}`}
                 >
                   <img
                     src={img.src || "/placeholder.svg"}
-                    alt={`Thumbnail ${idx + 1}`}
+                    alt={`${t("thumbnail")} ${idx + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
@@ -192,6 +211,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
                   onClick={() =>
                     onIndexChange?.(index > 0 ? index - 1 : images.length - 1)
                   }
+                  aria-label="Previous image"
                 >
                   ←
                 </button>
@@ -200,6 +220,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
                   onClick={() =>
                     onIndexChange?.(index < images.length - 1 ? index + 1 : 0)
                   }
+                  aria-label="Next image"
                 >
                   →
                 </button>
@@ -209,18 +230,21 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
             <button
               className="text-white hover:text-gray-300 px-3 py-1 rounded transition-colors"
               onClick={() => onScale(scale + 0.5)}
+              aria-label="Zoom in"
             >
               +
             </button>
             <button
               className="text-white hover:text-gray-300 px-3 py-1 rounded transition-colors"
               onClick={() => onScale(scale - 0.5)}
+              aria-label="Zoom out"
             >
               -
             </button>
             <button
               className="text-white hover:text-gray-300 px-3 py-1 rounded transition-colors"
               onClick={() => onRotate(rotate + 90)}
+              aria-label="Rotate image"
             >
               ↻
             </button>
@@ -245,4 +269,4 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ images, isOpen, onCl
       </div>
     </PhotoProvider>
   );
-}
+};

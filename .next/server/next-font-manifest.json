@@ -1,1 +1,32 @@
-{"pages":{},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":false}
+{
+  "app": {
+    "[project]/src/app/[locale]/(main)/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/geo2-s.p.04e2476a.ttf"
+    ],
+    "[project]/src/app/[locale]/admin/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/geo2-s.p.04e2476a.ttf"
+    ],
+    "[project]/src/app/[locale]/aisi-batumi/[...id]/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/geo2-s.p.04e2476a.ttf"
+    ],
+    "[project]/src/app/[locale]/aisi-batumi/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/geo2-s.p.04e2476a.ttf"
+    ],
+    "[project]/src/app/[locale]/aisi-goderdzi/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/gyByhwUxId8gMEwcGFWNOITd-s.p.da1ebef7.woff2",
+      "static/media/geo2-s.p.04e2476a.ttf"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

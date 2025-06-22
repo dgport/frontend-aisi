@@ -140,7 +140,7 @@ export default function CoverSection({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1 }}
-                    className="text-white/90 font-geo2 text-base lg:text-2xl mt-4"
+                    className="text-white font-geo2 text-lg  lg:text-2xl mt-4"
                   >
                     {description}
                   </motion.p>
@@ -154,7 +154,7 @@ export default function CoverSection({
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="max-w-lg lg:ml-auto md:pt-8 lg:mt-0"
               >
-                <div className="rounded-2xl bg-white/10 border border-white/20 p-6">
+                <div className="rounded-2xl bg-white/20 backdrop-blur-xs border border-white/20 p-6">
                   {secondaryTitle && (
                     <motion.h2
                       initial={{ opacity: 0 }}
