@@ -1,8 +1,1 @@
-{
-  "/[locale]/(main)/page": "app/[locale]/(main)/page.js",
-  "/[locale]/aisi-batumi/page": "app/[locale]/aisi-batumi/page.js",
-  "/[locale]/aisi-status/[...id]/page": "app/[locale]/aisi-status/[...id]/page.js",
-  "/[locale]/aisi-status/page": "app/[locale]/aisi-status/page.js",
-  "/[locale]/icon.png/route": "app/[locale]/icon.png/route.js",
-  "/_not-found/page": "app/_not-found/page.js"
-}
+{}
