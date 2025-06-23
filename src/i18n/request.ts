@@ -15,6 +15,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     main: (await import(`../messages/${locale}/main.json`)).default,
     contact: (await import(`../messages/${locale}/contact.json`)).default,
     batumi: (await import(`../messages/${locale}/batumi.json`)).default,
+    status: (await import(`../messages/${locale}/status.json`)).default,
   };
 
   return {

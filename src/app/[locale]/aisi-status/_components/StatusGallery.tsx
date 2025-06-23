@@ -13,10 +13,10 @@ import Image4 from "@/root/public/images/status/Status4.png";
 import { WaveShape } from "@/components/shared/waveShape/WaveShape";
 
 const propertyImages = [
-  { src: Image1, alt: "Goderdzi Green Views" },
-  { src: Image4, alt: "Goderdzi Nature Surroundings" },
-  { src: Image3, alt: "Goderdzi Pool Area" },
-  { src: Image2, alt: "Goderdzi Exterior" },
+  { src: Image1, alt: "AISI Status" },
+  { src: Image4, alt: "AISI Status" },
+  { src: Image3, alt: "AISI Status" },
+  { src: Image2, alt: "AISI Status" },
 ];
 
 export default function StatusGallery() {
@@ -25,10 +25,6 @@ export default function StatusGallery() {
       <WaveShape position="top" className="hidden md:block" />
       <section className="w-full px-4 md:px-8 lg:px-16 py-16 md:py-32 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative">
         <div className="container mx-auto">
-          <h3 className="text-3xl md:text-4xl text-center font-bold text-white mb-12">
-            Property Gallery
-          </h3>
-
           <Carousel
             className="w-full"
             opts={{

@@ -12,11 +12,12 @@ import Image from "next/image";
 import { useMediaQuery } from "@/use-media-query";
 import { FloorOverlay } from "@/components/shared/overlay/FloorOverlay";
 import { useRouter } from "next/navigation";
-import { Building, Layers, Home, Car, Calendar } from "lucide-react";
+import { Building, Package, Home, ArrowUp, Calendar } from "lucide-react";
 import { desktopAreas } from "@/constants/coordinants/statusFloorCoord";
 import background from "@/root/public/images/bg-body.jpg";
 import { useFloorStore } from "@/zustand/floorStore";
 import Loader from "@/components/shared/loader/Loader";
+import { useTranslations } from "next-intl";
 
 const ORIGINAL_IMAGE_WIDTH = 1505;
 const MOBILE_IMAGE_WIDTH = 1505;
@@ -34,51 +35,62 @@ const MemoizedFloorOverlay = React.memo(
 );
 MemoizedFloorOverlay.displayName = "MemoizedFloorOverlay";
 
-const BuildingStats = React.memo(() => (
-  <div className="space-y-4">
-    <div className="grid grid-cols-2 gap-4">
-      <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-        <div className="flex items-center mb-2">
-          <Layers className="h-5 w-5 mr-2 text-white" />
-          <span className="text-sm text-white/80">Total Floors</span>
+const BuildingStats = React.memo(() => {
+  const t = useTranslations("status");
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 gap-4">
+        <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
+          <div className="flex items-center mb-2">
+            <Home className="h-5 w-5 mr-2 text-white" />
+            <span className="text-sm text-white/80">{t("apartmentArea")}</span>
+          </div>
+          <div className=" text-2xl text-white">{t("areaRange")}</div>
         </div>
-        <div className="font-bold text-2xl text-white">4</div>
-      </div>
-      <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-        <div className="flex items-center mb-2">
-          <Home className="h-5 w-5 mr-2 text-white" />
-          <span className="text-sm text-white/80">Total Units</span>
+
+        <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
+          <div className="flex items-center mb-2">
+            <ArrowUp className="h-5 w-5 mr-2 text-white" />
+            <span className="text-sm text-white/80">{t("elevators")}</span>
+          </div>
+          <div className=" text-2xl text-white">{t("elevatorsCount")}</div>
         </div>
-        <div className="font-bold text-2xl text-white">36</div>
-      </div>
-      <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-        <div className="flex items-center mb-2">
-          <Car className="h-5 w-5 mr-2 text-white" />
-          <span className="text-sm text-white/80">Parking Spots</span>
+
+        <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
+          <div className="flex items-center mb-2">
+            <Building className="h-5 w-5 mr-2 text-white" />
+            <span className="text-sm text-white/80">{t("entrances")}</span>
+          </div>
+          <div className=" text-2xl text-white">{t("entrancesCount")}</div>
         </div>
-        <div className="font-bold text-2xl text-white">42</div>
-      </div>
-      <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
-        <div className="flex items-center mb-2">
-          <Calendar className="h-5 w-5 mr-2 text-white" />
-          <span className="text-sm text-white/80">Completion</span>
+
+        <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
+          <div className="flex items-center mb-2">
+            <Calendar className="h-5 w-5 mr-2 text-white" />
+            <span className="text-sm text-white/80">{t("completion")}</span>
+          </div>
+          <div className=" text-2xl text-white">{t("completionDate")}</div>
         </div>
-        <div className="font-bold text-2xl text-white">2025</div>
+        <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 backdrop-blur-2xl border-2 border-white/10 p-4 rounded-2xl hover:border-white/25 transition-all duration-300 hover:scale-[1.02] transform-gpu">
+          <div className="flex items-center mb-2">
+            <Package className="h-5 w-5 mr-2 text-white" />
+            <span className="text-md text-white/80">{t("materials")}</span>
+          </div>
+          <div className="text-white space-y-1">
+            <div className="text-sm">• {t("gasBlock")}</div>
+            <div className="text-sm">• {t("alucobond")}</div>
+            <div className="text-sm">• {t("otisElevators")}</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div className="mt-6 p-4 bg-gradient-to-br from-slate-800/50 via-slate-700/50 to-slate-900/50 backdrop-blur-xl border-2 border-white/10 rounded-2xl hover:border-white/25 transition-all duration-300">
-      <h4 className="text-white font-medium mb-2">How to Navigate</h4>
-      <ul className="text-sm text-white/80 space-y-1">
-        <li>• Hover over colored areas to see floor numbers</li>
-        <li>• Click on any floor to view apartment details</li>
-        <li>• Each color represents a different floor level</li>
-      </ul>
-    </div>
-  </div>
-));
+  );
+});
 BuildingStats.displayName = "BuildingStats";
 
 export default function StatusSelectFloor() {
+  const t = useTranslations("status");
   const [hoveredApartment, setHoveredApartment] = useState<number | null>(null);
   const [scaleFactor, setScaleFactor] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -99,7 +111,6 @@ export default function StatusSelectFloor() {
     }
   }, [isMobile]);
 
-  // Optimized resize observer setup
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     const debouncedUpdate = () => {
@@ -160,12 +171,12 @@ export default function StatusSelectFloor() {
   return (
     <section
       style={{ backgroundImage: `url(${background.src})` }}
-      className="px-4 md:px-8 lg:px-16 py-10 bg-white min-h-screen"
+      className="px-4 md:px-8 lg:px-16 py-10 bg-white min-h-screen font-geo2 tracking-widest"
     >
       <div className="container2">
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Select Your Floor
+          <h1 className="text-3xl md:text-4xl  font-semibold text-gray-900 mb-4">
+            {t("selectFloor")}
           </h1>
         </div>
         <div className="flex flex-col xl:flex-row gap-8">
@@ -200,7 +211,7 @@ export default function StatusSelectFloor() {
                 ))}
 
               {hoveredApartment && imageLoaded && !isLoading && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-6xl md:text-8xl opacity-70 pointer-events-none z-20 drop-shadow-lg">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white  text-6xl md:text-8xl opacity-70 pointer-events-none z-20 drop-shadow-lg">
                   {hoveredApartment}
                 </div>
               )}
@@ -209,9 +220,9 @@ export default function StatusSelectFloor() {
 
           <div className="w-full xl:w-1/3">
             <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-6 h-full hover:border-white/25 transition-all duration-700 ease-out">
-              <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
+              <h2 className="text-2xl  text-white mb-4 flex items-center">
                 <Building className="mr-3 h-6 w-6 text-white" />
-                Building Overview
+                {t("buildingOverview")}
               </h2>
               <BuildingStats />
             </div>

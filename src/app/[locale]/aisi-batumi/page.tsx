@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: t("aisiGroup"),
       images: [
         {
-          url: "/images/batumi/Cover2.png", // make sure the path is public-facing
+          url: "https://aisigroup.ge/images/batumi/Cover2.png",
           width: 1200,
           height: 630,
           alt: "AISI Batumi Residential Complex - Luxury Apartments",

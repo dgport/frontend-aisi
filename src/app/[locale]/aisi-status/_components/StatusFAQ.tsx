@@ -1,32 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown, Info } from "lucide-react";
+import { useTranslations } from "next-intl";
 import background from "@/root/public/images/bg-body.jpg";
-const accordionItems = [
-  {
-    question: "What amenities are included with each floor?",
-    answer:
-      "Each floor comes with access to all building amenities including 24/7 security, dedicated parking spaces, the rooftop garden, fitness center, and community gathering spaces. Higher floors may have enhanced views and premium finishes.",
-  },
-  {
-    question: "How do I schedule a viewing?",
-    answer:
-      "You can schedule a viewing by contacting our sales office at (123) 456-7890 or by filling out the contact form on our website. Our team will arrange a convenient time for you to visit the property and explore your preferred floor options.",
-  },
-  {
-    question: "What is the purchasing process?",
-    answer:
-      "The purchasing process begins with selecting your preferred floor and unit. Once you've made your selection, our sales team will guide you through the reservation process, financing options, contract signing, and closing procedures. We're here to make your home-buying experience as seamless as possible.",
-  },
-];
 
 export default function StatusFAQ() {
+  const t = useTranslations("status");
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
     setOpenAccordion(openAccordion === index ? null : index);
   };
+
+  const accordionItems = [
+    {
+      question: t("apartmentConditionTitle"),
+      answer: t("apartmentConditionAnswer"),
+    },
+    {
+      question: t("additionalServicesTitle"),
+      answer: t("additionalServicesAnswer"),
+    },
+    {
+      question: t("completionStatusTitle"),
+      answer: t("completionStatusAnswer"),
+    },
+  ];
 
   return (
     <section
@@ -53,9 +53,9 @@ export default function StatusFAQ() {
           <div className="relative z-10 p-3 sm:p-6 pt-8 sm:pt-12">
             <div className="flex flex-col items-center mb-6 sm:mb-10">
               <div className="flex items-center mb-2 sm:mb-4">
-                <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white mr-2 sm:mr-3" />
+                <Info className="h-5 w-5 sm:h-6 sm:w-6 text-white mr-2 sm:mr-3" />
                 <h3 className="text-lg sm:text-xl md:text-2xl font-normal text-white tracking-wide">
-                  Construction
+                  {t("projectInformation")}
                 </h3>
               </div>
               <div className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full w-24 sm:w-32"></div>
@@ -90,9 +90,9 @@ export default function StatusFAQ() {
                     <div className="px-4 sm:px-5 pb-4 sm:pb-5">
                       <div className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full w-full mb-3 sm:mb-4"></div>
                       <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10">
-                        <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+                        <div className="text-white/80 text-sm sm:text-base leading-relaxed">
                           {item.answer}
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </div>
