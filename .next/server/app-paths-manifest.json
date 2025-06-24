@@ -1,5 +1,7 @@
 {
   "/[locale]/(main)/page": "app/[locale]/(main)/page.js",
+  "/[locale]/aisi-batumi/page": "app/[locale]/aisi-batumi/page.js",
+  "/[locale]/contact/page": "app/[locale]/contact/page.js",
   "/[locale]/icon.png/route": "app/[locale]/icon.png/route.js",
   "/_not-found/page": "app/_not-found/page.js"
 }

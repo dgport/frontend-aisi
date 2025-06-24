@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "ka_GE",
       alternateLocale: ["en_US"],
-      url: "https://aisigroup.ge/en/aisi-goderdzi",
+      url: "https://aisigroup.ge/aisi-goderdzi",
       title: t("aisiGoderdzi"),
       description: t("aisiDesc"),
       siteName: t("aisiGroup"),

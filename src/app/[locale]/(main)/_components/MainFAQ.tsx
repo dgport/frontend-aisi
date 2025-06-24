@@ -3,31 +3,30 @@
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import background from "@/root/public/images/bg-body.jpg";
- 
-const accordionItems = [
-  {
-    question: "What amenities are included with each floor?",
-    answer:
-      "Each floor comes with access to all building amenities including 24/7 security, dedicated parking spaces, the rooftop garden, fitness center, and community gathering spaces. Higher floors may have enhanced views and premium finishes.",
-  },
-  {
-    question: "How do I schedule a viewing?",
-    answer:
-      "You can schedule a viewing by contacting our sales office at (123) 456-7890 or by filling out the contact form on our website. Our team will arrange a convenient time for you to visit the property and explore your preferred floor options.",
-  },
-  {
-    question: "What is the purchasing process?",
-    answer:
-      "The purchasing process begins with selecting your preferred floor and unit. Once you've made your selection, our sales team will guide you through the reservation process, financing options, contract signing, and closing procedures. We're here to make your home-buying experience as seamless as possible.",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function BatumiFAQ() {
+  const t = useTranslations("main");
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
     setOpenAccordion(openAccordion === index ? null : index);
   };
+
+  const accordionItems = [
+    {
+      question: t("faqQuestion1"),
+      answer: t("faqAnswer1"),
+    },
+    {
+      question: t("faqQuestion2"),
+      answer: t("faqAnswer2"),
+    },
+    {
+      question: t("faqQuestion3"),
+      answer: t("faqAnswer3"),
+    },
+  ];
 
   return (
     <section
@@ -56,11 +55,12 @@ export default function BatumiFAQ() {
               <div className="flex items-center mb-2 sm:mb-4">
                 <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white mr-2 sm:mr-3" />
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-normal font-geo2 text-white tracking-wide">
-                  Construction
+                  {t("faqTitle")}
                 </h3>
               </div>
               <div className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full w-24 sm:w-32"></div>
             </div>
+
             <div className="space-y-4 sm:space-y-6">
               {accordionItems.map((item, index) => (
                 <div

@@ -41,7 +41,7 @@ const INITIAL_FORM_STATE: FormData = {
 const CONTACT_INFO: ContactInfo = {
   address: "ანგისის პირველი შესახვევი #28, Batumi, Georgia",
   phone: ["+995 557 47 14 14", "+995 514 04 30 00", "+995 514 03 40 00"],
-  email: "aisistatus@gmail.com",
+  email: "info@aisigroup.ge",
 };
 
 const ContactCard: React.FC = () => {

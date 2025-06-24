@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "ka_GE",
       alternateLocale: ["en_US"],
-      url: "https://aisigroup.ge/en/aisi-status",
+      url: "https://aisigroup.ge/aisi-status",
       title: t("aisiStatus"),
       description: t("statusDesc"),
       siteName: t("aisiGroup"),

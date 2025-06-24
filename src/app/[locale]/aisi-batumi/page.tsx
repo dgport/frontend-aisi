@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "ka_GE",
       alternateLocale: ["en_US"],
-      url: "https://aisigroup.ge/en/aisi-batumi",
+      url: "https://aisigroup.ge/aisi-batumi",
       title: t("aisiBatumi"),
       description: t("batumiDesc"),
       siteName: t("aisiGroup"),

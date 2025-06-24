@@ -211,7 +211,7 @@ export default function SelectFloor() {
                 <Calendar className="h-5 w-5 mr-2 text-white" />
                 <span className="text-sm text-white/80">{t("completion")}</span>
               </div>
-              <div className="font-bold text-2xl text-white">2028</div>
+              <div className="font-bold text-2xl text-white">2030</div>
             </div>
           </div>
         </div>
@@ -268,7 +268,7 @@ export default function SelectFloor() {
                 <Calendar className="h-5 w-5 mr-2 text-white" />
                 <span className="text-sm text-white/80">{t("completion")}</span>
               </div>
-              <div className="font-bold text-2xl text-white">2030</div>
+              <div className="font-bold text-2xl text-white">2028</div>
             </div>
           </div>
         </div>
