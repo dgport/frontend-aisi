@@ -4,7 +4,6 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import img from "@/root/public/images/494312578_1192631112877893_6739643093763846871_n.jpg";
 import { WaveShape } from "@/components/shared/waveShape/WaveShape";
 import { useTranslations } from "next-intl";
 import background from "@/root/public/images/bg2.png";
