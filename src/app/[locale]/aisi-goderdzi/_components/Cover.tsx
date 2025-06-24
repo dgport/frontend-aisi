@@ -8,11 +8,11 @@ export default function Cover() {
   return (
     <CoverSection
       images={[Cover1, Cover2]}
-      title={t("aisiGoderdzie")}
+      title={t("aisiGoderdzi")}
       subtitle=""
       description={t("transferSpaces")}
-      secondaryTitle="Goderdzi Residence in Mountain Adjara"
-      secondaryDescription="Goderdzi Residence in Mountain Adjara Goderdzi Residence in Mountain Adjara Goderdzi Residence in Mountain Adjara"
+      secondaryTitle={t("aisiMountain")}
+      secondaryDescription={t("aisiDesc")}
       tags={[]}
       slideInterval={7000}
       height="lg:h-[700px]"

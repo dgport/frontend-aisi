@@ -1,4 +1,3 @@
-import React from "react";
 import { Metadata } from "next";
 import SelectFloor from "./_components/SelectFloor";
 import Cover from "./_components/Cover";
@@ -37,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: t("aisiGroup"),
       images: [
         {
-          url: "https://aisigroup.ge/images/status/StatusCover.png",
+          url: "https://aisigroup.ge//images/status/StatusLarge.png",
           width: 1200,
           height: 630,
           alt: t("statusImageAlt"),

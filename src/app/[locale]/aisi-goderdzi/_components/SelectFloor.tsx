@@ -18,7 +18,6 @@ import {
   Layers,
   Home,
   Calendar,
-  DollarSign,
   Waves,
   Dumbbell,
 } from "lucide-react";
@@ -248,10 +247,6 @@ export default function GoderdziSelectFloor() {
                 </div>
 
                 <div className="bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 backdrop-blur-2xl border-2 border-emerald-400/20 p-4 rounded-2xl hover:border-emerald-400/40 transition-all duration-300">
-                  <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-                    <DollarSign className="h-5 w-5 mr-2 text-emerald-400" />
-                    {t("pricing")}
-                  </h3>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-md text-white/80">

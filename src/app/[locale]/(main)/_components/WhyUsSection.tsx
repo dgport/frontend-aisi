@@ -59,7 +59,7 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="text-3xl md:text-4xl font-bold font-geo2 text-white mb-1 drop-shadow-[0_4px_12px_rgba(30,58,138,0.8)] group-hover:scale-105 transition-transform duration-200"
+          className="text-2xl md:text-3xl font-bold font-geo2 text-white mb-1 drop-shadow-[0_4px_12px_rgba(30,58,138,0.8)] group-hover:scale-105 transition-transform duration-200"
         >
           {count}+
         </motion.h3>
@@ -67,7 +67,7 @@ export default function WhyChooseUs() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.3, delay: 0.2 }}
-          className="text-blue-100/70 text-lg md:text-xl font-medium font-geo2 tracking-wide drop-shadow-[0_2px_8px_rgba(30,58,138,0.6)]"
+          className="text-blue-100/70 text-lg md:text-lg font-medium font-geo2 tracking-wide drop-shadow-[0_2px_8px_rgba(30,58,138,0.6)]"
         >
           {label}
         </motion.p>
@@ -101,7 +101,7 @@ export default function WhyChooseUs() {
             <div className="flex justify-center items-center mb-4">
               <motion.div
                 initial={{ width: 0 }}
-                whileInView={{ width: "7rem" }}
+                whileInView={{ width: "5rem" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full mr-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
@@ -112,7 +112,7 @@ export default function WhyChooseUs() {
               </h2>
               <motion.div
                 initial={{ width: 0 }}
-                whileInView={{ width: "7rem" }}
+                whileInView={{ width: "5rem" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="h-[2px] bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full ml-4 shadow-[0_0_10px_rgba(255,255,255,0.3)]"
@@ -128,7 +128,7 @@ export default function WhyChooseUs() {
           className="max-w-5xl mx-auto"
         >
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-xl border border-blue-700/30 shadow-2xl shadow-blue-900/50 p-6 md:p-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative">
+            <div className="grid grid-cols-2 md:grid-cols-4  gap-10 relative">
               <div className="flex justify-center">
                 <Counter
                   value="1000"

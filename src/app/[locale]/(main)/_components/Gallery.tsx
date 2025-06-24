@@ -8,28 +8,25 @@ import img from "@/root/public/images/494312578_1192631112877893_673964309376384
 import { WaveShape } from "@/components/shared/waveShape/WaveShape";
 import { useTranslations } from "next-intl";
 import background from "@/root/public/images/bg2.png";
+import image1 from "@/root/public/images/main/Batumi2.jpeg";
+import image2 from "@/root/public/images/main/Batumi1.jpeg";
+import image3 from "@/root/public/images/main/Batumi3.jpg";
 
 const images = [
   {
     id: 0,
-    src: img,
+    src: image1,
     alt: "Panoramic view",
-    title: "Scenic Views",
-    description: "Breathtaking surroundings from every angle",
   },
   {
     id: 1,
-    src: img,
+    src: image3,
     alt: "Amenities area",
-    title: "Premium Amenities",
-    description: "World-class facilities for residents",
   },
   {
     id: 2,
-    src: img,
+    src: image2,
     alt: "Luxury features",
-    title: "Exclusive Living",
-    description: "Premium lifestyle at its finest",
   },
 ];
 
@@ -68,7 +65,7 @@ export default function Gallery() {
                 >
                   {images.map((image) => (
                     <div key={image.id} className="w-full flex-shrink-0">
-                      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-2xl shadow-blue-900/50 mx-1 sm:mx-2">
+                      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-900/50 via-slate-800/40 to-blue-950/60 backdrop-blur-2xl border-2 border-blue-700/30 shadow-xs shadow-blue-900/50 mx-1 sm:mx-2">
                         <div className="relative h-[280px] xs:h-[320px] sm:h-[380px] md:h-[400px] rounded-xl sm:rounded-2xl overflow-hidden w-full m-1 sm:m-2 border border-blue-700/20">
                           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue-950/90 z-10"></div>
                           <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 via-transparent to-transparent z-10"></div>
@@ -78,19 +75,6 @@ export default function Gallery() {
                             fill
                             className="object-cover"
                           />
-                          <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 md:p-6 z-20">
-                            <div className="relative">
-                              <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/35 to-transparent rounded-xl sm:rounded-2xl -m-2 sm:-m-4 p-2 sm:p-4"></div>
-                              <div className="relative z-10">
-                                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-1 sm:mb-2">
-                                  {image.title}
-                                </h3>
-                                <p className="text-blue-100/70 text-xs sm:text-sm">
-                                  {image.description}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -100,13 +84,13 @@ export default function Gallery() {
 
               <button
                 onClick={prevSlide}
-                className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-blue-900/70 hover:bg-blue-800/80 text-white p-2 sm:p-3 rounded-full shadow-lg transition-all duration-300 z-30"
+                className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-blue-900/60 hover:bg-blue-800/70 text-white p-2 sm:p-3 rounded-full shadow-xs transition-all duration-300 z-30"
               >
                 <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-blue-900/70 hover:bg-blue-800/80 text-white p-2 sm:p-3 rounded-full shadow-lg transition-all duration-300 z-30"
+                className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-blue-900/60 hover:bg-blue-800/70 text-white p-2 sm:p-3 rounded-full shadow-xs transition-all duration-300 z-30"
               >
                 <ChevronRight size={20} className="sm:w-6 sm:h-6" />
               </button>
@@ -146,19 +130,6 @@ export default function Gallery() {
                       fill
                       className="object-cover transition-all duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 lg:p-6 z-20">
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/35 to-transparent rounded-2xl -m-4 p-4"></div>
-                        <div className="relative z-10">
-                          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
-                            {images[0].title}
-                          </h3>
-                          <p className="text-blue-100/70 text-sm md:text-sm lg:text-base">
-                            {images[0].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -179,19 +150,6 @@ export default function Gallery() {
                       fill
                       className="object-cover transition-all duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 lg:p-6 z-20">
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/35 to-transparent rounded-2xl -m-4 p-4"></div>
-                        <div className="relative z-10">
-                          <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
-                            {images[1].title}
-                          </h3>
-                          <p className="text-blue-100/70 text-sm md:text-sm lg:text-base">
-                            {images[1].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -229,19 +187,6 @@ export default function Gallery() {
                       fill
                       className="object-cover transition-all duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 lg:p-5 z-20">
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/85 via-blue-900/35 to-transparent rounded-2xl -m-4 p-4"></div>
-                        <div className="relative z-10">
-                          <h3 className="text-base md:text-lg lg:text-xl font-bold text-white mb-2 group-hover:translate-x-2 transition-all duration-500">
-                            {images[2].title}
-                          </h3>
-                          <p className="text-blue-100/70 text-xs md:text-sm lg:text-sm">
-                            {images[2].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </motion.div>

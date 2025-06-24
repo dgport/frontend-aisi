@@ -30,7 +30,7 @@ export default function StatusFAQ() {
 
   return (
     <section
-      className="bg-white py-10 md:py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900"
+      className="bg-white py-10 md:py-20 px-4 md:px-8 lg:px-16 font-geo2 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900"
       style={{ backgroundImage: `url(${background.src})` }}
     >
       <div className="absolute inset-0 overflow-hidden">
@@ -54,7 +54,7 @@ export default function StatusFAQ() {
             <div className="flex flex-col items-center mb-6 sm:mb-10">
               <div className="flex items-center mb-2 sm:mb-4">
                 <Info className="h-5 w-5 sm:h-6 sm:w-6 text-white mr-2 sm:mr-3" />
-                <h3 className="text-lg sm:text-xl md:text-2xl font-normal text-white tracking-wide">
+                <h3 className="text-lg sm:text-xl md:text-3xl font-normal text-white tracking-wide">
                   {t("projectInformation")}
                 </h3>
               </div>
@@ -70,7 +70,7 @@ export default function StatusFAQ() {
                     className="flex justify-between cursor-pointer items-center w-full p-4 sm:p-5 text-left hover:bg-white/5 transition-all duration-300 group"
                     onClick={() => toggleAccordion(index)}
                   >
-                    <span className="font-medium text-white/90 text-sm sm:text-base pr-4">
+                    <span className="font-medium text-white/90  md:text-xl text-xl pr-4">
                       {item.question}
                     </span>
                     <ChevronDown
@@ -90,7 +90,7 @@ export default function StatusFAQ() {
                     <div className="px-4 sm:px-5 pb-4 sm:pb-5">
                       <div className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full w-full mb-3 sm:mb-4"></div>
                       <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10">
-                        <div className="text-white/80 text-sm sm:text-base leading-relaxed">
+                        <div className="text-white/80  text-base md:text-xl  leading-relaxed">
                           {item.answer}
                         </div>
                       </div>

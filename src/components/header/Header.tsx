@@ -184,7 +184,7 @@ export default function Header() {
                                   }`}
                                   aria-expanded={isProjectsOpen}
                                 >
-                                  <span className="text-white font-geo2 text-lg font-medium tracking-widest">
+                                  <span className="text-white font-geo2 text-xl font-medium tracking-widest">
                                     {item.name}
                                   </span>
                                   <ChevronRight
@@ -216,7 +216,7 @@ export default function Header() {
                                                 : "bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-transparent hover:border-white/20"
                                             }`}
                                           >
-                                            <span className="text-xl font-geo2 tracking-widest">
+                                            <span className="text-2xl font-geo2 tracking-widest">
                                               {subItem.name}
                                             </span>
                                           </Link>
@@ -267,7 +267,7 @@ export default function Header() {
                     <div className="relative inline-block">
                       <button
                         onClick={() => setIsProjectsOpen(!isProjectsOpen)}
-                        className={`text-white font-geo2 text-lg lg:text-xl tracking-widest hover:text-gray-300 group inline-flex items-center pb-1 cursor-pointer ${
+                        className={`text-white font-geo2 text-xl lg:text-xl tracking-widest hover:text-gray-300 group inline-flex items-center pb-1 cursor-pointer ${
                           isActive(item.href) ? "font-medium" : ""
                         }`}
                         aria-expanded={isProjectsOpen}
@@ -332,7 +332,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={`/${locale}${item.href}`}
-                      className={`text-white font-geo2 text-lg lg:text-xl tracking-widest hover:text-gray-300 group inline-block pb-1 ${
+                      className={`text-white font-geo2 text-xl lg:text-xl tracking-widest hover:text-gray-300 group inline-block pb-1 ${
                         isActive(item.href) ? "font-medium" : ""
                       }`}
                     >
