@@ -12,11 +12,11 @@ import Image3 from "@/root/public/images/goderdzi/GoderdziPool.jpg";
 import { WaveShape } from "@/components/shared/waveShape/WaveShape";
 
 const propertyImages = [
-  { src: Image1, alt: "Goderdzi Green Views" },
-  { src: Image2, alt: "Goderdzi Nature Surroundings" },
-  { src: Image3, alt: "Goderdzi Pool Area" },
-  { src: Image1, alt: "Goderdzi Exterior" },
-  { src: Image2, alt: "Goderdzi Interior" },
+  { src: Image1, alt: "AISI Goderdzi" },
+  { src: Image2, alt: "AISI Goderdzi" },
+  { src: Image3, alt: "AISI Goderdzi" },
+  { src: Image1, alt: "AISI Goderdzi" },
+  { src: Image2, alt: "AISI Goderdzi" },
 ];
 
 export default function GoderdziGallery() {
@@ -25,10 +25,6 @@ export default function GoderdziGallery() {
       <WaveShape position="top" className="hidden md:block" />
       <section className="w-full px-4 md:px-8 lg:px-16 py-16 md:py-32 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 relative">
         <div className="container mx-auto">
-          <h3 className="text-3xl md:text-4xl text-center font-bold text-white mb-12">
-            Property Gallery
-          </h3>
-
           <Carousel
             className="w-full"
             opts={{
@@ -61,7 +57,6 @@ export default function GoderdziGallery() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-
             <CarouselPrevious className="left-2 md:-left-4 w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 text-white transition-all duration-200" />
             <CarouselNext className="right-2 md:-right-4 w-10 h-10 md:w-12 md:h-12 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 text-white transition-all duration-200" />
           </Carousel>

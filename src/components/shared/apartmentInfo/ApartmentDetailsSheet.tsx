@@ -187,7 +187,7 @@ const prevZoomImage = () => {
                         >
                           <ChevronRight className="h-5 w-5" />
                         </button>
-                        <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-sm z-20">
+                        <div className="absolute bottom-4 right-4 bg-black/70 text-white px-1 py-1 rounded-full text-sm z-20">
                           {selectedImage + 1} / {apartment.images.length}
                         </div>
                       </>

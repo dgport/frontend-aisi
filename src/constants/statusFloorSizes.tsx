@@ -4,7 +4,7 @@ export const STATUS_ORIGINAL_DIMENSIONS = {
     height: 670,
   },
   mobile: {
-    width: 192,
+    width: 1920,
     height: 3800,
   },
 };
