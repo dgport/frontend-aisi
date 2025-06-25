@@ -296,73 +296,33 @@ This inquiry was submitted through the apartment gallery.
           if (!hasArea && !hasStatus) return null;
 
           return (
-            <div
-              className="absolute top-6 right-6 z-50"
-              style={{ marginTop: "40px" }}
-            >
-              <div className="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-2xl border border-white/20 min-w-[200px]">
-                <div className="flex items-center gap-2 mb-3">
+            <div className="absolute top-6 right-6 z-50 md:mt-10 font-geo">
+              <div className="bg-white/95 flex flex-col items-center backdrop-blur-md rounded-xl p-4 shadow-2xl border border-white/20 min-w-[200px]">
+                <div className="flex items-center gap-2 ">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <h3 className="text-lg font-bold text-gray-800">
+                  <h3 className="text-lg font-semibold text-gray-800">
                     {t("apartment")} #{currentImage.apartmentNumber}
                   </h3>
                 </div>
-
                 {buildingId && (
                   <div className="mb-3">
-                    <p className="text-sm font-medium text-gray-700">
+                    <p className="text-sm font-medium md:block hidden text-gray-700">
                       {getBuildingName(buildingId)}
                     </p>
                   </div>
                 )}
-
                 {hasArea && (
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="flex items-center justify-center w-8 h-8 bg-blue-50 rounded-lg">
-                      <svg
-                        className="w-4 h-4 text-blue-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 8V6a2 2 0 012-2h2M4 16v2a2 2 0 002 2h2M16 4h2a2 2 0 012 2v2M16 20h2a2 2 0 002-2v-2"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-500">{t("area")}</p>
-                      <p className="font-semibold text-gray-800">
-                        {currentImage.area} m²
-                      </p>
-                    </div>
+                    <p className="text-sm text-gray-500">{t("area")}</p>
+                    <p className="font-semibold text-gray-800">
+                      {currentImage.area} m²
+                    </p>
                   </div>
                 )}
 
                 {hasStatus && (
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="flex items-center justify-center w-8 h-8 bg-gray-50 rounded-lg">
-                      <svg
-                        className="w-4 h-4 text-gray-600"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-500 mb-1">
-                        {t("status")}
-                      </p>
                       <span
                         className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium shadow-lg ${getStatusColor(
                           currentImage.status!
