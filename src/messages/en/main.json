@@ -94,8 +94,31 @@
     "yourPlace": "Place Where Your Dreams Come True",
     "place1": "Place Where",
     "place2": "Your Dreams Come True",
+  "metaKeywords": "real estate Georgia, luxury apartments Batumi, Goderdzi ski resort, property investment Georgia, rental income, AISI Group, mountain apartments, seaside properties",
+  "aisiBBlock": "AISI Batumi", 
+  "aisiBatumiABlock": "AISI Batumi ",
  
-  "metaKeywords": "real estate Georgia, luxury apartments Batumi, Goderdzi ski resort, property investment Georgia, rental income, AISI Group, mountain apartments, seaside properties"
+  "inquiryDetails": "Inquiry Details",
+ 
+  "buildingId": "Building ID", 
+  "floor": "Floor",
+ 
+  "yourName": "Your Name",
+  "enterYourFullName": "Enter your full name",
+  "yourEmailOrPhone": "Your Email or Phone Number",
+  "enterYourEmailOrPhone": "Enter your email or phone number",
+  "weWillUseThisToContact": "We'll use this to contact you about the apartment",
+  "additionalMessage": "Additional Message",
+  "optional": "Optional",
+  "anySpecificQuestions": "Any specific questions or requirements...",
+  "cancel": "Cancel",
+  "sending": "Sending",
+  "sendInquiry": "Send Inquiry",
+  "pleaseFillAllFields": "Please fill in all required fields",
+  "pleaseEnterValidContact": "Please enter a valid email address or phone number",
+  "inquirySentSuccessfully": "Your inquiry has been sent successfully! We'll get back to you soon.",
+  "failedToSendInquiry": "Failed to send inquiry. Please try again or contact us directly.",
+  "loading": "Loading..."
  
     
 }

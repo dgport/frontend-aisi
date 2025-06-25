@@ -1,62 +1,62 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import BlackAisi from "@/root/public/images/BlackAisi.png"
-import Image from 'next/image'
  
+import { motion } from "framer-motion";
+import BlackAisi from "@/root/public/images/BlackAisi.png";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function Loader() {
+  const t = useTranslations("main");
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ 
+        animate={{
           scale: [0.8, 1.1, 1],
-          opacity: 1
+          opacity: 1,
         }}
         transition={{
           duration: 1.2,
           repeat: Infinity,
           repeatType: "reverse",
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
         className="flex flex-col items-center"
       >
         <motion.div
-          animate={{ 
+          animate={{
             scale: [1, 1.2, 1],
             y: [0, -10, 0],
           }}
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
           className="mb-4"
         >
           <Image
-            src={BlackAisi} 
-            alt="Aisi Logo" 
+            src={BlackAisi}
+            alt="Aisi Logo"
             width={80}
             height={80}
             className="object-contain"
           />
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ 
+          transition={{
             delay: 0.5,
             duration: 0.6,
-            ease: "easeOut"
+            ease: "easeOut",
           }}
           className="text-gray-700 text-sm font-medium"
         >
-          Loading...
+          {t("loading")}
         </motion.div>
-        
-   
-        <motion.div 
+
+        <motion.div
           className="flex space-x-1 mt-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -68,18 +68,18 @@ export default function Loader() {
               className="w-2 h-2 bg-gray-500 rounded-full"
               animate={{
                 scale: [1, 1.5, 1],
-                opacity: [0.5, 1, 0.5]
+                opacity: [0.5, 1, 0.5],
               }}
               transition={{
                 duration: 1,
                 repeat: Infinity,
                 delay: index * 0.2,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
           ))}
         </motion.div>
       </motion.div>
     </div>
-  )
+  );
 }

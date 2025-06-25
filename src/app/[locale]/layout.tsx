@@ -6,7 +6,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import QueryProvider from "@/reactQuery/queryProvider";
 import { AuthProvider } from "@/auth/AuthProvider";
+import WhatsAppChat from "@/components/shared/socials/Whatsapp";
+import MessengerChat from "@/components/shared/socials/Messanger";
 import Footer from "@/components/footer/Footer";
+ 
 
 const geo1 = localFont({
   src: "../../fonts/geo1.otf",
@@ -112,6 +115,15 @@ export default async function RootLayout({
               <Header />
               {children}
               <Footer />
+
+              <WhatsAppChat
+                phoneNumber="+995557471414"
+                defaultMessage="Hello from aisi group website"
+              />
+              <MessengerChat
+                pageId={process.env.NEXT_PUBLIC_MESSENGER_PAGE_ID || ""}
+                defaultMessage="Hello from aisi group website"
+              />
             </NextIntlClientProvider>
           </QueryProvider>
         </AuthProvider>

@@ -6,48 +6,55 @@ import StatusFAQ from "./_components/StatusFAQ";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("status");
+ const t = await getTranslations("main");
 
-  return {
-    title: t("aisiStatus"),
-    description: t("statusDesc"),
-    keywords: t("keyWords"),
-    authors: [{ name: t("aisiGroup") }],
-    creator: t("aisiGroup"),
-    publisher: t("aisiGroup"),
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
-    openGraph: {
-      type: "website",
-      locale: "ka_GE",
-      alternateLocale: ["en_US"],
-      url: "https://aisigroup.ge/aisi-status",
-      title: t("aisiStatus"),
-      description: t("statusDesc"),
-      siteName: t("aisiGroup"),
-      images: [
-        {
-          url: "https://aisigroup.ge//images/status/StatusLarge.png",
-          width: 1200,
-          height: 630,
-          alt: t("statusImageAlt"),
-        },
-      ],
-    },
-    other: {
-      "apple-mobile-web-app-title": t("aisiGroup"),
-      "application-name": t("aisiGroup"),
-    },
-  };
+ return {
+   title: t("aisiGroup"),
+   description: t("transformingFrom"),
+   keywords: t("metaKeywords").split(", "),
+   creator: t("aisiGroup"),
+   publisher: "Digital Port",
+   metadataBase: new URL("https://aisigroup.ge/"),
+   openGraph: {
+     title: `${t("aisiGroup")} - ${t("premiumDev")}`,
+     description: `${t("coverDesc")} ${t("transformingFrom")}`,
+     url: "https://aisigroup.ge",
+     siteName: t("aisiGroup"),
+     images: [
+       {
+         url: "/images/opengraph-image.png",
+         width: 1200,
+         height: 630,
+         alt: `${t("aisiGroup")} - ${t("coverTitle")}`,
+       },
+     ],
+     type: "website",
+   },
+   twitter: {
+     card: "summary_large_image",
+     title: `${t("aisiGroup")} - ${t("premiumDev")}`,
+     description: t("coverDesc"),
+     images: ["/images/opengraph-image.png"],
+   },
+   alternates: {
+     canonical: "https://aisigroup.ge",
+     languages: {
+       en: "https://aisigroup.ge/en",
+       ka: "https://aisigroup.ge/ka",
+     },
+   },
+   robots: {
+     index: true,
+     follow: true,
+     googleBot: {
+       index: true,
+       follow: true,
+       "max-video-preview": -1,
+       "max-image-preview": "large",
+       "max-snippet": -1,
+     },
+   },
+ };
 }
 
 export default function Page() {

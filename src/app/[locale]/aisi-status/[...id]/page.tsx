@@ -233,6 +233,8 @@ export default function FloorPlanPage() {
         images={selectedApartmentImages}
         isOpen={isPhotoViewOpen}
         onClose={handlePhotoGalleryClose}
+        buildingId={buildingId}
+        floorNumber={currentFloor}
       />
     </>
   );
