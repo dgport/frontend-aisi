@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "investment returns",
     "premium properties",
   ],
-  creator: "Your Company Name",
+  creator: "AISI Group - აისი ჯგუფი",
   publisher: "Digital Port",
   metadataBase: new URL("https://aisigroup.ge/"),
   openGraph: {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     description:
       "Discover exceptional real estate investment opportunities with guaranteed returns. Explore our premium projects and start your investment journey today.",
     url: "https://yourwebsite.com",
-    siteName: "Your Company Name",
+    siteName: "AISI Group - აისი ჯგუფი",
     images: [
       {
         url: "/images/opengraph-image.png",
