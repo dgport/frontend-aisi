@@ -118,7 +118,22 @@
   "pleaseEnterValidContact": "Please enter a valid email address or phone number",
   "inquirySentSuccessfully": "Your inquiry has been sent successfully! We'll get back to you soon.",
   "failedToSendInquiry": "Failed to send inquiry. Please try again or contact us directly.",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "title": "AISI Group",
+    "description": "Discover exceptional real estate investment opportunities with guaranteed returns. Explore our premium projects, calculate payments, and start your investment journey today.",
+    "keywords": [
+      "real estate investment",
+      "property investment",
+      "investment opportunities",
+      "real estate projects",
+      "property calculator",
+      "investment returns",
+      "premium properties"
+    ],
+    "openGraphTitle": "Premium Real Estate Investment Opportunities",
+    "openGraphDescription": "Discover exceptional real estate investment opportunities with guaranteed returns. Explore our premium projects and start your investment journey today.",
+    "openGraphImageAlt": "Premium Real Estate Investment Opportunities"
+ 
  
     
 }
