@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Facebook, Instagram } from "../svg";
@@ -68,7 +68,7 @@ export default function Footer() {
                 </Link>
               ))}
               <a
-                className="text-gray-400 hover:text-white"
+                className="text-gray-400 hover:text-white hidden"
                 href="https://korter.ge"
                 target="_blank"
                 rel="noopener noreferrer"

@@ -1,1 +1,23 @@
-{"pages":{},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":false}
+{
+  "app": {
+    "[project]/src/app/[locale]/(main)/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/geo2-s.p.a469d16d.ttf"
+    ],
+    "[project]/src/app/[locale]/aisi-batumi/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/geo2-s.p.a469d16d.ttf"
+    ],
+    "[project]/src/app/[locale]/aisi-status/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/geo2-s.p.a469d16d.ttf"
+    ],
+    "[project]/src/app/[locale]/contact/page": [
+      "static/media/geo1-s.p.75d1b942.otf",
+      "static/media/geo2-s.p.a469d16d.ttf"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}
